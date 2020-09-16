@@ -1,0 +1,15 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: /app/output.txt
+START_TIME: Wed Sep 16 14:51:48 2020
+URL_BASE: http://webscantest.com/
+WORDLIST_FILES: /app/small.txt
+
+-----------------
+
+
+(!) FATAL: Error opening wordlist file: /app/small.txt
