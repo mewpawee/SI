@@ -1,5 +1,8 @@
 # XSSSNIPER
 
+### XSSSNIPER documentation
+https://github.com/gbrindisi/xsssniper
+
 ## Build
 `sudo docker build . -t xsssniper:v1`
 
