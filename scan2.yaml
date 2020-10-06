@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: scan-
+spec:
+  entrypoint: scan-service
+  imagePullSecrets:
+    - name: registry-frong-testv1
+  arguments:
+    parameters:
+    - name: target-domain
+      value: ''
+      #serviceAccountName: argo
+  templates:
+  - name: scan-service
+    dag:
+      tasks:
+      - name: scan-dnsmap
+        template: dnsmap
+        arguments:
+          parameters:
+          - name: target-domain
+            value: "{{item}}" 
+        withParam: "{{workflow.parameters.target-domain}}"
+  #Services        
+  - name: dnsmap
+    inputs:
+      parameters:
+      - name: target-domain
+    container:
+      image: registry.digitalocean.com/frong-testv1/dnsmap:v1
+      command: [./dnsmap, "{{inputs.parameters.target-domain}}", -r, ./result.txt]
+
