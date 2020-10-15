@@ -1,4 +1,5 @@
 # Description
+This service filter or clean the data that come from DNSMap service(s) and choose only nessessary data that we can use into another service. RIght now we choose *only* IPs that we going to use.
 * This container dependency is result.txt that contain IPv4 addresses
 * This is an example file **result.txt**
 > classroom.kmitl.ac.th\
