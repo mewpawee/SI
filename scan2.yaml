@@ -5,12 +5,12 @@ metadata:
 spec:
   entrypoint: scan-service
   imagePullSecrets:
-    - name: registry-frong-testv1
+    - name: registry-sec
   arguments:
     parameters:
     - name: target-domain
       value: ''
-      #serviceAccountName: argo
+  serviceAccountName: argo
   templates:
   - name: scan-service
     dag:
@@ -22,12 +22,41 @@ spec:
           - name: target-domain
             value: "{{item}}" 
         withParam: "{{workflow.parameters.target-domain}}"
-  #Services        
+      - name: test
+        dependencies: [scan-dnsmap]
+        template: echo
+        arguments:
+          parameters: [{name: message, value: C}]
+  #Services   
+  - name: echo
+    inputs:
+      parameters:
+      - name: message
+    container:
+      image: alpine:3.7
+      command: [echo, "{{inputs.parameters.message}}"]
+
   - name: dnsmap
     inputs:
       parameters:
       - name: target-domain
     container:
-      image: registry.digitalocean.com/frong-testv1/dnsmap:v1
-      command: [./dnsmap, "{{inputs.parameters.target-domain}}", -r, ./result.txt]
-
+      image: registry.digitalocean.com/sec/dnsmap:v1
+      command: [./dnsmap, "{{inputs.parameters.target-domain}}", -r, "./tmp/report-dnsmap-{{inputs.parameters.target-domain}}.txt"]
+    outputs:
+      artifacts:
+        - name: message
+          path: /tmp
+          archive:
+            none: {}
+  
+          s3:
+            endpoint: fra1.digitaloceanspaces.com
+            bucket: testv1
+            key: test/report
+            accessKeySecret:
+              name: artifact-key
+              key: accessKey
+            secretKeySecret:
+              name: artifact-key
+              key: secretKey
