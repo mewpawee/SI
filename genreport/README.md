@@ -92,7 +92,7 @@ IP address #2: 161.246.35.98
 > www3.kmitl.ac.th\
 IP address #1: 161.246.34.35
 
-* We select only available IPs in any domains and subdomains and not use any domain names that do not have IP(s)
+* We select only available IPs in any domains and subdomains and not use any domain names that **do not** have IP(s)
 * After run this container the result will be shown in directory in a named file as **filtered-result**
 > /result/filtered-result
 * This is an example result of **filtered-result** file
