@@ -1,5 +1,5 @@
 # Description
-* This container dependency is result.txt that contain IPv4 address
+* This container dependency is result.txt that contain IPv4 addresses
 * This is an example file **result.txt**
 > classroom.kmitl.ac.th\
 IP address #1: 161.246.35.53
