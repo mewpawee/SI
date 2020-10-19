@@ -25,20 +25,27 @@ spec:
       - name: test
         dependencies: [scan-dnsmap]
         template: echo
-        arguments:
-          artifacts:
-          - name: output
-            from: "{{workflow.outputs.artifacts.my-global-art}}"
   #Services   
   - name: echo
     inputs:
       artifacts:
-      - name: output
-        path: /tmp/output
+      - name: message
+        path: /tmp/
+        s3:
+          endpoint: fra1.digitaloceanspaces.com
+          bucket: testv1
+          key: /artifacts/
+          #insecure: true
+          accessKeySecret:
+            name: artifact-key
+            key: accessKey
+          secretKeySecret:
+            name: artifact-key
+            key: secretKey
     container:
       image: alpine:3.7
       command: [sh, -c]
-      args: ["cat /tmp/output"]
+      args: ["ls /tmp"]
 
   - name: dnsmap
     inputs:
@@ -58,7 +65,8 @@ spec:
           s3:
             endpoint: fra1.digitaloceanspaces.com
             bucket: testv1
-            key: artifacts/
+            key: /artifacts/
+            #insecure: true
             accessKeySecret:
               name: artifact-key
               key: accessKey
