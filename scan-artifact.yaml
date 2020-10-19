@@ -10,6 +10,8 @@ spec:
     parameters:
     - name: target-domain
       value: ''
+    - name: userId
+      value: '' 
   serviceAccountName: argo
   templates:
   - name: scan-service
@@ -34,7 +36,7 @@ spec:
         s3:
           endpoint: fra1.digitaloceanspaces.com
           bucket: testv1
-          key: /artifacts/
+          key: "/{{workflow.parameters.userId}}/artifacts/{{workflow.name}}/raw/dnsmap/"
           #insecure: true
           accessKeySecret:
             name: artifact-key
@@ -65,7 +67,7 @@ spec:
           s3:
             endpoint: fra1.digitaloceanspaces.com
             bucket: testv1
-            key: /artifacts/
+            key: "/{{workflow.parameters.userId}}/artifacts/{{workflow.name}}/raw/dnsmap/"
             #insecure: true
             accessKeySecret:
               name: artifact-key
