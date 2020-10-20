@@ -8,70 +8,119 @@ spec:
     - name: registry-sec
   arguments:
     parameters:
-    - name: target-domain
-      value: ''
-    - name: userId
-      value: '' 
+      - name: target-domain
+        value: ""
+      - name: userId
+        value: ""
   serviceAccountName: argo
   templates:
-  - name: scan-service
-    dag:
-      tasks:
-      - name: scan-dnsmap
-        template: dnsmap
-        arguments:
-          parameters:
-          - name: target-domain
-            value: "{{item}}" 
-        withParam: "{{workflow.parameters.target-domain}}"
-      - name: test
-        dependencies: [scan-dnsmap]
-        template: echo
-  #Services   
-  - name: echo
-    inputs:
-      artifacts:
-      - name: message
-        path: /tmp/
-        s3:
-          endpoint: fra1.digitaloceanspaces.com
-          bucket: testv1
-          key: "/{{workflow.parameters.userId}}/artifacts/{{workflow.name}}/raw/dnsmap/"
-          #insecure: true
-          accessKeySecret:
-            name: artifact-key
-            key: accessKey
-          secretKeySecret:
-            name: artifact-key
-            key: secretKey
-    container:
-      image: alpine:3.7
-      command: [sh, -c]
-      args: ["ls /tmp"]
+    - name: scan-service
+      dag:
+        tasks:
+          - name: scan-dnsmap
+            template: dnsmap
+            arguments:
+              parameters:
+                - name: target-domain
+                  value: "{{item}}"
+            withParam: "{{workflow.parameters.target-domain}}"
+          - name: test
+            dependencies: [scan-dnsmap]
+            template: echo
+            arguments:
+              parameters:
+                - name: fileLocation
+                  value: "{{item.fileLocation}}"
+            withParam: "{{tasks.scan-dnsmap.outputs.parameters}}"
+    #Services
+    - name: echo
+      inputs:
+        parameters:
+          - name: fileLocation
+        artifacts:
+          - name: message
+            path: /tmp/
+            s3:
+              endpoint: fra1.digitaloceanspaces.com
+              bucket: testv1
+              key: "/{{workflow.parameters.userId}}/artifacts/{{workflow.name}}/raw/dnsmap/"
+              #insecure: true
+              accessKeySecret:
+                name: artifact-key
+                key: accessKey
+              secretKeySecret:
+                name: artifact-key
+                key: secretKey
+      container:
+        image: alpine:3.7
+        command: [sh, -c]
+        args:
+          - grep -Eo "([0-9]{1,3}\.){3}[0-9]{1,3}" "/tmp/output-dnsmap-{{inputs.parameters.fileLocation}}.txt" > "/tmp/filtered-dnsmap-{{inputs.parameters.fileLocation}}.txt";
+      outputs:
+        artifacts:
+          - name: filteredDnsmap
+            path: "/tmp/filtered-dnsmap-{{inputs.parameters.fileLocation}}.txt"
+            archive:
+              none: {}
+            s3:
+              endpoint: fra1.digitaloceanspaces.com
+              bucket: testv1
+              key: "/{{workflow.parameters.userId}}/artifacts/{{workflow.name}}/filtered/dnsmap/filtered-dnsmap-{{inputs.parameters.fileLocation}}.txt"
+              #insecure: true
+              accessKeySecret:
+                name: artifact-key
+                key: accessKey
+              secretKeySecret:
+                name: artifact-key
+                key: secretKey
+          - name: reportDnsmap
+            path: "/tmp/output-dnsmap-{{inputs.parameters.fileLocation}}.txt"
+            archive:
+              none: {}
+            s3:
+              endpoint: fra1.digitaloceanspaces.com
+              bucket: testv1
+              key: "/{{workflow.parameters.userId}}/reports/{{workflow.name}}/src/dnsmap/output-dnsmap-{{inputs.parameters.fileLocation}}.txt"
+              #insecure: true
+              accessKeySecret:
+                name: artifact-key
+                key: accessKey
+              secretKeySecret:
+                name: artifact-key
+                key: secretKey
 
-  - name: dnsmap
-    inputs:
-      parameters:
-      - name: target-domain
-    container:
-      image: registry.digitalocean.com/sec/dnsmap:v1
-      command: [./dnsmap, "{{inputs.parameters.target-domain}}", -r, "./tmp/output-dnsmap-{{inputs.parameters.target-domain}}.txt"]
-    outputs:
-      artifacts:
-        - name: message
-          path: "/tmp/"
-          globalName: my-global-art
-          archive:
-            none: {}
-            
-          s3:
-            endpoint: fra1.digitaloceanspaces.com
-            bucket: testv1
-            key: "/{{workflow.parameters.userId}}/artifacts/{{workflow.name}}/raw/dnsmap/"
-            #insecure: true
-            accessKeySecret:
-              name: artifact-key
-              key: accessKey
-            secretKeySecret:
-              name: artifact-key
-              key: secretKey
+    - name: dnsmap
+      inputs:
+        parameters:
+          - name: target-domain
+      container:
+        image: registry.digitalocean.com/sec/dnsmap:v1
+        command:
+          [
+            ./dnsmap,
+            "{{inputs.parameters.target-domain}}",
+            -r,
+            "./tmp/output-dnsmap-{{inputs.parameters.target-domain}}.txt",
+          ]
+      outputs:
+        parameters:
+          - name: fileLocation
+            value: "{{inputs.parameters.target-domain}}"
+        artifacts:
+          - name: message
+            path: "/tmp/"
+            globalName: my-global-art
+            archive:
+              none: {}
+
+            s3:
+              endpoint: fra1.digitaloceanspaces.com
+              bucket: testv1
+              key: "/{{workflow.parameters.userId}}/artifacts/{{workflow.name}}/raw/dnsmap/"
+              #insecure: true
+              accessKeySecret:
+                name: artifact-key
+                key: accessKey
+              secretKeySecret:
+                name: artifact-key
+                key: secretKey
