@@ -62,7 +62,6 @@ export const submitWorkflow = async (userId, targetDomain) => {
               artifacts: [
                 {
                   name: 'reportDnsmap',
-                  globalName: 'report-location',
                   path: '/tmp/',
                   s3: {
                     endpoint: 'fra1.digitaloceanspaces.com',
@@ -86,6 +85,7 @@ export const submitWorkflow = async (userId, targetDomain) => {
               artifacts: [
                 {
                   name: 'report',
+                  globalName: 'report-location',
                   path: '/tmp/{{workflow.name}}-report.pdf',
                   archive: { none: {} },
                   s3: {
