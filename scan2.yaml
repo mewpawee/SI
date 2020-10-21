@@ -26,15 +26,19 @@ spec:
         dependencies: [scan-dnsmap]
         template: echo
         arguments:
-          parameters: [{name: message, value: C}]
+          artifacts:
+          - name: output
+            from: "{{workflow.outputs.artifacts.my-global-art}}"
   #Services   
   - name: echo
     inputs:
-      parameters:
-      - name: message
+      artifacts:
+      - name: output
+        path: /tmp/output
     container:
       image: alpine:3.7
-      command: [echo, "{{inputs.parameters.message}}"]
+      command: [sh, -c]
+      args: ["cat /tmp/output"]
 
   - name: dnsmap
     inputs:
@@ -42,18 +46,19 @@ spec:
       - name: target-domain
     container:
       image: registry.digitalocean.com/sec/dnsmap:v1
-      command: [./dnsmap, "{{inputs.parameters.target-domain}}", -r, "./tmp/report-dnsmap-{{inputs.parameters.target-domain}}.txt"]
+      command: [./dnsmap, "{{inputs.parameters.target-domain}}", -r, "./tmp/output-dnsmap-{{inputs.parameters.target-domain}}.txt"]
     outputs:
       artifacts:
         - name: message
-          path: /tmp
+          path: "/tmp/"
+          globalName: my-global-art
           archive:
             none: {}
-  
+            
           s3:
             endpoint: fra1.digitaloceanspaces.com
             bucket: testv1
-            key: test/report
+            key: artifacts/
             accessKeySecret:
               name: artifact-key
               key: accessKey
