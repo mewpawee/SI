@@ -32,7 +32,51 @@ spec:
                 - name: fileLocation
                   value: "{{item.fileLocation}}"
             withParam: "{{tasks.scan-dnsmap.outputs.parameters}}"
+          - name: scan-genReport
+            dependencies: [test]
+            template: gen-report
+
     #Services
+    - name: gen-report
+      inputs:
+        artifacts:
+          - name: reportDnsmap
+            path: /tmp/
+            s3:
+              endpoint: fra1.digitaloceanspaces.com
+              bucket: testv1
+              key: "/{{workflow.parameters.userId}}/reports/{{workflow.name}}/src/dnsmap/"
+              #insecure: true
+              accessKeySecret:
+                name: artifact-key
+                key: accessKey
+              secretKeySecret:
+                name: artifact-key
+                key: secretKey
+      container:
+        image: registry.digitalocean.com/sec/report:v01
+        command: [sh, -c]
+        args:
+          - enscript /tmp/*.txt --output=- | ps2pdf -sOwnerPassword="1234" -sUserPassword="1234" - > "/tmp/{{workflow.name}}-report.pdf";
+      outputs:
+        artifacts:
+          - name: report
+            path: "/tmp/{{workflow.name}}-report.pdf"
+            archive:
+              none: {}
+
+            s3:
+              endpoint: fra1.digitaloceanspaces.com
+              bucket: testv1
+              key: "/{{workflow.parameters.userId}}/reports/{{workflow.name}}/{{workflow.name}}-report.pdf"
+              #insecure: true
+              accessKeySecret:
+                name: artifact-key
+                key: accessKey
+              secretKeySecret:
+                name: artifact-key
+                key: secretKey
+
     - name: echo
       inputs:
         parameters:
@@ -95,13 +139,9 @@ spec:
           - name: target-domain
       container:
         image: registry.digitalocean.com/sec/dnsmap:v1
-        command:
-          [
-            ./dnsmap,
-            "{{inputs.parameters.target-domain}}",
-            -r,
-            "./tmp/output-dnsmap-{{inputs.parameters.target-domain}}.txt",
-          ]
+        command: [sh, -c]
+        args:
+          - ./dnsmap "{{inputs.parameters.target-domain}}" -r "./tmp/output-dnsmap-{{inputs.parameters.target-domain}}.txt";
       outputs:
         parameters:
           - name: fileLocation
