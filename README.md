@@ -1,7 +1,7 @@
 # Security-Index-2
 
-##Usage
+## Usage
 
 ```
-argo submit -n argo scan2.yaml -p target-domain='[endpoints]'
+argo submit -n argo scan-artifact.yaml -p target-domain='[<endpoints>]' -p userId=<userId>
 ```
