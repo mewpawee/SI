@@ -1,22 +1,9 @@
-import http from 'http';
 import { startArgo } from './argoApi';
 
 export const getWorkflow = async (workflowId) => {
-  const options = {
-    host: 'argo-server',
-    port: 2746,
-    path: `/api/v1/workflows/argo/${workflowId}`,
-  };
-  http.get(options, (resp) => {
-    let data = '';
-    resp.on('data', (chunk) => {
-      data += chunk;
-    });
-    resp.on('end', () => {
-      const peopleData = JSON.parse(data);
-      return peopleData;
-    });
-  });
+  const url = `/api/v1/workflows/argo/${workflowId}`;
+  const body = {};
+  return startArgo('GET', url, body);
 };
 
 export const submitWorkflow = async (userId, targetDomain) => {
