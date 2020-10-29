@@ -9,6 +9,7 @@ export const startArgo = async (method, url, queryData) => {
       url,
       data: JSON.stringify(queryData),
       headers,
+      proxy: { host: 'argo-server', port: 2746 },
     });
     console.log(response);
     return response.data;

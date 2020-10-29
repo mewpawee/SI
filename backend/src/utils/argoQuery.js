@@ -2,23 +2,25 @@ import http from 'http';
 import { startArgo } from './argoApi';
 
 export const getWorkflow = async (workflowId) => {
-  http.get(
-    `http://argo-server:2746/api/v1/workflows/argo/${workflowId}`,
-    (resp) => {
-      let data = '';
-      resp.on('data', (chunk) => {
-        data += chunk;
-      });
-      resp.on('end', () => {
-        const peopleData = JSON.parse(data);
-        return peopleData;
-      });
-    }
-  );
+  const options = {
+    host: 'argo-server',
+    port: 2746,
+    path: `/api/v1/workflows/argo/${workflowId}`,
+  };
+  http.get(options, (resp) => {
+    let data = '';
+    resp.on('data', (chunk) => {
+      data += chunk;
+    });
+    resp.on('end', () => {
+      const peopleData = JSON.parse(data);
+      return peopleData;
+    });
+  });
 };
 
 export const submitWorkflow = async (userId, targetDomain) => {
-  const url = 'http://10.245.151.194:2746/api/v1/workflows/argo';
+  const url = '/api/v1/workflows/argo';
   const body = {
     namespace: 'argo',
     serverDryRun: false,

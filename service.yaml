@@ -1,0 +1,10 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: argo-server
+  namespace: default
+spec:
+  type: ExternalName
+  externalName: argo-server.argo.svc.cluster.local
+  ports:
+  - port: 2746
