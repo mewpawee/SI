@@ -5,7 +5,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-        app: backend
+      app: backend
   replicas: 1
 
   template:
@@ -17,7 +17,7 @@ spec:
       containers:
         - name: backend
           image: registry.digitalocean.com/sec/backend:v1
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 3000
-        

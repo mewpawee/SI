@@ -1,15 +1,19 @@
 import { submitWorkflow, getWorkflow } from '../utils/argoQuery';
-
+import { verifyGoogleToken } from '../utils/googleValidate';
 // const targetDomain = ['cie.kmitl.ac.th', 'kmitl.ac.th'];
 
 export const argoPage = async (req, res) => {
   try {
-    const { userId } = req.query;
     let { targetDomain } = req.query;
     targetDomain = JSON.stringify(targetDomain);
-    // console.log(userId);
-    const response = await submitWorkflow(userId, targetDomain);
-    res.status(200).json(response.metadata);
+    const { token } = req.headers;
+    const userId = await verifyGoogleToken(token);
+    if (userId) {
+      const response = await submitWorkflow(userId, targetDomain);
+      res.status(200).json(response.metadata);
+    } else {
+      throw userId;
+    }
   } catch (err) {
     res.status(200).json(err);
   }
@@ -17,9 +21,15 @@ export const argoPage = async (req, res) => {
 
 export const workFlowPage = async (req, res) => {
   try {
+    const { token } = req.headers;
     const { workflowId } = req.query;
-    const response = await getWorkflow(workflowId);
-    res.status(200).json(response.status);
+    const userId = await verifyGoogleToken(token);
+    if (userId) {
+      const response = await getWorkflow(workflowId);
+      res.status(200).json(response.status);
+    } else {
+      throw userId;
+    }
   } catch (err) {
     res.status(200).json(err);
   }
