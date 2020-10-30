@@ -41,6 +41,7 @@ spec:
       inputs:
         artifacts:
           - name: reportDnsmap
+            globalName: report-location
             path: /tmp/
             s3:
               endpoint: fra1.digitaloceanspaces.com
