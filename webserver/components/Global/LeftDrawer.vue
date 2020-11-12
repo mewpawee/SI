@@ -1,8 +1,9 @@
 <template>
   <v-navigation-drawer
+    v-model="leftDrawer"
     :mini-variant="miniVariant"
-    :clipped="clipped"
-    :fixed="fixed"
+    :clipped="true"
+    :fixed="true"
     app
   >
     <v-list>
@@ -21,6 +22,13 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+    <template v-slot:append>
+      <div class="pa-2">
+        <v-btn icon @click.stop="miniVariantToggle">
+          <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
+        </v-btn>
+      </div>
+    </template>
   </v-navigation-drawer>
 </template>
 
@@ -28,13 +36,11 @@
 export default {
   data() {
     return {
-      clipped: true,
-      fixed: true,
       items: [
         {
           icon: 'mdi-shield-search',
-          title: 'Scan',
-          to: { name: 'dashboard' }
+          title: 'Scanner',
+          to: { name: 'scanner' }
         },
         {
           icon: 'mdi-history',
@@ -48,10 +54,20 @@ export default {
     miniVariant: {
       get() {
         return this.$nuxt.$store.state.miniVariant
-      },
-      set(val) {
-        this.$store.commit('set_miniVariant', val)
       }
+    },
+    leftDrawer: {
+      get() {
+        return this.$nuxt.$store.state.leftDrawer
+      }
+    }
+  },
+  methods: {
+    miniVariantToggle() {
+      this.$store.commit(
+        'set_minivariant',
+        !this.$nuxt.$store.state.miniVariant
+      )
     }
   }
 }

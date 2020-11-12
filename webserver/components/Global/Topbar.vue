@@ -1,7 +1,7 @@
 <template>
   <v-app-bar clipped-left fixed app>
-    <v-btn icon @click.stop="miniVariantToggle">
-      <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
+    <v-btn icon @click.stop="leftDrawerToggle">
+      <v-icon>mdi-menu</v-icon>
     </v-btn>
     <v-toolbar-title v-text="title" />
     <v-spacer />
@@ -9,9 +9,9 @@
     <v-btn icon @click.stop="signOut">
       <v-icon>mdi-export</v-icon>
     </v-btn>
-    <v-btn icon @click.stop="rightDrawerToggle">
-      <v-icon>mdi-menu</v-icon>
-    </v-btn>
+    <v-avatar color="accent">
+      <span class="white--text headline">{{ avartar }}</span>
+    </v-avatar>
   </v-app-bar>
 </template>
 
@@ -20,7 +20,8 @@ export default {
   data() {
     return {
       title: 'Cyber Security Index',
-      user: ''
+      user: '',
+      avatar: ''
     }
   },
   computed: {
@@ -33,6 +34,9 @@ export default {
   mounted() {
     if (this.$nuxt.$auth.loggedIn) {
       this.user = 'Welcome, ' + this.$nuxt.$auth.user.given_name + '!'
+      this.avartar =
+        this.$nuxt.$auth.user.given_name[0].toUpperCase() +
+        this.$nuxt.$auth.user.family_name[0].toUpperCase()
     }
   },
   methods: {
@@ -45,11 +49,8 @@ export default {
         !this.$nuxt.$store.state.miniVariant
       )
     },
-    rightDrawerToggle() {
-      this.$store.commit(
-        'set_right_drawer',
-        !this.$nuxt.$store.state.rightDrawer
-      )
+    leftDrawerToggle() {
+      this.$store.commit('set_left_drawer', !this.$nuxt.$store.state.leftDrawer)
     }
   }
 }

@@ -51,7 +51,7 @@ export default {
   },
   mounted() {
     if (this.$auth.loggedIn) {
-      this.$router.push({ name: 'dashboard' })
+      this.$router.push({ name: 'scanner' })
     }
   },
   methods: {

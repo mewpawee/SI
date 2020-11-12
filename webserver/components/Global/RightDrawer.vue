@@ -15,9 +15,6 @@ export default {
     rightDrawer: {
       get() {
         return this.$nuxt.$store.state.rightDrawer
-      },
-      set(val) {
-        return this.$store.commit('set_right_drawer', val)
       }
     }
   },
