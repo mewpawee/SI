@@ -1,0 +1,23 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: argo
+spec:
+  type: ExternalName
+  externalName: argo-server.argo.svc.cluster.local
+  ports:
+    - port: 2746
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: webserver
+spec:
+  type: ExternalName
+  externalName: webserver.webserver.svc.cluster.local
+  ports:
+    - port: 3035
+
+---
+

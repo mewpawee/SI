@@ -1,0 +1,15 @@
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: virtualserver
+  namespace: webserver
+spec:
+  host: localhost
+  upstreams:
+  - name: webserver
+    service: webserver
+    port: 3035
+  routes:
+  - path: /
+    action:
+      pass: webserver

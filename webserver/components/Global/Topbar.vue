@@ -1,0 +1,57 @@
+<template>
+  <v-app-bar clipped-left fixed app>
+    <v-btn icon @click.stop="miniVariantToggle">
+      <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
+    </v-btn>
+    <v-toolbar-title v-text="title" />
+    <v-spacer />
+    <v-toolbar-title v-text="user" />
+    <v-btn icon @click.stop="signOut">
+      <v-icon>mdi-export</v-icon>
+    </v-btn>
+    <v-btn icon @click.stop="rightDrawerToggle">
+      <v-icon>mdi-menu</v-icon>
+    </v-btn>
+  </v-app-bar>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      title: 'Cyber Security Index',
+      user: ''
+    }
+  },
+  computed: {
+    miniVariant: {
+      get() {
+        return this.$nuxt.$store.state.miniVariant
+      }
+    }
+  },
+  mounted() {
+    if (this.$nuxt.$auth.loggedIn) {
+      this.user = 'Welcome, ' + this.$nuxt.$auth.user.given_name + '!'
+    }
+  },
+  methods: {
+    signOut() {
+      this.$auth.logout('local')
+    },
+    miniVariantToggle() {
+      this.$store.commit(
+        'set_minivariant',
+        !this.$nuxt.$store.state.miniVariant
+      )
+    },
+    rightDrawerToggle() {
+      this.$store.commit(
+        'set_right_drawer',
+        !this.$nuxt.$store.state.rightDrawer
+      )
+    }
+  }
+}
+</script>
+>
