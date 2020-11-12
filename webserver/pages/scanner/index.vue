@@ -89,6 +89,7 @@
 </template>
 
 <script>
+import { argoSubmit } from '@/utils/argo.js'
 export default {
   data: () => ({
     dialog: false,
@@ -188,8 +189,10 @@ export default {
       }
       this.close()
     },
-    startScanner() {
+    async startScanner() {
       console.log(this.selected)
+      const res = await argoSubmit(this.selected)
+      console.log(res)
     }
   }
 }

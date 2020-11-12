@@ -51,7 +51,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: registry.digitalocean.com/sec/backend:v1
+          image: registry.digitalocean.com/sec/argo-middleware:v1
           imagePullPolicy: Always
           ports:
             - name: http

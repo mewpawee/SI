@@ -6,7 +6,7 @@ export const getWorkflow = async (workflowId) => {
   return startArgo('GET', url, body);
 };
 
-export const submitWorkflow = async (userId, targetDomain) => {
+export const submitWorkflow = async (userId, targetEndpoints) => {
   const url = '/api/v1/workflows/argo';
   const body = {
     namespace: 'argo',
@@ -20,7 +20,7 @@ export const submitWorkflow = async (userId, targetDomain) => {
         imagePullSecrets: [{ name: 'registry-sec' }],
         arguments: {
           parameters: [
-            { name: 'target-domain', value: `${targetDomain}` },
+            { name: 'target-domain', value: `${targetEndpoints}` },
             { name: 'userId', value: `${userId}` },
           ],
         },
@@ -34,7 +34,9 @@ export const submitWorkflow = async (userId, targetDomain) => {
                   name: 'scan-dnsmap',
                   template: 'dnsmap',
                   arguments: {
-                    parameters: [{ name: 'target-domain', value: '{{item}}' }],
+                    parameters: [
+                      { name: 'target-domain', value: '{{item.name}}' },
+                    ],
                   },
                   withParam: '{{workflow.parameters.target-domain}}',
                 },
@@ -68,7 +70,7 @@ export const submitWorkflow = async (userId, targetDomain) => {
                     endpoint: 'fra1.digitaloceanspaces.com',
                     bucket: 'testv1',
                     key:
-                      '/{{workflow.parameters.userId}}/reports/{{workflow.name}}/src/dnsmap/',
+                      '{{workflow.parameters.userId}}/reports/{{workflow.name}}/src/dnsmap/',
                     accessKeySecret: { name: 'artifact-key', key: 'accessKey' },
                     secretKeySecret: { name: 'artifact-key', key: 'secretKey' },
                   },
@@ -93,7 +95,7 @@ export const submitWorkflow = async (userId, targetDomain) => {
                     endpoint: 'fra1.digitaloceanspaces.com',
                     bucket: 'testv1',
                     key:
-                      '/{{workflow.parameters.userId}}/reports/{{workflow.name}}/{{workflow.name}}-report.pdf',
+                      '{{workflow.parameters.userId}}/reports/{{workflow.name}}/{{workflow.name}}-report.pdf',
                     accessKeySecret: { name: 'artifact-key', key: 'accessKey' },
                     secretKeySecret: { name: 'artifact-key', key: 'secretKey' },
                   },
@@ -113,7 +115,7 @@ export const submitWorkflow = async (userId, targetDomain) => {
                     endpoint: 'fra1.digitaloceanspaces.com',
                     bucket: 'testv1',
                     key:
-                      '/{{workflow.parameters.userId}}/artifacts/{{workflow.name}}/raw/dnsmap/',
+                      '{{workflow.parameters.userId}}/artifacts/{{workflow.name}}/raw/dnsmap/',
                     accessKeySecret: { name: 'artifact-key', key: 'accessKey' },
                     secretKeySecret: { name: 'artifact-key', key: 'secretKey' },
                   },
@@ -138,7 +140,7 @@ export const submitWorkflow = async (userId, targetDomain) => {
                     endpoint: 'fra1.digitaloceanspaces.com',
                     bucket: 'testv1',
                     key:
-                      '/{{workflow.parameters.userId}}/artifacts/{{workflow.name}}/filtered/dnsmap/filtered-dnsmap-{{inputs.parameters.fileLocation}}.txt',
+                      '{{workflow.parameters.userId}}/artifacts/{{workflow.name}}/filtered/dnsmap/filtered-dnsmap-{{inputs.parameters.fileLocation}}.txt',
                     accessKeySecret: { name: 'artifact-key', key: 'accessKey' },
                     secretKeySecret: { name: 'artifact-key', key: 'secretKey' },
                   },
@@ -152,7 +154,7 @@ export const submitWorkflow = async (userId, targetDomain) => {
                     endpoint: 'fra1.digitaloceanspaces.com',
                     bucket: 'testv1',
                     key:
-                      '/{{workflow.parameters.userId}}/reports/{{workflow.name}}/src/dnsmap/output-dnsmap-{{inputs.parameters.fileLocation}}.txt',
+                      '{{workflow.parameters.userId}}/reports/{{workflow.name}}/src/dnsmap/output-dnsmap-{{inputs.parameters.fileLocation}}.txt',
                     accessKeySecret: { name: 'artifact-key', key: 'accessKey' },
                     secretKeySecret: { name: 'artifact-key', key: 'secretKey' },
                   },
@@ -187,7 +189,7 @@ export const submitWorkflow = async (userId, targetDomain) => {
                     endpoint: 'fra1.digitaloceanspaces.com',
                     bucket: 'testv1',
                     key:
-                      '/{{workflow.parameters.userId}}/artifacts/{{workflow.name}}/raw/dnsmap/',
+                      '{{workflow.parameters.userId}}/artifacts/{{workflow.name}}/raw/dnsmap/',
                     accessKeySecret: { name: 'artifact-key', key: 'accessKey' },
                     secretKeySecret: { name: 'artifact-key', key: 'secretKey' },
                   },
