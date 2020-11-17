@@ -1,5 +1,6 @@
-# Security-Index-2
+# Cyber-Security-Index
 
+CSI is an cloud-based automated security assessment system which could scan on server endpoints and create an assessment report on sceduled
 ## Usage
 
 ```
