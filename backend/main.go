@@ -25,6 +25,7 @@ func main() {
 	r.GET("/testData/:id", controllers.GetTestData)
 	r.GET("/getHost/:scan_id", controllers.GetHost)
 	r.GET("/getVal/:scan_id", controllers.GetVul)
-	//r.POST("/AddLog", controllers.AddLog)
+	r.POST("/addEndpoint", controllers.AddNewEndpoint)
+	r.GET("/getEndpoints/:google_id", controllers.GetEndpoints)
 	r.Run() 
 }

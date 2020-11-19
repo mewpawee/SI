@@ -51,15 +51,40 @@ func AddNewScan(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{"data": account})
 }
 
+func AddNewEndpoint(c *gin.Context) {
+    db := c.MustGet("db").(*gorm.DB)
+// Validate input
+    var input models.Endpoint
+    if err := c.ShouldBindJSON(&input); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+// Create Book
+    endpoint := models.Endpoint{Endpoint: input.Endpoint, GoogleID: input.GoogleID}
+    db.Create(&endpoint)
+    c.JSON(http.StatusOK, gin.H{"data": endpoint})
+}
+
 func GetTestData(c *gin.Context) {
- db := c.MustGet("db").(*gorm.DB)
+    db := c.MustGet("db").(*gorm.DB)
 // Get model if exist
- var test models.TestData
- if err := db.Where("id = ?", c.Param("id")).First(&test).Error; err != nil {
-  c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-  return
- }
-c.JSON(http.StatusOK, gin.H{"data": test})
+    var test models.TestData
+    if err := db.Where("id = ?", c.Param("id")).First(&test).Error; err != nil {
+    c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+        return
+    }
+    c.JSON(http.StatusOK, gin.H{"data": test})
+}
+
+func GetEndpoints(c *gin.Context) {
+    db := c.MustGet("db").(*gorm.DB)
+   // Get model if exist
+    var endpoints[] models.Endpoint
+    if err := db.Where("google_id = ?", c.Param("google_id")).Find(&endpoints).Error; err != nil {
+     c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+     return
+    }
+   c.JSON(http.StatusOK, gin.H{"data": endpoints})
 }
 
 func GetHost(c *gin.Context) {
