@@ -20,8 +20,11 @@ func main() {
 		c.Set("db", db)
 		c.Next()
 		})
-	r.POST("/AddCompany", controllers.AddNewCompany)
-	r.POST("/AddAccount", controllers.AddNewAccount)
+	//r.POST("/AddCompany", controllers.AddNewCompany)
+	//r.POST("/AddAccount", controllers.AddNewAccount)
+	r.GET("/testData/:id", controllers.GetTestData)
+	r.GET("/getHost/:scan_id", controllers.GetHost)
+	r.GET("/getVal/:scan_id", controllers.GetVul)
 	//r.POST("/AddLog", controllers.AddLog)
 	r.Run() 
 }
