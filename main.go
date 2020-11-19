@@ -54,27 +54,8 @@ func AddNewCompany(c *gin.Context) {
 	})
 }
 type Company struct {
-	name string `json:"name"`
-	tel string `json:"tel"`
-	contactperson string `json:"contactperson"`
+	name string `json:"Name"`
+	tel string `json:"Tel"`
+	contactperson string `json:"Contactperson"`
 }
 
-func exampleJSON(c *gin.Context) {
-	var input Result
-	e := c.ShouldBindJSON(&input)
-	if e != nil {
-		fmt.Println(e)
-	}
-	log.Printf(input.Name)
-	c.JSON(200, gin.H{
-		"id": input.ID,
-		"name": input.Name,
-		"message": input.Message,
-	})
-}
-
-type Result struct {
-	ID string `json:"id"`
-	Name string `json:"name"`
-	Message string `json:"message"`
-}
