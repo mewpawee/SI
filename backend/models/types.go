@@ -35,6 +35,6 @@ type Vulnerability struct {
 	SystemVulnerabilty float64 `json:"systemvulnerabilty"`
 }
 type Endpoint struct {
-	Endpoint int `json:"endpoint"` 
+	Endpoint string `json:"endpoint" gorm:"primary_key"` 
 	GoogleID string `json:"googleid"` 
 }

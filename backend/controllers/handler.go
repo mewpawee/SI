@@ -65,6 +65,19 @@ func AddNewEndpoint(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{"data": endpoint})
 }
 
+func DeleteEndpoint(c *gin.Context) {
+    db := c.MustGet("db").(*gorm.DB)
+   // Get model if exist
+    var endpoint models.Endpoint
+    log.Printf(c.Param("endpoint"))
+    if err := db.Where("endpoint = ?", c.Param("endpoint")).First(&endpoint).Error; err != nil {
+     c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+     return
+    }
+   db.Delete(&endpoint)
+   c.JSON(http.StatusOK, gin.H{"data": true})
+   }
+
 func GetTestData(c *gin.Context) {
     db := c.MustGet("db").(*gorm.DB)
 // Get model if exist

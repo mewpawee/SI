@@ -27,5 +27,6 @@ func main() {
 	r.GET("/getVal/:scan_id", controllers.GetVul)
 	r.POST("/addEndpoint", controllers.AddNewEndpoint)
 	r.GET("/getEndpoints/:google_id", controllers.GetEndpoints)
+	r.DELETE("/DeleteEndpoint/:endpoint", controllers.DeleteEndpoint)
 	r.Run() 
 }
