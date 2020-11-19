@@ -22,6 +22,15 @@ type Host struct {
 	HostName string `json:"hostname"` 
 	HostVulnerabilty float64 `json:"hostvulnerabilty"`
 }
+type Scan struct {
+	ScanID string `json:"scanid" gorm:"primary_key"` 
+	GoogleID string `json:"googleid"` 
+	Status string `json:"status"`
+}
+type UpdateScanInput struct {
+	ScanID string `json:"scanid"` 
+	Status string `json:"status"`
+}
 type TestData struct {
 	ID int `json:"id"` 
 	Name string `json:"name"`

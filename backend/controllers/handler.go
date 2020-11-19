@@ -11,13 +11,11 @@ import (
 
 func AddNewCompany(c *gin.Context) {
     db := c.MustGet("db").(*gorm.DB)
-// Validate input
     var input models.Company
     if err := c.ShouldBindJSON(&input); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
         return
     }
-// Create Book
     company := models.Company{Name: input.Name, Tel: input.Tel, Contactperson: input.Contactperson}
     db.Create(&company)
     c.JSON(http.StatusOK, gin.H{"data": company})
@@ -25,13 +23,11 @@ func AddNewCompany(c *gin.Context) {
 
 func AddNewAccount(c *gin.Context) {
     db := c.MustGet("db").(*gorm.DB)
-// Validate input
     var input models.Account
     if err := c.ShouldBindJSON(&input); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
         return
     }
-// Create Book
     account := models.Account{UserName: input.UserName, CompanyName: input.CompanyName, GoogleID: input.GoogleID}
     db.Create(&account)
     c.JSON(http.StatusOK, gin.H{"data": account})
@@ -39,27 +35,39 @@ func AddNewAccount(c *gin.Context) {
 
 func AddNewScan(c *gin.Context) {
     db := c.MustGet("db").(*gorm.DB)
-// Validate input
-    var input models.Account
+    var input models.Scan
     if err := c.ShouldBindJSON(&input); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
         return
     }
-// Create Book
-    account := models.Account{UserName: input.UserName, CompanyName: input.CompanyName, GoogleID: input.GoogleID}
-    db.Create(&account)
-    c.JSON(http.StatusOK, gin.H{"data": account})
+    log.Printf(input.ScanID)
+    scan := models.Scan{ScanID: input.ScanID, GoogleID: input.GoogleID, Status: input.Status}
+    db.Create(&scan)
+    c.JSON(http.StatusOK, gin.H{"data": scan})
 }
-
+func UpdateScan(c *gin.Context) {
+    db := c.MustGet("db").(*gorm.DB)
+// Get model if exist
+    var scan models.Scan
+    if err := db.Where("scan_id = ?", c.Param("scan_id")).First(&scan).Error; err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+        return
+    }
+    var input models.Scan
+    if err := c.ShouldBindJSON(&input); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+    db.Model(&scan).Updates(input)
+    c.JSON(http.StatusOK, gin.H{"data": scan})
+}
 func AddNewEndpoint(c *gin.Context) {
     db := c.MustGet("db").(*gorm.DB)
-// Validate input
     var input models.Endpoint
     if err := c.ShouldBindJSON(&input); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
         return
     }
-// Create Book
     endpoint := models.Endpoint{Endpoint: input.Endpoint, GoogleID: input.GoogleID}
     db.Create(&endpoint)
     c.JSON(http.StatusOK, gin.H{"data": endpoint})
@@ -76,7 +84,7 @@ func DeleteEndpoint(c *gin.Context) {
     }
    db.Delete(&endpoint)
    c.JSON(http.StatusOK, gin.H{"data": true})
-   }
+}
 
 func GetTestData(c *gin.Context) {
     db := c.MustGet("db").(*gorm.DB)
@@ -101,24 +109,24 @@ func GetEndpoints(c *gin.Context) {
 }
 
 func GetHost(c *gin.Context) {
- db := c.MustGet("db").(*gorm.DB)
- log.Printf("host")
+    db := c.MustGet("db").(*gorm.DB)
+    log.Printf("host")
 // Get model if exist
- var hosts[] models.Host
- if err := db.Where("scan_id = ?", c.Param("scan_id")).Find(&hosts).Error; err != nil {
-  c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-  return
- }
-c.JSON(http.StatusOK, gin.H{"data": hosts})
+    var hosts[] models.Host
+    if err := db.Where("scan_id = ?", c.Param("scan_id")).Find(&hosts).Error; err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+        return
+    }
+    c.JSON(http.StatusOK, gin.H{"data": hosts})
 }
 
 func GetVul(c *gin.Context) {
- db := c.MustGet("db").(*gorm.DB)
-// Get model if exist
- var vulnerability[] models.Vulnerability
- if err := db.Where("scan_id = ?", c.Param("scan_id")).Find(&vulnerability).Error; err != nil {
-  c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-  return
- }
-c.JSON(http.StatusOK, gin.H{"data": vulnerability})
+    db := c.MustGet("db").(*gorm.DB)
+
+    var vulnerability[] models.Vulnerability
+    if err := db.Where("scan_id = ?", c.Param("scan_id")).Find(&vulnerability).Error; err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+        return
+    }
+    c.JSON(http.StatusOK, gin.H{"data": vulnerability})
 }
