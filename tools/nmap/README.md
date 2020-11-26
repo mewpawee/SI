@@ -1,5 +1,11 @@
 # Usage
-> Usage: nmap [Scan Type(s)] [Options] {target specification}\
+> Usage: nmap [Scan Type(s)] [Options] {target specification}
+
+> EXAMPLES:\
+    nmap -v -A scanme.nmap.org\
+    nmap -v -sn 192.168.0.0/16 10.0.0.0/8\
+    nmap -v -iR 10000 -Pn -p 80\
+SEE THE MAN PAGE (https://nmap.org/book/man.html) FOR MORE OPTIONS AND EXAMPLES
 
 TARGET SPECIFICATION:\
     Can pass hostnames, IP addresses, networks, etc.\
@@ -107,10 +113,4 @@ MISC:\
     --privileged: Assume that the user is fully privileged\
     --unprivileged: Assume the user lacks raw socket privileges\
     -V: Print version number\
-    -h: Print this help summary page.\
-             
-> EXAMPLES:\
-    nmap -v -A scanme.nmap.org\
-    nmap -v -sn 192.168.0.0/16 10.0.0.0/8\
-    nmap -v -iR 10000 -Pn -p 80\
-SEE THE MAN PAGE (https://nmap.org/book/man.html) FOR MORE OPTIONS AND EXAMPLES\
+    -h: Print this help summary page.
