@@ -24,9 +24,9 @@ spec:
     #Services
     - name: selected-tool
       inputs:
-        parameters:
+        parameters: 
           - name: arg
       container:
-        image: registry.digitalocean.com/sec/dnsmap:v1
+        image: "registry.digitalocean.com/sec/{{workflow.parameters.tool}}:v1"
         command: [sh, -c]
         args: ["{{inputs.parameters.arg}}"]
