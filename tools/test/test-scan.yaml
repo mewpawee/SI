@@ -3,6 +3,9 @@ kind: Workflow
 metadata:
   generateName: test-tool-
 spec:
+  artifactRepositoryRef:
+    configMap: artifact-repositories
+    key: default-v1
   entrypoint: test
   imagePullSecrets:
     - name: registry-sec
@@ -30,3 +33,10 @@ spec:
         image: "registry.digitalocean.com/sec/{{workflow.parameters.tool}}:v1"
         command: [sh, -c]
         args: ["{{inputs.parameters.arg}}"]
+      outputs:
+        artifacts:
+        - name: message
+          path: "/tmp/"
+          archive: 
+            none: {}
+

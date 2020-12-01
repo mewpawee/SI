@@ -6,4 +6,4 @@ COPY requirement.txt src ./
 
 RUN pip install --no-cache-dir mechanize lxml
 
-CMD [ "python", "./xsssniper.py" ]
+# CMD [ "python", "./xsssniper.py" ]
