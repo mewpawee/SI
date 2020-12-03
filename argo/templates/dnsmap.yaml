@@ -26,11 +26,15 @@ spec:
       image: "registry.digitalocean.com/sec/dnsmap:{{inputs.parameters.version}}"
       command: [sh, -c]
       args:
-      - ./dnsmap "{{inputs.parameters.domainName}}" -r /tmp/log || grep -Eo "([0-9]{1,3}\.){3}[0-9]{1,3}" "/tmp/log" > "/tmp/dnsmap2nmap";
+      - ./dnsmap "{{inputs.parameters.domainName}}" -r /tmp/log && grep -Eo "([0-9]{1,3}\.){3}[0-9]{1,3}" "/tmp/log" > "/tmp/dnsmap2nmap";
     outputs:
       artifacts:
-      - name: message
-        path: "/tmp/"
+      - name: dnsmap-log
+        path: "/tmp/log"
         archive: 
+          none: {}
+      - name: d2n
+        path: "/tmp/dnsmap2nmap"
+        archive:
           none: {}
       

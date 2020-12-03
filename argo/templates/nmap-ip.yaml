@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: nmap
+spec:
+  serviceAccountName: argo
+  artifactRepositoryRef:
+    configMap: artifact-repositories
+    key: default
+  entrypoint: nmap
+  imagePullSecrets:
+  - name: registry-sec
+  arguments:
+    parameters:
+    - name: ip
+      value: ''
+    - name: version
+      value: 'v1'
+  templates:
+  - name: nmap
+    inputs:
+      parameters:
+      - name: ip
+      - name: version
+    container:
+      image: "registry.digitalocean.com/sec/nmap:{{inputs.parameters.version}}"
+      command: [sh, -c]
+      args:
+      - nmap -v -A "{{inputs.parameters.ip}}" -oN /tmp/log;
+    outputs:
+      artifacts:
+      - name: nmap
+        path: "/tmp/"
+        archive: 
+          none: {}
+      

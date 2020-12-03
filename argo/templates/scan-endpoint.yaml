@@ -36,3 +36,12 @@ spec:
             value: "{{workflow.parameters.endpoint}}"
           - name: version
             value: "v1"
+      - name: scan-nmap
+        dependencies: [scan-dnsmap]
+        templateRef:
+          name: nmap
+          template: nmap
+        arguments:
+          artifacts:
+          - name: dnsmap
+            from: "{{tasks.scan-dnsmap.outputs.artifacts.d2n}}"
