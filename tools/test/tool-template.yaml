@@ -1,18 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Workflow
+kind: WorkflowTemplate
 metadata:
-  generateName: test-tool-
+  name: tool
 spec:
   artifactRepositoryRef:
     configMap: artifact-repositories
-    key: default-v1
+    key: default
   entrypoint: test
   imagePullSecrets:
     - name: registry-sec
   arguments:
     parameters:
       - name: tool
+        value: 'tool-name'
       - name: arg
+        value: ''
   serviceAccountName: argo
   templates:
     - name: test

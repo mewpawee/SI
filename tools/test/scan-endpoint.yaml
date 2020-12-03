@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: scan-endpoint
+spec:
+  serviceAccountName: argo
+  artifactRepositoryRef:
+    configMap: artifact-repositories
+    key: default
+  entrypoint: scan
+  arguments:
+    parameters:
+    - name: endpoint
+      value: ""
+  templates:
+  - name: scan
+    dag:                                                  # You should only reference external "templates" in a "steps" or "dag" "template".
+      tasks:                                                 
+      - name: scan-validate-ip
+        templateRef:                                 # You can reference a "template" from another "WorkflowTemplate" using this field
+          name: validate-ip                        # This is the name of the "WorkflowTemplate" CRD that contains the "template" you want
+          template: validate-ip                     # This is the name of the "template" you want to reference
+        arguments:                                    # You can pass in arguments as normal
+          parameters:
+          - name: endpoint 
+            value: "{{workflow.parameters.endpoint}}"
+      - name: scan-dnsmap
+        dependencies: [scan-validate-ip]
+        when: "{{tasks.scan-validate-ip.outputs.result}} == false"
+        templateRef:
+          name: dnsmap
+          template: dnsmap
+        arguments:
+          parameters:
+          - name: domainName
+            value: "{{workflow.parameters.endpoint}}"
+          - name: version
+            value: "v1"

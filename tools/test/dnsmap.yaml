@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: dnsmap
+spec:
+  serviceAccountName: argo
+  artifactRepositoryRef:
+    configMap: artifact-repositories
+    key: default
+  entrypoint: dnsmap
+  imagePullSecrets:
+  - name: registry-sec
+  arguments:
+    parameters:
+    - name: domainName
+      value: ''
+    - name: version
+      value: 'v1'
+  templates:
+  - name: dnsmap
+    inputs:
+      parameters:
+      - name: domainName
+      - name: version
+    container:
+      image: "registry.digitalocean.com/sec/dnsmap:{{inputs.parameters.version}}"
+      command: [sh, -c]
+      args:
+      - ./dnsmap "{{inputs.parameters.domainName}}" -r /tmp/log || grep -Eo "([0-9]{1,3}\.){3}[0-9]{1,3}" "/tmp/log" > "/tmp/dnsmap2nmap";
+    outputs:
+      artifacts:
+      - name: message
+        path: "/tmp/"
+        archive: 
+          none: {}
+      
