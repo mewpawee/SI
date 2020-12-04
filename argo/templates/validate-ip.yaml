@@ -8,7 +8,7 @@ spec:
   arguments:
     parameters:
     - name: endpoint
-      value: ''  
+      value: ""  
   templates:
   - name: validate-ip
     inputs:

@@ -20,11 +20,11 @@ spec:
       image: "registry.digitalocean.com/sec/nmap:v1"
       command: [sh, -c]
       args:
-      - nmap -v -A  nmap -v -A -p- -oX /tmp/log.xml -iL /mnt/dnsmap/dnsmap;
+      - nmap -v -A -p- -oX /tmp/nmap2hydra.xml -oN /tmp/log -iL /mnt/dnsmap/dnsmap;
     outputs:
       artifacts:
       - name: nmap-log
-        path: "/tmp/log.xml"
+        path: "/tmp/log"
         archive: 
           none: {}
       

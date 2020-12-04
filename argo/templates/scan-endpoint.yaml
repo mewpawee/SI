@@ -7,13 +7,16 @@ spec:
   artifactRepositoryRef:
     configMap: artifact-repositories
     key: default
-  entrypoint: scan
+  entrypoint: scan-endpoint
   arguments:
     parameters:
     - name: endpoint
-      value: ""
+      value: "google.com"
   templates:
-  - name: scan
+  - name: scan-endpoint
+    inputs:
+      parameters:
+      - name: endpoint
     dag:                                                  # You should only reference external "templates" in a "steps" or "dag" "template".
       tasks:                                                 
       - name: scan-validate-ip
@@ -23,7 +26,7 @@ spec:
         arguments:                                    # You can pass in arguments as normal
           parameters:
           - name: endpoint 
-            value: "{{workflow.parameters.endpoint}}"
+            value: "{{inputs.parameters.endpoint}}"
       - name: scan-dnsmap
         dependencies: [scan-validate-ip]
         when: "{{tasks.scan-validate-ip.outputs.result}} == false"
@@ -33,10 +36,22 @@ spec:
         arguments:
           parameters:
           - name: domainName
-            value: "{{workflow.parameters.endpoint}}"
+            value: "{{inputs.parameters.endpoint}}"
           - name: version
             value: "v1"
       - name: scan-nmap
+        dependencies: [scan-validate-ip]
+        templateRef:
+          name: nmap-ip
+          template: nmap-ip
+        arguments:
+          parameters:
+          - name: ip
+            value: "{{inputs.parameters.endpoint}}"
+          - name: version
+            value: "v1"
+        when: "{{tasks.scan-validate-ip.outputs.result}} == true"
+      - name: scan-d2-nmap
         dependencies: [scan-dnsmap]
         templateRef:
           name: nmap
@@ -45,3 +60,4 @@ spec:
           artifacts:
           - name: dnsmap
             from: "{{tasks.scan-dnsmap.outputs.artifacts.d2n}}"
+        when: "{{tasks.scan-dnsmap.status}} == Succeeded"
