@@ -90,6 +90,7 @@
 
 <script>
 import { argoSubmit } from '@/utils/argo.js'
+import { addEndpoint } from '@/utils/backendAPI.js'
 export default {
   data: () => ({
     dialog: false,
@@ -181,11 +182,16 @@ export default {
       })
     },
 
-    save() {
+    async save() {
       if (this.editedIndex > -1) {
         Object.assign(this.desserts[this.editedIndex], this.editedItem)
       } else {
         this.desserts.push(this.editedItem)
+        const res = await addEndpoint(
+          this.$nuxt.$auth.user.sub,
+          this.editedItem.name
+        )
+        console.log(res)
       }
       this.close()
     },

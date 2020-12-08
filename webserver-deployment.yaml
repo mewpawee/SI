@@ -50,9 +50,35 @@ spec:
         app: express
     spec:
       containers:
-        - name: backend
+        - name: argo-middleware
           image: registry.digitalocean.com/sec/argo-middleware:v1
           imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 3000
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: webserver
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  replicas: 1
+
+  template:
+    metadata:
+      name: backend
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: registry.digitalocean.com/sec/backend:v1
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080

@@ -1,0 +1,28 @@
+Database=>
+    - postgrst
+    - mysql
+ssh
+File sharing=>
+    - FTP:21
+Mail transpotation protocol=>
+    - smtp:25
+    - imap:143
+    - pop3:110
+    - telnet:22
+VMWare=>
+    vmware-auth:902
+NetBIOS=>
+    - name service:137
+    - datagram service:138
+    - session service:139
+Group mail=> 
+    - NNTP:119
+Handling command=>
+    - ICQ:5190
+Provide chatroom=>
+    - IRC:194
+Directory access=>
+    - LDAP:389
+
+Command => grep -Ev "^#|Status: Up" nmap.txt | cut -d' ' -f4- | sed -n -e 's/Ignored.*//p' | tr -d ',' '\n' | sed -e 's/^[\t]*//' | sort -n | uniq -c | sort -k 1 -r
+Command => grep -Ev "^#|Status: (Up|Down)" nmap.txt | cut -d' ' -f 2,4- | sed -n 's/Ignored.*//p' | tr ',' '\n' | sed -e 's/^[\t]*//'

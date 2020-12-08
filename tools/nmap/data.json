@@ -1,0 +1,1177 @@
+{
+    "nmaprun": {
+        "$": {
+            "scanner": "nmap",
+            "args": "nmap -v -A -p- -oX x_nmap2.xml -oG nmap.txt -iL list_ips.txt",
+            "start": "1607038782",
+            "startstr": "Fri Dec  4 06:39:42 2020",
+            "version": "7.91",
+            "xmloutputversion": "1.05"
+        },
+        "scaninfo": [
+            {
+                "$": {
+                    "type": "connect",
+                    "protocol": "tcp",
+                    "numservices": "65535",
+                    "services": "1-65535"
+                }
+            }
+        ],
+        "verbose": [
+            {
+                "$": {
+                    "level": "1"
+                }
+            }
+        ],
+        "debugging": [
+            {
+                "$": {
+                    "level": "0"
+                }
+            }
+        ],
+        "taskbegin": [
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038783"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038783"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038783"
+                }
+            },
+            {
+                "$": {
+                    "task": "Ping Scan",
+                    "time": "1607038783"
+                }
+            },
+            {
+                "$": {
+                    "task": "Parallel DNS resolution of 2 hosts.",
+                    "time": "1607038784"
+                }
+            },
+            {
+                "$": {
+                    "task": "Connect Scan",
+                    "time": "1607038784"
+                }
+            },
+            {
+                "$": {
+                    "task": "Service scan",
+                    "time": "1607038813"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038825"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038829"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038829"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038829"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038829"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038829"
+                }
+            }
+        ],
+        "taskend": [
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038783"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038783"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038783"
+                }
+            },
+            {
+                "$": {
+                    "task": "Ping Scan",
+                    "time": "1607038784",
+                    "extrainfo": "3 total hosts"
+                }
+            },
+            {
+                "$": {
+                    "task": "Parallel DNS resolution of 2 hosts.",
+                    "time": "1607038784"
+                }
+            },
+            {
+                "$": {
+                    "task": "Connect Scan",
+                    "time": "1607038813",
+                    "extrainfo": "131070 total ports"
+                }
+            },
+            {
+                "$": {
+                    "task": "Service scan",
+                    "time": "1607038825",
+                    "extrainfo": "5 services on 2 hosts"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038829"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038829"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038829"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038829"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038829"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607038829"
+                }
+            }
+        ],
+        "hosthint": [
+            {
+                "status": [
+                    {
+                        "$": {
+                            "state": "up",
+                            "reason": "unknown-response",
+                            "reason_ttl": "0"
+                        }
+                    }
+                ],
+                "address": [
+                    {
+                        "$": {
+                            "addr": "161.246.34.35",
+                            "addrtype": "ipv4"
+                        }
+                    }
+                ],
+                "hostnames": [
+                    "\n"
+                ]
+            },
+            {
+                "status": [
+                    {
+                        "$": {
+                            "state": "up",
+                            "reason": "unknown-response",
+                            "reason_ttl": "0"
+                        }
+                    }
+                ],
+                "address": [
+                    {
+                        "$": {
+                            "addr": "161.246.35.98",
+                            "addrtype": "ipv4"
+                        }
+                    }
+                ],
+                "hostnames": [
+                    "\n"
+                ]
+            }
+        ],
+        "host": [
+            {
+                "status": [
+                    {
+                        "$": {
+                            "state": "down",
+                            "reason": "no-response",
+                            "reason_ttl": "0"
+                        }
+                    }
+                ],
+                "address": [
+                    {
+                        "$": {
+                            "addr": "161.246.34.53",
+                            "addrtype": "ipv4"
+                        }
+                    }
+                ]
+            },
+            {
+                "$": {
+                    "starttime": "1607038783",
+                    "endtime": "1607038829"
+                },
+                "status": [
+                    {
+                        "$": {
+                            "state": "up",
+                            "reason": "conn-refused",
+                            "reason_ttl": "0"
+                        }
+                    }
+                ],
+                "address": [
+                    {
+                        "$": {
+                            "addr": "161.246.34.35",
+                            "addrtype": "ipv4"
+                        }
+                    }
+                ],
+                "hostnames": [
+                    {
+                        "hostname": [
+                            {
+                                "$": {
+                                    "name": "angel.kmitl.ac.th",
+                                    "type": "PTR"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "ports": [
+                    {
+                        "extraports": [
+                            {
+                                "$": {
+                                    "state": "closed",
+                                    "count": "65533"
+                                },
+                                "extrareasons": [
+                                    {
+                                        "$": {
+                                            "reason": "conn-refused",
+                                            "count": "65533"
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        "port": [
+                            {
+                                "$": {
+                                    "protocol": "tcp",
+                                    "portid": "21"
+                                },
+                                "state": [
+                                    {
+                                        "$": {
+                                            "state": "open",
+                                            "reason": "syn-ack",
+                                            "reason_ttl": "0"
+                                        }
+                                    }
+                                ],
+                                "service": [
+                                    {
+                                        "$": {
+                                            "name": "ftp",
+                                            "product": "vsftpd",
+                                            "version": "2.0.8 or later",
+                                            "hostname": "Welcome",
+                                            "method": "probed",
+                                            "conf": "10"
+                                        },
+                                        "cpe": [
+                                            "cpe:/a:vsftpd:vsftpd"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "$": {
+                                    "protocol": "tcp",
+                                    "portid": "22"
+                                },
+                                "state": [
+                                    {
+                                        "$": {
+                                            "state": "open",
+                                            "reason": "syn-ack",
+                                            "reason_ttl": "0"
+                                        }
+                                    }
+                                ],
+                                "service": [
+                                    {
+                                        "$": {
+                                            "name": "ssh",
+                                            "product": "OpenSSH",
+                                            "version": "6.6.1p1 Ubuntu 2ubuntu2.10",
+                                            "extrainfo": "Ubuntu Linux; protocol 2.0",
+                                            "ostype": "Linux",
+                                            "method": "probed",
+                                            "conf": "10"
+                                        },
+                                        "cpe": [
+                                            "cpe:/a:openbsd:openssh:6.6.1p1",
+                                            "cpe:/o:linux:linux_kernel"
+                                        ]
+                                    }
+                                ],
+                                "script": [
+                                    {
+                                        "$": {
+                                            "id": "ssh-hostkey",
+                                            "output": "\n  1024 f3:89:78:52:28:73:8f:75:72:1c:9f:ac:78:0e:fb:36 (DSA)\n  2048 b1:0f:8b:22:69:44:69:45:ea:84:39:d5:04:17:20:e4 (RSA)\n  256 f8:ab:36:de:c6:7b:46:21:bf:7f:23:33:bc:9d:38:49 (ECDSA)\n  256 06:63:29:99:d8:97:e1:4a:45:e2:0b:54:54:2a:c5:a9 (ED25519)"
+                                        },
+                                        "table": [
+                                            {
+                                                "elem": [
+                                                    {
+                                                        "_": "f389785228738f75721c9fac780efb36",
+                                                        "$": {
+                                                            "key": "fingerprint"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "AAAAB3NzaC1kc3MAAACBAKtKFX1W9acVmnOGv5n9LccItY/QhofBjB0RTIt+7UxPKrfzcwgPIlRV2NIAJS5o1MrqjdQKB0ZETOwbTCrumxG4cr5DC03hZDpjb/D5BxMvhyEyQ/iUgNBXqoWRzTnNEfBsVdfOe5Q4KTZctNqbgJQjtdVRhA0Gvqe64/fqcmSlAAAAFQD7PQKn7CXtAawHxb5f2JR7SVXYpwAAAIBujUFo+85PSN+JhlO8AOR6NyKMmxqL7kXIgCsBBTsEZlp7fsg8hnk+gqnJPnRmkOePwISpuABWJPx/947mTnQZn37z5yjZtLh93Pl1utNDFHxHwnDBrCNYu/7tsbSqchz4D0jDHMcP8Ts5X2CIO3tKR6fQ78PsRM/8gxUZlrH8LQAAAIEAgAFYGks7eOaEXZNxPsDogwr6deoJtPf57C9Ler5KDwEWmU3voVkuunNawbx33RFiUUzZtxhQsbsiVuqrfj4f6pBOTXYRW8FQE0bynLjubMu+2j9BZs0DXbktZ/COYEPHvX9FozxN/uEMJku3agrihBkWw4AYCjQ/fREak0N5PmE=",
+                                                        "$": {
+                                                            "key": "key"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "ssh-dss",
+                                                        "$": {
+                                                            "key": "type"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "1024",
+                                                        "$": {
+                                                            "key": "bits"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "elem": [
+                                                    {
+                                                        "_": "b10f8b2269446945ea8439d5041720e4",
+                                                        "$": {
+                                                            "key": "fingerprint"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "AAAAB3NzaC1yc2EAAAADAQABAAABAQDVeP8t4apLYAz/bbhcooGaztWHHwGIlAUOOQH6Zj7+rGsR0EMjHXWl9K/SXvmKqBXEwmJye//h5rYoPNIw2wxgPDaQxVeqnWJCKNecyrj/DOdL05azEN5hihaPpB+6E3V8ctUoxdv8m1Q70Fl/eV5ZTgVISGZBB7B9PgJhOQ2ggIdxf+zImAiJ0uW/6FhwJGyGrXSy+MqZR/CNo3xe5S4wD62a4J03Nsu5coEzgKmfqhXIxa4Fxvvf+vVhUxci+W1qOGGOUj+Q5UY2cFIJbV36wP1T3ImoIn2haa0LiSHh9aq2Rwf8aLDZ/TMka3VLppZ3ZaGpb/WYuZ7jZICtccIB",
+                                                        "$": {
+                                                            "key": "key"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "ssh-rsa",
+                                                        "$": {
+                                                            "key": "type"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "2048",
+                                                        "$": {
+                                                            "key": "bits"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "elem": [
+                                                    {
+                                                        "_": "f8ab36dec67b4621bf7f2333bc9d3849",
+                                                        "$": {
+                                                            "key": "fingerprint"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBByARieslO12ExF91ucuXYxKjtCXC1/NqPizHi9krr5OXgRUy6DDGq8R6t+qf5uclTbBR/QgljREGhYOD419Dzg=",
+                                                        "$": {
+                                                            "key": "key"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "ecdsa-sha2-nistp256",
+                                                        "$": {
+                                                            "key": "type"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "256",
+                                                        "$": {
+                                                            "key": "bits"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "elem": [
+                                                    {
+                                                        "_": "06632999d897e14a45e20b54542ac5a9",
+                                                        "$": {
+                                                            "key": "fingerprint"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "AAAAC3NzaC1lZDI1NTE5AAAAIGbE2Tw8VXKJ9ZAKSdq6K6VCHTb8Ail+ru7EDx4g/Tsh",
+                                                        "$": {
+                                                            "key": "key"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "ssh-ed25519",
+                                                        "$": {
+                                                            "key": "type"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "256",
+                                                        "$": {
+                                                            "key": "bits"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "times": [
+                    {
+                        "$": {
+                            "srtt": "8275",
+                            "rttvar": "2135",
+                            "to": "100000"
+                        }
+                    }
+                ]
+            },
+            {
+                "$": {
+                    "starttime": "1607038783",
+                    "endtime": "1607038829"
+                },
+                "status": [
+                    {
+                        "$": {
+                            "state": "up",
+                            "reason": "syn-ack",
+                            "reason_ttl": "0"
+                        }
+                    }
+                ],
+                "address": [
+                    {
+                        "$": {
+                            "addr": "161.246.35.98",
+                            "addrtype": "ipv4"
+                        }
+                    }
+                ],
+                "hostnames": [
+                    {
+                        "hostname": [
+                            {
+                                "$": {
+                                    "name": "office.kmitl.ac.th",
+                                    "type": "PTR"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "ports": [
+                    {
+                        "extraports": [
+                            {
+                                "$": {
+                                    "state": "closed",
+                                    "count": "65532"
+                                },
+                                "extrareasons": [
+                                    {
+                                        "$": {
+                                            "reason": "conn-refused",
+                                            "count": "65532"
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        "port": [
+                            {
+                                "$": {
+                                    "protocol": "tcp",
+                                    "portid": "22"
+                                },
+                                "state": [
+                                    {
+                                        "$": {
+                                            "state": "open",
+                                            "reason": "syn-ack",
+                                            "reason_ttl": "0"
+                                        }
+                                    }
+                                ],
+                                "service": [
+                                    {
+                                        "$": {
+                                            "name": "ssh",
+                                            "product": "OpenSSH",
+                                            "version": "7.4",
+                                            "extrainfo": "protocol 2.0",
+                                            "method": "probed",
+                                            "conf": "10"
+                                        },
+                                        "cpe": [
+                                            "cpe:/a:openbsd:openssh:7.4"
+                                        ]
+                                    }
+                                ],
+                                "script": [
+                                    {
+                                        "$": {
+                                            "id": "ssh-hostkey",
+                                            "output": "\n  2048 07:ba:09:4f:93:3f:80:d7:68:6c:0a:80:ba:03:07:22 (RSA)\n  256 7d:e9:c2:61:e7:6b:eb:8d:38:1a:c3:a7:75:fe:6c:24 (ECDSA)\n  256 e4:30:06:68:4c:9b:ba:d5:4e:8d:9c:3c:9a:1b:23:20 (ED25519)"
+                                        },
+                                        "table": [
+                                            {
+                                                "elem": [
+                                                    {
+                                                        "_": "07ba094f933f80d7686c0a80ba030722",
+                                                        "$": {
+                                                            "key": "fingerprint"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "AAAAB3NzaC1yc2EAAAADAQABAAABAQC6B5if454FXdyMLblt+qBrgVx6/E0UeCqhAOmzGbs68UwLNW1ZL+gPDsZyII9eSlGFrjk1pVg3IKhMgHExwBWesLlY0wiol3KXjUY7uU1ze7+bZdpBErhZF4gOtdPa8BIlw2s4ede5TKInsBMuH9NhVSG88L1NMED5CJhE6JhFcmj8TzeK8zzbaT67Xlp2McSH/depHD+gcwOZPlXP5Lxouz3gKC6pWIYpxoWbiLOEKeZrUg6HzgelAVis7jp59d3tUpoSzvlgLjW/1gmiU1l2PXImd4dRiwvuaS3BG1ZGXzgm715OzgXWoFFAd7rkI7BN/rIXsDVdMW8IgaltlXPr",
+                                                        "$": {
+                                                            "key": "key"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "ssh-rsa",
+                                                        "$": {
+                                                            "key": "type"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "2048",
+                                                        "$": {
+                                                            "key": "bits"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "elem": [
+                                                    {
+                                                        "_": "7de9c261e76beb8d381ac3a775fe6c24",
+                                                        "$": {
+                                                            "key": "fingerprint"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBiXfx60502rBdXyaiknQREVwdBTJKlavEuDkCSsJGKB7llq47yPrM1vtD4j9K2knj/SKwV+RkyTRGItSGUyeYo=",
+                                                        "$": {
+                                                            "key": "key"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "ecdsa-sha2-nistp256",
+                                                        "$": {
+                                                            "key": "type"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "256",
+                                                        "$": {
+                                                            "key": "bits"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "elem": [
+                                                    {
+                                                        "_": "e43006684c9bbad54e8d9c3c9a1b2320",
+                                                        "$": {
+                                                            "key": "fingerprint"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "AAAAC3NzaC1lZDI1NTE5AAAAIGp/Igc14OZpZEP16t8fTSgE3xwMSQwlUPzEkOjgmkCp",
+                                                        "$": {
+                                                            "key": "key"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "ssh-ed25519",
+                                                        "$": {
+                                                            "key": "type"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "256",
+                                                        "$": {
+                                                            "key": "bits"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "$": {
+                                    "protocol": "tcp",
+                                    "portid": "80"
+                                },
+                                "state": [
+                                    {
+                                        "$": {
+                                            "state": "open",
+                                            "reason": "syn-ack",
+                                            "reason_ttl": "0"
+                                        }
+                                    }
+                                ],
+                                "service": [
+                                    {
+                                        "$": {
+                                            "name": "http",
+                                            "product": "nginx",
+                                            "method": "probed",
+                                            "conf": "10"
+                                        },
+                                        "cpe": [
+                                            "cpe:/a:igor_sysoev:nginx"
+                                        ]
+                                    }
+                                ],
+                                "script": [
+                                    {
+                                        "$": {
+                                            "id": "http-methods",
+                                            "output": "\n  Supported Methods: GET HEAD POST OPTIONS"
+                                        },
+                                        "table": [
+                                            {
+                                                "$": {
+                                                    "key": "Supported Methods"
+                                                },
+                                                "elem": [
+                                                    "GET",
+                                                    "HEAD",
+                                                    "POST",
+                                                    "OPTIONS"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "$": {
+                                            "id": "http-title",
+                                            "output": "Did not follow redirect to https://office.kmitl.ac.th/"
+                                        },
+                                        "elem": [
+                                            {
+                                                "_": "https://office.kmitl.ac.th/",
+                                                "$": {
+                                                    "key": "redirect_url"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "$": {
+                                    "protocol": "tcp",
+                                    "portid": "443"
+                                },
+                                "state": [
+                                    {
+                                        "$": {
+                                            "state": "open",
+                                            "reason": "syn-ack",
+                                            "reason_ttl": "0"
+                                        }
+                                    }
+                                ],
+                                "service": [
+                                    {
+                                        "$": {
+                                            "name": "http",
+                                            "product": "nginx",
+                                            "tunnel": "ssl",
+                                            "method": "probed",
+                                            "conf": "10"
+                                        },
+                                        "cpe": [
+                                            "cpe:/a:igor_sysoev:nginx"
+                                        ]
+                                    }
+                                ],
+                                "script": [
+                                    {
+                                        "$": {
+                                            "id": "http-methods",
+                                            "output": "\n  Supported Methods: GET HEAD"
+                                        },
+                                        "table": [
+                                            {
+                                                "$": {
+                                                    "key": "Supported Methods"
+                                                },
+                                                "elem": [
+                                                    "GET",
+                                                    "HEAD"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "$": {
+                                            "id": "http-title",
+                                            "output": "CSC - Coming Soon"
+                                        },
+                                        "elem": [
+                                            {
+                                                "_": "CSC - Coming Soon",
+                                                "$": {
+                                                    "key": "title"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "$": {
+                                            "id": "ssl-cert",
+                                            "output": "Subject: commonName=office.kmitl.ac.th\nSubject Alternative Name: DNS:office.kmitl.ac.th\nIssuer: commonName=Let's Encrypt Authority X3/organizationName=Let's Encrypt/countryName=US\nPublic Key type: rsa\nPublic Key bits: 2048\nSignature Algorithm: sha256WithRSAEncryption\nNot valid before: 2020-11-30T02:10:44\nNot valid after:  2021-02-28T02:10:44\nMD5:   4254 1f3c cfff 7956 4ef5 34c5 3d61 c9f8\nSHA-1: b4f1 1993 8ebc bfe4 399f 7ca7 31e7 f131 276c 2c28"
+                                        },
+                                        "table": [
+                                            {
+                                                "$": {
+                                                    "key": "subject"
+                                                },
+                                                "elem": [
+                                                    {
+                                                        "_": "office.kmitl.ac.th",
+                                                        "$": {
+                                                            "key": "commonName"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "$": {
+                                                    "key": "issuer"
+                                                },
+                                                "elem": [
+                                                    {
+                                                        "_": "Let's Encrypt Authority X3",
+                                                        "$": {
+                                                            "key": "commonName"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "US",
+                                                        "$": {
+                                                            "key": "countryName"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "Let's Encrypt",
+                                                        "$": {
+                                                            "key": "organizationName"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "$": {
+                                                    "key": "pubkey"
+                                                },
+                                                "elem": [
+                                                    {
+                                                        "_": "rsa",
+                                                        "$": {
+                                                            "key": "type"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "2048",
+                                                        "$": {
+                                                            "key": "bits"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "D7E0BD723EA4FBA6F4A5D08B89FB96D8BA93D4102F9BB557AA08A92913232BCCB5DAEB63190599C537EF184ACBEDD4FADE1B1F3E97D19D9FC2982F663045FCAA9D7B60646FF22F471DAF32BA4C24C1787127469A1D3B3ADA6A58EF44DF9DC34F8083BAD7520482E184B7EEA4E5417D2C7D15A9E284A6B8BC8934DCB4E91FBC8E29C1D760E2623C7EE08072D78A9C830334DFF675BBDFE0022DDAD122F92F6106C93DF992CF1D1ED30EEBC4420F430F06DA67BC99622C5D0E28D415418F5924DC128E6B3307C46EF2224F21FECE2B7C76AFF578E41A293EC17DC05A48F364CA815AADB4FDA4C7A476467307DF92CE3A8FE58BEA1A766697A3538DEA92CE509921",
+                                                        "$": {
+                                                            "key": "modulus"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "65537",
+                                                        "$": {
+                                                            "key": "exponent"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "$": {
+                                                    "key": "extensions"
+                                                },
+                                                "table": [
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "X509v3 Key Usage",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "Digital Signature, Key Encipherment",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "true",
+                                                                "$": {
+                                                                    "key": "critical"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "X509v3 Extended Key Usage",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "TLS Web Server Authentication, TLS Web Client Authentication",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "X509v3 Basic Constraints",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "CA:FALSE",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "true",
+                                                                "$": {
+                                                                    "key": "critical"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "X509v3 Subject Key Identifier",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "5B:BC:95:54:AF:C0:F1:91:20:16:2E:7E:00:84:E9:79:4B:86:FD:77",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "X509v3 Authority Key Identifier",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "keyid:A8:4A:6A:63:04:7D:DD:BA:E6:D1:39:B7:A6:45:65:EF:F3:A8:EC:A1\n",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "Authority Information Access",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "OCSP - URI:http://ocsp.int-x3.letsencrypt.org\nCA Issuers - URI:http://cert.int-x3.letsencrypt.org/\n",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "X509v3 Subject Alternative Name",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "DNS:office.kmitl.ac.th",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "X509v3 Certificate Policies",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "Policy: 2.23.140.1.2.1\nPolicy: 1.3.6.1.4.1.44947.1.1.1\n  CPS: http://cps.letsencrypt.org\n",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "CT Precertificate SCTs",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "Signed Certificate Timestamp:\n    Version   : v1 (0x0)\n    Log ID    : 5C:DC:43:92:FE:E6:AB:45:44:B1:5E:9A:D4:56:E6:10:\n                37:FB:D5:FA:47:DC:A1:73:94:B2:5E:E6:F6:C7:0E:CA\n    Timestamp : Nov 30 03:10:44.157 2020 GMT\n    Extensions: none\n    Signature : ecdsa-with-SHA256\n                30:44:02:20:17:03:1A:38:46:33:D3:5C:4F:BD:23:38:\n                E9:DA:0D:6B:3A:65:E6:69:5F:EB:80:0E:3F:BC:25:95:\n                FD:FF:F4:1D:02:20:6F:A3:32:CC:CB:18:39:24:01:95:\n                64:B5:9E:D4:92:9A:9E:86:6B:B8:73:8A:74:6C:52:4D:\n                E9:66:FC:39:25:51\nSigned Certificate Timestamp:\n    Version   : v1 (0x0)\n    Log ID    : 7D:3E:F2:F8:8F:FF:88:55:68:24:C2:C0:CA:9E:52:89:\n                79:2B:C5:0E:78:09:7F:2E:6A:97:68:99:7E:22:F0:D7\n    Timestamp : Nov 30 03:10:44.266 2020 GMT\n    Extensions: none\n    Signature : ecdsa-with-SHA256\n                30:45:02:20:5B:81:91:65:E6:69:D5:ED:FC:54:01:09:\n                E6:91:EC:6B:CC:42:A3:61:9E:21:2E:8F:E9:06:8D:91:\n                7E:51:B2:12:02:21:00:9B:A9:5A:50:53:C2:F3:23:C1:\n                CC:B9:C7:80:7B:DD:DB:04:CB:9A:4C:01:DC:EC:2E:A5:\n                6B:7F:57:71:8B:63:E7",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "$": {
+                                                    "key": "validity"
+                                                },
+                                                "elem": [
+                                                    {
+                                                        "_": "2020-11-30T02:10:44",
+                                                        "$": {
+                                                            "key": "notBefore"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "2021-02-28T02:10:44",
+                                                        "$": {
+                                                            "key": "notAfter"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "elem": [
+                                            {
+                                                "_": "sha256WithRSAEncryption",
+                                                "$": {
+                                                    "key": "sig_algo"
+                                                }
+                                            },
+                                            {
+                                                "_": "42541f3ccfff79564ef534c53d61c9f8",
+                                                "$": {
+                                                    "key": "md5"
+                                                }
+                                            },
+                                            {
+                                                "_": "b4f119938ebcbfe4399f7ca731e7f131276c2c28",
+                                                "$": {
+                                                    "key": "sha1"
+                                                }
+                                            },
+                                            {
+                                                "_": "-----BEGIN CERTIFICATE-----\nMIIFWzCCBEOgAwIBAgISA28QRS+Rvn2W/oHDumJO4hZhMA0GCSqGSIb3DQEBCwUA\nMEoxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MSMwIQYDVQQD\nExpMZXQncyBFbmNyeXB0IEF1dGhvcml0eSBYMzAeFw0yMDExMzAwMjEwNDRaFw0y\nMTAyMjgwMjEwNDRaMB0xGzAZBgNVBAMTEm9mZmljZS5rbWl0bC5hYy50aDCCASIw\nDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANfgvXI+pPum9KXQi4n7lti6k9QQ\nL5u1V6oIqSkTIyvMtdrrYxkFmcU37xhKy+3U+t4bHz6X0Z2fwpgvZjBF/Kqde2Bk\nb/IvRx2vMrpMJMF4cSdGmh07OtpqWO9E353DT4CDutdSBILhhLfupOVBfSx9Fani\nhKa4vIk03LTpH7yOKcHXYOJiPH7ggHLXipyDAzTf9nW73+ACLdrRIvkvYQbJPfmS\nzx0e0w7rxEIPQw8G2me8mWIsXQ4o1BVBj1kk3BKOazMHxG7yIk8h/s4rfHav9Xjk\nGik+wX3AWkjzZMqBWq20/aTHpHZGcwffks46j+WL6hp2ZpejU43qks5QmSECAwEA\nAaOCAmYwggJiMA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcDAQYI\nKwYBBQUHAwIwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQUW7yVVK/A8ZEgFi5+AITp\neUuG/XcwHwYDVR0jBBgwFoAUqEpqYwR93brm0Tm3pkVl7/Oo7KEwbwYIKwYBBQUH\nAQEEYzBhMC4GCCsGAQUFBzABhiJodHRwOi8vb2NzcC5pbnQteDMubGV0c2VuY3J5\ncHQub3JnMC8GCCsGAQUFBzAChiNodHRwOi8vY2VydC5pbnQteDMubGV0c2VuY3J5\ncHQub3JnLzAdBgNVHREEFjAUghJvZmZpY2Uua21pdGwuYWMudGgwTAYDVR0gBEUw\nQzAIBgZngQwBAgEwNwYLKwYBBAGC3xMBAQEwKDAmBggrBgEFBQcCARYaaHR0cDov\nL2Nwcy5sZXRzZW5jcnlwdC5vcmcwggEDBgorBgEEAdZ5AgQCBIH0BIHxAO8AdQBc\n3EOS/uarRUSxXprUVuYQN/vV+kfcoXOUsl7m9scOygAAAXYXIY+9AAAEAwBGMEQC\nIBcDGjhGM9NcT70jOOnaDWs6ZeZpX+uADj+8JZX9//QdAiBvozLMyxg5JAGVZLWe\n1JKanoZruHOKdGxSTelm/DklUQB2AH0+8viP/4hVaCTCwMqeUol5K8UOeAl/LmqX\naJl+IvDXAAABdhchkCoAAAQDAEcwRQIgW4GRZeZp1e38VAEJ5pHsa8xCo2GeIS6P\n6QaNkX5RshICIQCbqVpQU8LzI8HMuceAe93bBMuaTAHc7C6la39XcYtj5zANBgkq\nhkiG9w0BAQsFAAOCAQEAehc+9tI6orF8Q73WVhJTlq/p2dwrIik8r5C9MHfIwM7Y\nhz07/ZS1dL/wZLWbjmbiGd1rYx4rFccCPnr9EmG7O581p8RDzlbd1OTYDC/wG5sv\nFwzwshcZaUeEemzrHUFLqt7jK56KQNG821NmCs8DQjQBaTj5DenipffFq3XAnU89\nhZF2Z4uvOo9bRqaTZ9S03BMbuoX/83kIf3PDbmtJYDSxcVeRZeolqre6hhidREbJ\nU5ry2xwPpLdfY5ik6Wu3zKHFykJmZNSFhI+YvjrtRnuH9wl5pjLA70DObeK62ox5\ndk6bogfi/Tz8NVTrxl8NDK5qugdKsKXC3NFA6eyYPg==\n-----END CERTIFICATE-----\n",
+                                                "$": {
+                                                    "key": "pem"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "$": {
+                                            "id": "ssl-date",
+                                            "output": "TLS randomness does not represent time"
+                                        }
+                                    },
+                                    {
+                                        "$": {
+                                            "id": "tls-alpn",
+                                            "output": "\n  h2\n  http/1.1"
+                                        },
+                                        "elem": [
+                                            "h2",
+                                            "http/1.1"
+                                        ]
+                                    },
+                                    {
+                                        "$": {
+                                            "id": "tls-nextprotoneg",
+                                            "output": "\n  h2\n  http/1.1"
+                                        },
+                                        "elem": [
+                                            "h2",
+                                            "http/1.1"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "times": [
+                    {
+                        "$": {
+                            "srtt": "16009",
+                            "rttvar": "3428",
+                            "to": "100000"
+                        }
+                    }
+                ]
+            }
+        ],
+        "taskprogress": [
+            {
+                "$": {
+                    "task": "Connect Scan",
+                    "time": "1607038806",
+                    "percent": "71.21",
+                    "remaining": "9",
+                    "etc": "1607038815"
+                }
+            }
+        ],
+        "runstats": [
+            {
+                "finished": [
+                    {
+                        "$": {
+                            "time": "1607038829",
+                            "timestr": "Fri Dec  4 06:40:29 2020",
+                            "summary": "Nmap done at Fri Dec  4 06:40:29 2020; 3 IP addresses (2 hosts up) scanned in 46.82 seconds",
+                            "elapsed": "46.82",
+                            "exit": "success"
+                        }
+                    }
+                ],
+                "hosts": [
+                    {
+                        "$": {
+                            "up": "2",
+                            "down": "1",
+                            "total": "3"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

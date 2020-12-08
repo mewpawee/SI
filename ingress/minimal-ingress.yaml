@@ -23,3 +23,10 @@ spec:
                 name: express
                 port:
                   number: 3000
+          - path: /api(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 8080
