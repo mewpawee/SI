@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: hydra
+spec:
+  serviceAccountName: argo
+  artifactRepositoryRef:
+    configMap: artifact-repositories
+    key: default
+  entrypoint: hydra
+  imagePullSecrets:
+  - name: registry-sec
+  arguments:
+    parameters:
+    - name: protocal-endpoint-port
+      value: "ssh://161.246.34.35:22"
+  templates:
+  - name: hydra
+    inputs:
+      parameters:
+      - name: protocal-endpoint-port
+    container:
+      image: "registry.digitalocean.com/sec/hydra:v1"
+      command: [sh, -c]
+      args:
+      - hydra -L /inputs/username -P /inputs/password {{inputs.parameters.protocal-endpoint-port}} > /tmp/log 2>&1 || true;
+    outputs:
+      artifacts:
+      - name: hydra-log
+        path: "/tmp/log"
+        archive: 
+          none: {}
+      

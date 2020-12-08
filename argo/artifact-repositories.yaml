@@ -10,7 +10,7 @@ data:
   default: |
     s3:
       endpoint: fra1.digitaloceanspaces.com
-      bucket: testv1
+      bucket: csi
       keyFormat: argo/{{workflow.name}}/{{pod.name}}
       accessKeySecret:
         name: artifact-key

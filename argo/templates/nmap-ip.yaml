@@ -9,28 +9,31 @@ spec:
     key: default
   entrypoint: nmap-ip
   imagePullSecrets:
-  - name: registry-sec
+    - name: registry-sec
   arguments:
     parameters:
-    - name: ip
-      value: ''
-    - name: version
-      value: 'v1'
-  templates:
-  - name: nmap-ip
-    inputs:
-      parameters:
       - name: ip
+        value: ""
       - name: version
-    container:
-      image: "registry.digitalocean.com/sec/nmap:{{inputs.parameters.version}}"
-      command: [sh, -c]
-      args:
-      - nmap -v -A -p- -oX /tmp/nmap2hydra.xml -oN /tmp/log "{{inputs.parameters.ip}}";
-    outputs:
-      artifacts:
-      - name: nmap
-        path: "/tmp/"
-        archive: 
-          none: {}
-      
+        value: "v1"
+  templates:
+    - name: nmap-ip
+      inputs:
+        parameters:
+          - name: ip
+          - name: version
+      container:
+        image: "registry.digitalocean.com/sec/nmap:{{inputs.parameters.version}}"
+        command: [sh, -c]
+        args:
+          - nmap -v -A -p- -oG /tmp/nmp2hydra-raw -oX /tmp/nmap2db.xml -oN /tmp/log "{{inputs.parameters.ip}}" && node app.js /tmp/nmap2db.xml && ./nmp2hyd.sh /tmp/nmp2hydra-raw /tmp/nmap2hydra;
+      outputs:
+        parameters:
+          - name: nmp2hydra
+            valueFrom:
+              path: /tmp/nmap2hydra
+        artifacts:
+          - name: nmap
+            path: "/tmp/"
+            archive:
+              none: {}

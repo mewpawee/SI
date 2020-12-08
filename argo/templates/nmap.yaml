@@ -9,22 +9,25 @@ spec:
     key: default
   entrypoint: nmap
   imagePullSecrets:
-  - name: registry-sec
+    - name: registry-sec
   templates:
-  - name: nmap
-    inputs:
-      artifacts:
-      - name: dnsmap
-        path: /mnt/dnsmap/dnsmap
-    container:
-      image: "registry.digitalocean.com/sec/nmap:v1"
-      command: [sh, -c]
-      args:
-      - nmap -v -A -p- -oX /tmp/nmap2hydra.xml -oN /tmp/log -iL /mnt/dnsmap/dnsmap;
-    outputs:
-      artifacts:
-      - name: nmap-log
-        path: "/tmp/log"
-        archive: 
-          none: {}
-      
+    - name: nmap
+      inputs:
+        artifacts:
+          - name: dnsmap
+            path: /mnt/dnsmap/dnsmap
+      container:
+        image: "registry.digitalocean.com/sec/nmap:latest"
+        command: [sh, -c]
+        args:
+          - nmap -v -A -p- -oG /tmp/nmp2hydra-raw -oX /tmp/nmap2db.xml -oN /tmp/log -iL /mnt/dnsmap/dnsmap && node app.js /tmp/nmap2db.xml && ./nmp2hyd.sh /tmp/nmp2hydra-raw /tmp/nmap2hydra
+      outputs:
+        parameters:
+          - name: dnmp2hydra
+            valueFrom:
+              path: /tmp/nmap2hydra
+        artifacts:
+          - name: nmap-log
+            path: "/tmp/log"
+            archive:
+              none: {}
