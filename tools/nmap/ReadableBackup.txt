@@ -26,3 +26,10 @@ Directory access=>
 
 Command => grep -Ev "^#|Status: Up" nmap.txt | cut -d' ' -f4- | sed -n -e 's/Ignored.*//p' | tr -d ',' '\n' | sed -e 's/^[\t]*//' | sort -n | uniq -c | sort -k 1 -r
 Command => grep -Ev "^#|Status: (Up|Down)" nmap.txt | cut -d' ' -f 2,4- | sed -n 's/Ignored.*//p' | tr ',' '\n' | sed -e 's/^[\t]*//'
+
+Currently used: nmp2hyd.sh 
+#! /bin/bash
+fname=$1
+output=$2
+result=$(grep -Ev "^#|Status: (Up|Down)" $fname | cut -d' ' -f2,4- | sed -n -e 's/Ignored.*//p' | awk '{for(i=2; i<=NF; i++) { a=a""$i; }; split(a,s,","); for(e in s) { split(s[e],v,"/"); printf "\"%s://%s:%s\"\n" , v[5], $1,v[1]}; a="" ;}' | grep -v "http" | tr '\n' ',' | sed '$ s/.$//' | sed 's/^/[&/' | sed '$s/$/]/'  > $output)
+echo "$result"
