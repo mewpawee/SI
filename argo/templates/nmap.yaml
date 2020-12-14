@@ -27,6 +27,10 @@ spec:
             valueFrom:
               path: /tmp/nmap2hydra
         artifacts:
+          - name: debug
+            path: "/tmp/"
+            archive:
+              none: {}
           - name: nmap-log
             path: "/tmp/log"
             archive:

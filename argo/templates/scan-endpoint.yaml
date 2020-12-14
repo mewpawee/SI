@@ -53,7 +53,6 @@ spec:
                   value: "latest"
           - name: scan-d-nmap
             depends: "scan-dnsmap.Succeeded"
-            when: "{{tasks.scan-dnsmap.status}} == Succeeded"
             templateRef:
               name: nmap
               template: nmap
@@ -63,7 +62,6 @@ spec:
                   from: "{{tasks.scan-dnsmap.outputs.artifacts.d2n}}"
           - name: scan-hydra
             depends: "scan-nmap.Succeeded"
-            when: "{{tasks.scan-nmap.status}} == Succeeded"
             templateRef:
               name: hydra
               template: hydra
@@ -74,7 +72,6 @@ spec:
             withParam: "{{tasks.scan-nmap.outputs.parameters.nmp2hydra}}"
           - name: scan-d-hydra
             depends: "scan-d-nmap.Succeeded"
-            when: "{{tasks.scan-d-nmap.status}} == Succeeded"
             templateRef:
               name: hydra
               template: hydra

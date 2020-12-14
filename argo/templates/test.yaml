@@ -29,7 +29,7 @@ spec:
         image: docker/whalesay:latest
         command: [sh, -c]
         args:
-        - endpoint='["ssh://188.166.231.190"\n,"ftp://188.166.231.190"]' && echo -e $endpoint > /tmp/hello_world.txt
+        - endpoint='[]' && echo -e $endpoint > /tmp/hello_world.txt
       outputs:
         parameters:
           - name: hello-param
