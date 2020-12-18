@@ -1,0 +1,1203 @@
+{
+    "nmaprun": {
+        "$": {
+            "scanner": "nmap",
+            "args": "nmap -v -A -p- -oG /tmp/nmp2hydra-raw -oX /tmp/nmap2db.xml -oN /tmp/log -iL /mnt/dnsmap/dnsmap",
+            "start": "1607500138",
+            "startstr": "Wed Dec  9 07:48:58 2020",
+            "version": "7.80",
+            "xmloutputversion": "1.04"
+        },
+        "scaninfo": [
+            {
+                "$": {
+                    "type": "syn",
+                    "protocol": "tcp",
+                    "numservices": "65535",
+                    "services": "1-65535"
+                }
+            }
+        ],
+        "verbose": [
+            {
+                "$": {
+                    "level": "1"
+                }
+            }
+        ],
+        "debugging": [
+            {
+                "$": {
+                    "level": "0"
+                }
+            }
+        ],
+        "taskbegin": [
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500140"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500140"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500140"
+                }
+            },
+            {
+                "$": {
+                    "task": "Ping Scan",
+                    "time": "1607500140"
+                }
+            },
+            {
+                "$": {
+                    "task": "Parallel DNS resolution of 1 host.",
+                    "time": "1607500140"
+                }
+            },
+            {
+                "$": {
+                    "task": "SYN Stealth Scan",
+                    "time": "1607500140"
+                }
+            },
+            {
+                "$": {
+                    "task": "Service scan",
+                    "time": "1607500836"
+                }
+            },
+            {
+                "$": {
+                    "task": "Traceroute",
+                    "time": "1607500858"
+                }
+            },
+            {
+                "$": {
+                    "task": "Parallel DNS resolution of 9 hosts.",
+                    "time": "1607500861"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500861"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500862"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500863"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500863"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500863"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500863"
+                }
+            }
+        ],
+        "taskend": [
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500140"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500140"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500140"
+                }
+            },
+            {
+                "$": {
+                    "task": "Ping Scan",
+                    "time": "1607500140",
+                    "extrainfo": "1 total hosts"
+                }
+            },
+            {
+                "$": {
+                    "task": "Parallel DNS resolution of 1 host.",
+                    "time": "1607500140"
+                }
+            },
+            {
+                "$": {
+                    "task": "SYN Stealth Scan",
+                    "time": "1607500835",
+                    "extrainfo": "65535 total ports"
+                }
+            },
+            {
+                "$": {
+                    "task": "Service scan",
+                    "time": "1607500854",
+                    "extrainfo": "1 service on 1 host"
+                }
+            },
+            {
+                "$": {
+                    "task": "Traceroute",
+                    "time": "1607500861"
+                }
+            },
+            {
+                "$": {
+                    "task": "Parallel DNS resolution of 9 hosts.",
+                    "time": "1607500861"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500862"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500863"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500863"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500863"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500863"
+                }
+            },
+            {
+                "$": {
+                    "task": "NSE",
+                    "time": "1607500863"
+                }
+            }
+        ],
+        "taskprogress": [
+            {
+                "$": {
+                    "task": "SYN Stealth Scan",
+                    "time": "1607500171",
+                    "percent": "6.44",
+                    "remaining": "451",
+                    "etc": "1607500622"
+                }
+            },
+            {
+                "$": {
+                    "task": "SYN Stealth Scan",
+                    "time": "1607500228",
+                    "percent": "15.52",
+                    "remaining": "479",
+                    "etc": "1607500707"
+                }
+            },
+            {
+                "$": {
+                    "task": "SYN Stealth Scan",
+                    "time": "1607500363",
+                    "percent": "33.11",
+                    "remaining": "451",
+                    "etc": "1607500813"
+                }
+            },
+            {
+                "$": {
+                    "task": "SYN Stealth Scan",
+                    "time": "1607500414",
+                    "percent": "39.76",
+                    "remaining": "416",
+                    "etc": "1607500829"
+                }
+            },
+            {
+                "$": {
+                    "task": "SYN Stealth Scan",
+                    "time": "1607500450",
+                    "percent": "44.92",
+                    "remaining": "381",
+                    "etc": "1607500830"
+                }
+            },
+            {
+                "$": {
+                    "task": "SYN Stealth Scan",
+                    "time": "1607500486",
+                    "percent": "50.08",
+                    "remaining": "345",
+                    "etc": "1607500831"
+                }
+            },
+            {
+                "$": {
+                    "task": "SYN Stealth Scan",
+                    "time": "1607500522",
+                    "percent": "55.18",
+                    "remaining": "311",
+                    "etc": "1607500832"
+                }
+            },
+            {
+                "$": {
+                    "task": "SYN Stealth Scan",
+                    "time": "1607500558",
+                    "percent": "60.35",
+                    "remaining": "275",
+                    "etc": "1607500833"
+                }
+            },
+            {
+                "$": {
+                    "task": "SYN Stealth Scan",
+                    "time": "1607500594",
+                    "percent": "65.50",
+                    "remaining": "240",
+                    "etc": "1607500833"
+                }
+            },
+            {
+                "$": {
+                    "task": "SYN Stealth Scan",
+                    "time": "1607500630",
+                    "percent": "70.62",
+                    "remaining": "204",
+                    "etc": "1607500834"
+                }
+            },
+            {
+                "$": {
+                    "task": "SYN Stealth Scan",
+                    "time": "1607500666",
+                    "percent": "75.79",
+                    "remaining": "169",
+                    "etc": "1607500834"
+                }
+            },
+            {
+                "$": {
+                    "task": "SYN Stealth Scan",
+                    "time": "1607500702",
+                    "percent": "80.95",
+                    "remaining": "133",
+                    "etc": "1607500834"
+                }
+            },
+            {
+                "$": {
+                    "task": "SYN Stealth Scan",
+                    "time": "1607500738",
+                    "percent": "86.10",
+                    "remaining": "97",
+                    "etc": "1607500835"
+                }
+            },
+            {
+                "$": {
+                    "task": "SYN Stealth Scan",
+                    "time": "1607500774",
+                    "percent": "91.22",
+                    "remaining": "62",
+                    "etc": "1607500835"
+                }
+            }
+        ],
+        "host": [
+            {
+                "$": {
+                    "starttime": "1607500140",
+                    "endtime": "1607500863"
+                },
+                "status": [
+                    {
+                        "$": {
+                            "state": "up",
+                            "reason": "syn-ack",
+                            "reason_ttl": "49"
+                        }
+                    }
+                ],
+                "address": [
+                    {
+                        "$": {
+                            "addr": "150.95.79.133",
+                            "addrtype": "ipv4"
+                        }
+                    }
+                ],
+                "hostnames": [
+                    {
+                        "hostname": [
+                            {
+                                "$": {
+                                    "name": "cswww-qa.zcomsec.com",
+                                    "type": "user"
+                                }
+                            },
+                            {
+                                "$": {
+                                    "name": "v150-95-79-133.a002.g.bkk2.static.cnode.io",
+                                    "type": "PTR"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "ports": [
+                    {
+                        "extraports": [
+                            {
+                                "$": {
+                                    "state": "filtered",
+                                    "count": "65534"
+                                },
+                                "extrareasons": [
+                                    {
+                                        "$": {
+                                            "reason": "no-responses",
+                                            "count": "65534"
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        "port": [
+                            {
+                                "$": {
+                                    "protocol": "tcp",
+                                    "portid": "443"
+                                },
+                                "state": [
+                                    {
+                                        "$": {
+                                            "state": "open",
+                                            "reason": "syn-ack",
+                                            "reason_ttl": "49"
+                                        }
+                                    }
+                                ],
+                                "service": [
+                                    {
+                                        "$": {
+                                            "name": "http-proxy",
+                                            "product": "HAProxy http proxy",
+                                            "version": "1.3.1 or later",
+                                            "devicetype": "load balancer",
+                                            "tunnel": "ssl",
+                                            "method": "probed",
+                                            "conf": "10"
+                                        },
+                                        "cpe": [
+                                            "cpe:/a:haproxy:haproxy"
+                                        ]
+                                    }
+                                ],
+                                "script": [
+                                    {
+                                        "$": {
+                                            "id": "http-methods",
+                                            "output": "\n  Supported Methods: GET HEAD"
+                                        },
+                                        "table": [
+                                            {
+                                                "$": {
+                                                    "key": "Supported Methods"
+                                                },
+                                                "elem": [
+                                                    "GET",
+                                                    "HEAD"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "$": {
+                                            "id": "http-title",
+                                            "output": "SMART KYC"
+                                        },
+                                        "elem": [
+                                            {
+                                                "_": "SMART KYC",
+                                                "$": {
+                                                    "key": "title"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "$": {
+                                            "id": "ssl-cert",
+                                            "output": "Subject: commonName=*.zcomsec.com\nSubject Alternative Name: DNS:*.zcomsec.com, DNS:zcomsec.com\nIssuer: commonName=Sectigo RSA Domain Validation Secure Server CA/organizationName=Sectigo Limited/stateOrProvinceName=Greater Manchester/countryName=GB\nPublic Key type: rsa\nPublic Key bits: 2048\nSignature Algorithm: sha256WithRSAEncryption\nNot valid before: 2020-08-18T00:00:00\nNot valid after:  2022-08-18T23:59:59\nMD5:   cd56 8ba4 8a72 3c18 4112 336a f0e9 295e\nSHA-1: d496 1e70 872a 1ce5 3a4f dbc6 1f30 89af cc5c 0fb3"
+                                        },
+                                        "table": [
+                                            {
+                                                "$": {
+                                                    "key": "subject"
+                                                },
+                                                "elem": [
+                                                    {
+                                                        "_": "*.zcomsec.com",
+                                                        "$": {
+                                                            "key": "commonName"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "$": {
+                                                    "key": "issuer"
+                                                },
+                                                "elem": [
+                                                    {
+                                                        "_": "Sectigo Limited",
+                                                        "$": {
+                                                            "key": "organizationName"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "Sectigo RSA Domain Validation Secure Server CA",
+                                                        "$": {
+                                                            "key": "commonName"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "GB",
+                                                        "$": {
+                                                            "key": "countryName"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "Greater Manchester",
+                                                        "$": {
+                                                            "key": "stateOrProvinceName"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "Salford",
+                                                        "$": {
+                                                            "key": "localityName"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "$": {
+                                                    "key": "pubkey"
+                                                },
+                                                "elem": [
+                                                    {
+                                                        "_": "BIGNUM: 0x56503e9b40c8",
+                                                        "$": {
+                                                            "key": "exponent"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "2048",
+                                                        "$": {
+                                                            "key": "bits"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "BIGNUM: 0x56503e9b4128",
+                                                        "$": {
+                                                            "key": "modulus"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "rsa",
+                                                        "$": {
+                                                            "key": "type"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "$": {
+                                                    "key": "extensions"
+                                                },
+                                                "table": [
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "keyid:8D:8C:5E:C4:54:AD:8A:E1:77:E9:9B:F9:9B:05:E1:B8:01:8D:61:E1\n",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "X509v3 Authority Key Identifier",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "17:52:CE:71:3F:E1:3B:3B:EA:7B:52:7E:28:7A:CD:D4:B2:8F:91:4D",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "X509v3 Subject Key Identifier",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "Digital Signature, Key Encipherment",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "X509v3 Key Usage",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "true",
+                                                                "$": {
+                                                                    "key": "critical"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "CA:FALSE",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "X509v3 Basic Constraints",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "true",
+                                                                "$": {
+                                                                    "key": "critical"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "TLS Web Server Authentication, TLS Web Client Authentication",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "X509v3 Extended Key Usage",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "Policy: 1.3.6.1.4.1.6449.1.2.2.7\n  CPS: https://sectigo.com/CPS\nPolicy: 2.23.140.1.2.1\n",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "X509v3 Certificate Policies",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "CA Issuers - URI:http://crt.sectigo.com/SectigoRSADomainValidationSecureServerCA.crt\nOCSP - URI:http://ocsp.sectigo.com\n",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "Authority Information Access",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "DNS:*.zcomsec.com, DNS:zcomsec.com",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "X509v3 Subject Alternative Name",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "elem": [
+                                                            {
+                                                                "_": "Signed Certificate Timestamp:\n    Version   : v1 (0x0)\n    Log ID    : 46:A5:55:EB:75:FA:91:20:30:B5:A2:89:69:F4:F3:7D:\n                11:2C:41:74:BE:FD:49:B8:85:AB:F2:FC:70:FE:6D:47\n    Timestamp : Aug 18 09:59:13.885 2020 GMT\n    Extensions: none\n    Signature : ecdsa-with-SHA256\n                30:46:02:21:00:D9:AE:2B:64:AD:30:46:1B:2C:87:E9:\n                3E:A0:47:36:88:EF:FC:31:5B:9A:2F:79:0B:FD:09:3F:\n                10:F6:45:77:9E:02:21:00:8A:86:F5:E3:17:B9:EF:52:\n                9E:06:A8:56:64:E7:E0:DF:8A:D3:77:BE:FB:52:03:4A:\n                04:B5:1F:BA:71:A8:4C:0E\nSigned Certificate Timestamp:\n    Version   : v1 (0x0)\n    Log ID    : DF:A5:5E:AB:68:82:4F:1F:6C:AD:EE:B8:5F:4E:3E:5A:\n                EA:CD:A2:12:A4:6A:5E:8E:3B:12:C0:20:44:5C:2A:73\n    Timestamp : Aug 18 09:59:13.925 2020 GMT\n    Extensions: none\n    Signature : ecdsa-with-SHA256\n                30:46:02:21:00:EC:2D:61:9D:31:85:32:EF:49:45:97:\n                12:81:5E:A6:A7:9A:23:E1:AB:71:FC:93:5D:34:C1:94:\n                6A:43:CF:55:C5:02:21:00:E2:FC:32:3D:C1:F5:16:6B:\n                36:0C:BB:A2:33:C0:C6:E5:E8:A4:28:A1:25:7B:95:66:\n                EC:0B:31:FD:6A:DD:75:03\nSigned Certificate Timestamp:\n    Version   : v1 (0x0)\n    Log ID    : 6F:53:76:AC:31:F0:31:19:D8:99:00:A4:51:15:FF:77:\n                15:1C:11:D9:02:C1:00:29:06:8D:B2:08:9A:37:D9:13\n    Timestamp : Aug 18 09:59:13.878 2020 GMT\n    Extensions: none\n    Signature : ecdsa-with-SHA256\n                30:46:02:21:00:A8:8B:A4:99:87:69:C7:FF:E8:AE:76:\n                59:E1:AC:22:3E:96:42:8E:D4:AB:DF:B1:76:93:EE:3D:\n                5B:19:0F:E1:4A:02:21:00:B5:33:A0:5A:34:E3:FF:70:\n                9B:04:8D:D4:33:D4:14:13:38:B4:4F:48:03:26:F5:4D:\n                15:5C:F9:2F:BD:DC:4B:82",
+                                                                "$": {
+                                                                    "key": "value"
+                                                                }
+                                                            },
+                                                            {
+                                                                "_": "CT Precertificate SCTs",
+                                                                "$": {
+                                                                    "key": "name"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "$": {
+                                                    "key": "validity"
+                                                },
+                                                "elem": [
+                                                    {
+                                                        "_": "2020-08-18T00:00:00",
+                                                        "$": {
+                                                            "key": "notBefore"
+                                                        }
+                                                    },
+                                                    {
+                                                        "_": "2022-08-18T23:59:59",
+                                                        "$": {
+                                                            "key": "notAfter"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "elem": [
+                                            {
+                                                "_": "sha256WithRSAEncryption",
+                                                "$": {
+                                                    "key": "sig_algo"
+                                                }
+                                            },
+                                            {
+                                                "_": "cd568ba48a723c184112336af0e9295e",
+                                                "$": {
+                                                    "key": "md5"
+                                                }
+                                            },
+                                            {
+                                                "_": "d4961e70872a1ce53a4fdbc61f3089afcc5c0fb3",
+                                                "$": {
+                                                    "key": "sha1"
+                                                }
+                                            },
+                                            {
+                                                "_": "-----BEGIN CERTIFICATE-----\nMIIGNDCCBRygAwIBAgIRALTLoKXW+gFSZp17b4MJXTAwDQYJKoZIhvcNAQELBQAw\ngY8xCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAO\nBgNVBAcTB1NhbGZvcmQxGDAWBgNVBAoTD1NlY3RpZ28gTGltaXRlZDE3MDUGA1UE\nAxMuU2VjdGlnbyBSU0EgRG9tYWluIFZhbGlkYXRpb24gU2VjdXJlIFNlcnZlciBD\nQTAeFw0yMDA4MTgwMDAwMDBaFw0yMjA4MTgyMzU5NTlaMBgxFjAUBgNVBAMMDSou\nemNvbXNlYy5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCs0EOX\nba0sTihEKHFJuqaDrYtnyJxh8N4BfsA/CcgQuQK9W/w/zpr1eHin+uHKc+MCBP6Q\noPqo2ubsGBGEFpiEg4MBOyUcWPIO0ysnxivZin11fUsvKylehzCSWL9l44KBi1lA\nPyDEEmew52DgrrhWT9kUEC9PeaGDH1ykqaRZC6s2fdrvI6dNaPVf1i77OYdhuN6F\nGFtzXXOshufwfqVj+vSvAnUcU3G1v+7QsW96MmBnRHfxOaygwYL1nbcI6WOFBBeV\n5gU5u2I1hShXe44RZt4y10lnFOsZxc7N5wEqirF3YWN9djoOI+88ffXl34iJSpGT\nLSadGG/D5CpckgGVAgMBAAGjggL/MIIC+zAfBgNVHSMEGDAWgBSNjF7EVK2K4Xfp\nm/mbBeG4AY1h4TAdBgNVHQ4EFgQUF1LOcT/hOzvqe1J+KHrN1LKPkU0wDgYDVR0P\nAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsG\nAQUFBwMCMEkGA1UdIARCMEAwNAYLKwYBBAGyMQECAgcwJTAjBggrBgEFBQcCARYX\naHR0cHM6Ly9zZWN0aWdvLmNvbS9DUFMwCAYGZ4EMAQIBMIGEBggrBgEFBQcBAQR4\nMHYwTwYIKwYBBQUHMAKGQ2h0dHA6Ly9jcnQuc2VjdGlnby5jb20vU2VjdGlnb1JT\nQURvbWFpblZhbGlkYXRpb25TZWN1cmVTZXJ2ZXJDQS5jcnQwIwYIKwYBBQUHMAGG\nF2h0dHA6Ly9vY3NwLnNlY3RpZ28uY29tMCUGA1UdEQQeMByCDSouemNvbXNlYy5j\nb22CC3pjb21zZWMuY29tMIIBgQYKKwYBBAHWeQIEAgSCAXEEggFtAWsAdwBGpVXr\ndfqRIDC1oolp9PN9ESxBdL79SbiFq/L8cP5tRwAAAXQBAizdAAAEAwBIMEYCIQDZ\nritkrTBGGyyH6T6gRzaI7/wxW5oveQv9CT8Q9kV3ngIhAIqG9eMXue9SngaoVmTn\n4N+K03e++1IDSgS1H7pxqEwOAHcA36Veq2iCTx9sre64X04+WurNohKkal6OOxLA\nIERcKnMAAAF0AQItBQAABAMASDBGAiEA7C1hnTGFMu9JRZcSgV6mp5oj4atx/JNd\nNMGUakPPVcUCIQDi/DI9wfUWazYMu6IzwMbl6KQooSV7lWbsCzH9at11AwB3AG9T\ndqwx8DEZ2JkApFEV/3cVHBHZAsEAKQaNsgiaN9kTAAABdAECLNYAAAQDAEgwRgIh\nAKiLpJmHacf/6K52WeGsIj6WQo7Uq9+xdpPuPVsZD+FKAiEAtTOgWjTj/3CbBI3U\nM9QUEzi0T0gDJvVNFVz5L73cS4IwDQYJKoZIhvcNAQELBQADggEBAGB8NyD/GE1f\n+rW5GxYd0hFtGlhUfk4gSHUVIS7X/Z8pN/GD3ut3Ej3whgp8bxCwfocVmicODULu\nI9kjPy4Op6arZiaOZGxY+Q2PoAkPaAraZzV6HkQtkOzM8FmQnOXsL/gFjgI7qFvu\ncpBPcjyAunw1bKGbEqgc+2xXZyc16nrZEVWQrcU4Buj2UdhLx/CetbH6iUa9P5kQ\nkfpi3cJZz7RQgV23+YZ6W+ngtX+WK988YbOhqQREnlHZPt0bhlp16aRETcgehCiJ\nQzw6E9qwYcK4eAdFiamsuPeujFqUj+skcz3bXz7iO62SBWF20xBuQSvAEXipXOY5\ni2ZOHM9Nafw=\n-----END CERTIFICATE-----\n",
+                                                "$": {
+                                                    "key": "pem"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "$": {
+                                            "id": "ssl-date",
+                                            "output": "TLS randomness does not represent time"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "os": [
+                    {
+                        "portused": [
+                            {
+                                "$": {
+                                    "state": "open",
+                                    "proto": "tcp",
+                                    "portid": "443"
+                                }
+                            }
+                        ],
+                        "osmatch": [
+                            {
+                                "$": {
+                                    "name": "Linux 4.4",
+                                    "accuracy": "96",
+                                    "line": "67202"
+                                },
+                                "osclass": [
+                                    {
+                                        "$": {
+                                            "type": "general purpose",
+                                            "vendor": "Linux",
+                                            "osfamily": "Linux",
+                                            "osgen": "4.X",
+                                            "accuracy": "96"
+                                        },
+                                        "cpe": [
+                                            "cpe:/o:linux:linux_kernel:4.4"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "$": {
+                                    "name": "Linux 4.0",
+                                    "accuracy": "94",
+                                    "line": "66814"
+                                },
+                                "osclass": [
+                                    {
+                                        "$": {
+                                            "type": "general purpose",
+                                            "vendor": "Linux",
+                                            "osfamily": "Linux",
+                                            "osgen": "4.X",
+                                            "accuracy": "94"
+                                        },
+                                        "cpe": [
+                                            "cpe:/o:linux:linux_kernel:4.0"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "$": {
+                                    "name": "Linux 3.2 - 4.9",
+                                    "accuracy": "93",
+                                    "line": "65105"
+                                },
+                                "osclass": [
+                                    {
+                                        "$": {
+                                            "type": "general purpose",
+                                            "vendor": "Linux",
+                                            "osfamily": "Linux",
+                                            "osgen": "3.X",
+                                            "accuracy": "93"
+                                        },
+                                        "cpe": [
+                                            "cpe:/o:linux:linux_kernel:3"
+                                        ]
+                                    },
+                                    {
+                                        "$": {
+                                            "type": "general purpose",
+                                            "vendor": "Linux",
+                                            "osfamily": "Linux",
+                                            "osgen": "4.X",
+                                            "accuracy": "93"
+                                        },
+                                        "cpe": [
+                                            "cpe:/o:linux:linux_kernel:4"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "$": {
+                                    "name": "Linux 2.6.32 or 3.10",
+                                    "accuracy": "93",
+                                    "line": "56650"
+                                },
+                                "osclass": [
+                                    {
+                                        "$": {
+                                            "type": "general purpose",
+                                            "vendor": "Linux",
+                                            "osfamily": "Linux",
+                                            "osgen": "2.6.X",
+                                            "accuracy": "93"
+                                        },
+                                        "cpe": [
+                                            "cpe:/o:linux:linux_kernel:2.6.32"
+                                        ]
+                                    },
+                                    {
+                                        "$": {
+                                            "type": "general purpose",
+                                            "vendor": "Linux",
+                                            "osfamily": "Linux",
+                                            "osgen": "3.X",
+                                            "accuracy": "93"
+                                        },
+                                        "cpe": [
+                                            "cpe:/o:linux:linux_kernel:3.10"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "$": {
+                                    "name": "Linux 3.10 - 4.11",
+                                    "accuracy": "92",
+                                    "line": "63230"
+                                },
+                                "osclass": [
+                                    {
+                                        "$": {
+                                            "type": "general purpose",
+                                            "vendor": "Linux",
+                                            "osfamily": "Linux",
+                                            "osgen": "3.X",
+                                            "accuracy": "92"
+                                        },
+                                        "cpe": [
+                                            "cpe:/o:linux:linux_kernel:3"
+                                        ]
+                                    },
+                                    {
+                                        "$": {
+                                            "type": "general purpose",
+                                            "vendor": "Linux",
+                                            "osfamily": "Linux",
+                                            "osgen": "4.X",
+                                            "accuracy": "92"
+                                        },
+                                        "cpe": [
+                                            "cpe:/o:linux:linux_kernel:4"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "$": {
+                                    "name": "Linux 3.11 - 4.1",
+                                    "accuracy": "92",
+                                    "line": "63416"
+                                },
+                                "osclass": [
+                                    {
+                                        "$": {
+                                            "type": "general purpose",
+                                            "vendor": "Linux",
+                                            "osfamily": "Linux",
+                                            "osgen": "3.X",
+                                            "accuracy": "92"
+                                        },
+                                        "cpe": [
+                                            "cpe:/o:linux:linux_kernel:3"
+                                        ]
+                                    },
+                                    {
+                                        "$": {
+                                            "type": "general purpose",
+                                            "vendor": "Linux",
+                                            "osfamily": "Linux",
+                                            "osgen": "4.X",
+                                            "accuracy": "92"
+                                        },
+                                        "cpe": [
+                                            "cpe:/o:linux:linux_kernel:4"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "$": {
+                                    "name": "Linux 2.6.32",
+                                    "accuracy": "91",
+                                    "line": "54126"
+                                },
+                                "osclass": [
+                                    {
+                                        "$": {
+                                            "type": "general purpose",
+                                            "vendor": "Linux",
+                                            "osfamily": "Linux",
+                                            "osgen": "2.6.X",
+                                            "accuracy": "91"
+                                        },
+                                        "cpe": [
+                                            "cpe:/o:linux:linux_kernel:2.6.32"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "$": {
+                                    "name": "Linux 2.6.32 - 2.6.35",
+                                    "accuracy": "90",
+                                    "line": "56133"
+                                },
+                                "osclass": [
+                                    {
+                                        "$": {
+                                            "type": "general purpose",
+                                            "vendor": "Linux",
+                                            "osfamily": "Linux",
+                                            "osgen": "2.6.X",
+                                            "accuracy": "90"
+                                        },
+                                        "cpe": [
+                                            "cpe:/o:linux:linux_kernel:2.6.32"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "$": {
+                                    "name": "Linux 2.6.32 - 2.6.39",
+                                    "accuracy": "89",
+                                    "line": "56230"
+                                },
+                                "osclass": [
+                                    {
+                                        "$": {
+                                            "type": "general purpose",
+                                            "vendor": "Linux",
+                                            "osfamily": "Linux",
+                                            "osgen": "2.6.X",
+                                            "accuracy": "89"
+                                        },
+                                        "cpe": [
+                                            "cpe:/o:linux:linux_kernel:2.6"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "$": {
+                                    "name": "Linux 3.10 - 3.12",
+                                    "accuracy": "89",
+                                    "line": "63130"
+                                },
+                                "osclass": [
+                                    {
+                                        "$": {
+                                            "type": "general purpose",
+                                            "vendor": "Linux",
+                                            "osfamily": "Linux",
+                                            "osgen": "3.X",
+                                            "accuracy": "89"
+                                        },
+                                        "cpe": [
+                                            "cpe:/o:linux:linux_kernel:3"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "uptime": [
+                    {
+                        "$": {
+                            "seconds": "1969283",
+                            "lastboot": "Mon Nov 16 12:59:40 2020"
+                        }
+                    }
+                ],
+                "distance": [
+                    {
+                        "$": {
+                            "value": "13"
+                        }
+                    }
+                ],
+                "tcpsequence": [
+                    {
+                        "$": {
+                            "index": "241",
+                            "difficulty": "Good luck!",
+                            "values": "B0EDBDFE,8DFDDF71,611AEBF4,8A4DBBA5,636400A3,492B5E6B"
+                        }
+                    }
+                ],
+                "ipidsequence": [
+                    {
+                        "$": {
+                            "class": "All zeros",
+                            "values": "0,0,0,0,0,0"
+                        }
+                    }
+                ],
+                "tcptssequence": [
+                    {
+                        "$": {
+                            "class": "1000HZ",
+                            "values": "7560C77C,7560C7E2,7560C844,7560C8AA,7560C90C,7560C973"
+                        }
+                    }
+                ],
+                "trace": [
+                    {
+                        "$": {
+                            "port": "443",
+                            "proto": "tcp"
+                        },
+                        "hop": [
+                            {
+                                "$": {
+                                    "ttl": "2",
+                                    "ipaddr": "10.244.0.19",
+                                    "rtt": "0.06"
+                                }
+                            },
+                            {
+                                "$": {
+                                    "ttl": "3",
+                                    "ipaddr": "128.199.127.253",
+                                    "rtt": "1.38"
+                                }
+                            },
+                            {
+                                "$": {
+                                    "ttl": "4",
+                                    "ipaddr": "138.197.251.40",
+                                    "rtt": "1.57"
+                                }
+                            },
+                            {
+                                "$": {
+                                    "ttl": "5",
+                                    "ipaddr": "138.197.251.161",
+                                    "rtt": "1.47"
+                                }
+                            },
+                            {
+                                "$": {
+                                    "ttl": "7",
+                                    "ipaddr": "202.183.138.122",
+                                    "rtt": "27.90"
+                                }
+                            },
+                            {
+                                "$": {
+                                    "ttl": "8",
+                                    "ipaddr": "202.183.138.121",
+                                    "rtt": "29.83"
+                                }
+                            },
+                            {
+                                "$": {
+                                    "ttl": "9",
+                                    "ipaddr": "202.183.138.170",
+                                    "rtt": "40.52"
+                                }
+                            },
+                            {
+                                "$": {
+                                    "ttl": "10",
+                                    "ipaddr": "202.183.234.130",
+                                    "rtt": "28.81"
+                                }
+                            },
+                            {
+                                "$": {
+                                    "ttl": "13",
+                                    "ipaddr": "150.95.79.133",
+                                    "rtt": "28.13",
+                                    "host": "v150-95-79-133.a002.g.bkk2.static.cnode.io"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "times": [
+                    {
+                        "$": {
+                            "srtt": "28515",
+                            "rttvar": "575",
+                            "to": "100000"
+                        }
+                    }
+                ]
+            }
+        ],
+        "runstats": [
+            {
+                "finished": [
+                    {
+                        "$": {
+                            "time": "1607500863",
+                            "timestr": "Wed Dec  9 08:01:03 2020",
+                            "elapsed": "725.92",
+                            "summary": "Nmap done at Wed Dec  9 08:01:03 2020; 1 IP address (1 host up) scanned in 725.92 seconds",
+                            "exit": "success"
+                        }
+                    }
+                ],
+                "hosts": [
+                    {
+                        "$": {
+                            "up": "1",
+                            "down": "0",
+                            "total": "1"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}
