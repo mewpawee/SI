@@ -5,19 +5,20 @@ const carbone = require('carbone');
 var data = require('./data.json'); //with path
 
 var options = {
-    convertTo : 'pdf' //can be docx, txt, ...
+    convertTo : 'pdf:writer_pdf_Export' //can be docx, txt, ...
 };
 
 // Generate a report using the sample template provided by carbone module
 // This LibreOffice template contains "Hello {d.firstname} {d.lastname} !"
 // Of course, you can create your own templates!
-carbone.render('template.pptx', data, options, function(err, result){
+carbone.render('CSI.pptx', data, function(err, result){
   console.log('t1');
   if (err) {
     return console.log(err);
   }
   // write the result
-  fs.writeFileSync('result.pdf', result);
+  fs.writeFileSync('result.pptx', result);
   console.log("finish");
   process.exit();
 });
+
