@@ -1,12 +1,17 @@
 package models
+
 import (
-    //models "backendAPI/models"
-    //"net/http"
-    //"github.com/gin-gonic/gin"
-    //"database/sql"
-    "github.com/jinzhu/gorm"
+	//models "backendAPI/models"
+	//"net/http"
+	//"github.com/gin-gonic/gin"
+	//"database/sql"
+	//"database/sql"
 	"fmt"
 	//"log"
+
+	"github.com/jinzhu/gorm"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 )
 
 func ConnectPsql() *gorm.DB {
@@ -17,3 +22,12 @@ func ConnectPsql() *gorm.DB {
 	}
 	return db
 }
+func ConnectPNoSQL() *sqlx.DB {
+	dsn := "<POSTGRESQL_URI>"
+	db, err := sqlx.Connect("postgres", dsn)
+	if err != nil {
+		fmt.Println("Error in postgres connection: ", err)
+	}
+	return db
+}
+
