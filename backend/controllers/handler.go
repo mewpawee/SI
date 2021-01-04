@@ -1,14 +1,17 @@
 package controllers
 
+//D:\capstone\backend
 import (
 	models "backendAPI/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-
+	"io/ioutil"
 	//"database/sql"
 	"github.com/jinzhu/gorm"
 	//"fmt"
+	//"encoding/json"
+	"github.com/jmoiron/sqlx"
 	"log"
 )
 
@@ -20,10 +23,55 @@ func AddNewCompany(c *gin.Context) {
 		return
 	}
 	company := models.Company{Name: input.Name, Tel: input.Tel, Contactperson: input.Contactperson}
-	db.Create(&company)
+	dbc := db.Create(&company)
+	if dbc.Error != nil {
+		c.JSON(http.StatusOK, gin.H{"error": dbc.Error})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"data": company})
 }
+func Raw(c *gin.Context) {
+	db := c.MustGet("NoSQL").(*sqlx.DB)
+	//var result, err = c.GetRawData()
+	//if result == nil {
+	//	log.Printf("this is bad")
+	//}
+	//var str = string(result)
+	//log.Printf(str)
+	//if err != nil {
+	//	log.Printf("this sucks!!!")
+	//}
+	//hdata := models.Resulth{}
+	var body, _ = ioutil.ReadAll(c.Request.Body)
+	var str = string(body)
+	log.Printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+	log.Printf(str)
+	//json.Unmarshal(body, &hdata)
+	
+	//record := models.Resultd{}
+	//record.Data = hdata.Data
+	var _, err = db.NamedExec(`INSERT INTO results (data) VALUES (:data)`, body)//record)
+	//var input models.Company
+	if err != nil {
+	    c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	    return
+	}
+	//company := models.Company{Name: input.Name, Tel: input.Tel, Contactperson: input.Contactperson}
+	//db.Create(&company)
+	c.JSON(http.StatusOK, gin.H{"data": body})//record})
+}
 
+//func AddScanResult(c *gin.Context) {
+//db := c.MustGet("db").(*gorm.DB)
+//var input models.Result
+//if err := c.ShouldBindJSON(&input); err != nil {
+//  c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+//return
+//}
+//result := models.Result{Data: input.Data}
+//db.Create(&result)
+//c.JSON(http.StatusOK, gin.H{"data": result})
+//}
 func AddNewAccount(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var input models.Account
@@ -32,7 +80,11 @@ func AddNewAccount(c *gin.Context) {
 		return
 	}
 	account := models.Account{UserName: input.UserName, CompanyName: input.CompanyName, GoogleID: input.GoogleID}
-	db.Create(&account)
+	dbc := db.Create(&account)
+	if dbc.Error != nil {
+		c.JSON(http.StatusOK, gin.H{"error": dbc.Error})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"data": account})
 }
 
@@ -45,7 +97,11 @@ func AddNewScan(c *gin.Context) {
 	}
 	log.Printf(input.ScanID)
 	scan := models.Scan{ScanID: input.ScanID, GoogleID: input.GoogleID, Status: input.Status}
-	db.Create(&scan)
+	dbc := db.Create(&scan)
+	if dbc.Error != nil {
+		c.JSON(http.StatusOK, gin.H{"error": dbc.Error})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"data": scan})
 }
 func UpdateScan(c *gin.Context) {
@@ -58,7 +114,7 @@ func UpdateScan(c *gin.Context) {
 	}
 	var input models.Scan
 	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
 		return
 	}
 	db.Model(&scan).Updates(input)
@@ -72,7 +128,11 @@ func AddNewEndpoint(c *gin.Context) {
 		return
 	}
 	endpoint := models.Endpoint{Endpoint: input.Endpoint, GoogleID: input.GoogleID}
-	db.Create(&endpoint)
+	dbc := db.Create(&endpoint)
+	if dbc.Error != nil {
+		c.JSON(http.StatusOK, gin.H{"error": dbc.Error})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"data": endpoint})
 }
 
@@ -82,7 +142,7 @@ func DeleteEndpoint(c *gin.Context) {
 	var endpoint models.Endpoint
 	log.Printf(c.Param("endpoint"))
 	if err := db.Where("endpoint = ?", c.Param("endpoint")).First(&endpoint).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		c.JSON(http.StatusOK, gin.H{"error": "Record not found!"})
 		return
 	}
 	db.Delete(&endpoint)
@@ -94,7 +154,7 @@ func GetTestData(c *gin.Context) {
 	// Get model if exist
 	var test models.TestData
 	if err := db.Where("id = ?", c.Param("id")).First(&test).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		c.JSON(http.StatusOK, gin.H{"error": "Record not found!"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": test})
@@ -105,7 +165,7 @@ func GetEndpoints(c *gin.Context) {
 	// Get model if exist
 	var endpoints []models.Endpoint
 	if err := db.Where("google_id = ?", c.Param("google_id")).Find(&endpoints).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		c.JSON(http.StatusOK, gin.H{"error": "Record not found!"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": endpoints})
