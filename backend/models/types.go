@@ -1,5 +1,7 @@
 package models
-
+import (
+	"encoding/json"
+)
 type Company struct {
 	Name          string `json:"name"`
 	Tel           string `json:"tel"`
@@ -44,4 +46,10 @@ type Vulnerability struct {
 type Endpoint struct {
 	Endpoint string `json:"endpoint" gorm:"primary_key"`
 	GoogleID string `json:"googleid"`
+}
+type Resulth struct {
+	Data    json.RawMessage 
+}
+type Resultd struct {  
+	Data    string  `db:"data"`
 }
