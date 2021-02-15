@@ -8,7 +8,8 @@
 # Credits:  Thanks to van Hauser for support and fixing portability issues.
 #           "The universe is an intelligence test." -Timothy Leary (R.I.P.)
 
-INSTALLDIR=/usr/local
+#INSTALLDIR=/usr/local
+INSTALLDIR=.
 LOCATION=etc
 
 usage ()
@@ -110,7 +111,7 @@ refresh ()
 
 generate ()
 {
-  HYDRAFILE=`echo "dpl4hydra_${BRAND}.lst" | tr '/ =:@\\|;<>"'"'" '_____________'`
+  HYDRAFILE=`echo "./protocols/"``echo "dpl4hydra_${BRAND}.lst" | tr '/ =:@\\|;<>"'"'" '_____________'`
 
   if [ ! -r $FULLFILE ]; then
     echo
