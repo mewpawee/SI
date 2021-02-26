@@ -7,25 +7,27 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webserver
+  name: frontend
   namespace: webserver
+  labels:
+    app: frontend
 spec:
   selector:
     matchLabels:
-      app: webserver
+      app: frontend
   replicas: 1
 
   template:
     metadata:
-      name: webserver
+      name: frontend
       labels:
-        app: webserver
+        app: frontend
     spec:
       #imagePullSecrets:
       # - name: registry-sec
       containers:
-        - name: webserver
-          image: registry.digitalocean.com/sec/webserver:v1
+        - name: frontend
+          image: registry.digitalocean.com/sec/frontend:latest
           imagePullPolicy: Always
           ports:
             - name: http

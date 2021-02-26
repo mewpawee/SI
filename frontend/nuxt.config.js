@@ -48,20 +48,48 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth-next'
   ],
   router: {
     middleware: ['auth']
   },
   auth: {
     redirect: {
-      login: '/'
+      login: '/',
+      logout: '/',
+      callback: '/scanner',
+      home: '/scanner'
     },
     strategies: {
-      google: {
-        client_id:
-          '622455844449-11312eea0b1ogdpe8htmbr9ghracp6mn.apps.googleusercontent.com',
-        token_key: 'access_token'
+      local: false,
+      keycloak: {
+        scheme: 'oauth2',
+        endpoints: {
+          authorization:
+            'https://csi.cmkl.ac.th/auth/realms/csi/protocol/openid-connect/auth',
+          token:
+            'https://csi.cmkl.ac.th/auth/realms/csi/protocol/openid-connect/token',
+          userInfo:
+            'https://csi.cmkl.ac.th/auth/realms/csi/protocol/openid-connect/userinfo',
+          logout:
+            'https://csi.cmkl.ac.th/auth/realms/csi/protocol/openid-connect/logout?redirect_uri=' +
+            encodeURIComponent('https://csi.cmkl.ac.th')
+        },
+        token: {
+          property: 'access_token',
+          type: 'Bearer ',
+          name: 'Authorization',
+          maxAge: 300
+        },
+        refreshToken: {
+          property: 'refresh_token',
+          maxAge: 60 * 60 * 24 * 30
+        },
+        responseType: 'code',
+        grantType: 'authorization_code',
+        clientId: 'frontend',
+        scope: ['openid', 'profile', 'email'],
+        codeChallengeMethod: 'S256'
       }
     }
   },

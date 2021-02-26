@@ -8,4 +8,4 @@ bash dpl4hydra.sh $PROTOCOL;
 #save a vairable for this protocol
 FILE=./protocols/dpl4hydra_$PROTOCOL.lst;
 
-./hydra -C $FILE -t 1 localhost $PROTOCOL > result.txt;
+./hydra -C $FILE -t 1 $ENDPOINT $PROTOCOL | tee /tmp/log 2>&1 || true;

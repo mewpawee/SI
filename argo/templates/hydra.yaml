@@ -12,18 +12,21 @@ spec:
   - name: registry-sec
   arguments:
     parameters:
-    - name: protocal-endpoint-port
-      value: "ssh://161.246.34.35:22"
+    - name: protocal
+      value: "ssh"
+    - name: endpoint
+      value: "161.246.34.35"
   templates:
   - name: hydra
     inputs:
       parameters:
-      - name: protocal-endpoint-port
+      - name: protocal
+      - name: endpoint
     container:
-      image: "registry.digitalocean.com/sec/hydra:v1"
+      image: "registry.digitalocean.com/sec/hydra:latest"
       command: [sh, -c]
       args:
-      - hydra -L /inputs/username -P /inputs/password {{inputs.parameters.protocal-endpoint-port}} > /tmp/log 2>&1 || true;
+      - bash run.sh {{inputs.parameters.protocal}} {{inputs.parameters.endpoint}};
     outputs:
       artifacts:
       - name: hydra-log

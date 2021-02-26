@@ -9,22 +9,22 @@
         class="ma-2"
         color="indigo"
         outlined
-        @click.stop="dialogLogin = true"
+        @click.stop="handleLoginClicked"
       >
         Login
       </v-btn>
     </v-tabs>
 
-    <v-dialog v-model="dialogLogin" max-width="500">
+    <!-- <v-dialog v-model="dialogLogin" max-width="500">
       <v-card color="accent" class="justify-center">
         <v-card-title>Login</v-card-title>
         <hr />
         <v-btn large block @click="handleLoginClicked">
-          <v-icon class="mx-5">mdi-google</v-icon>
-          Sign in with Google
+          <v-icon class="mx-5">mdi-login</v-icon>
+          Sign in
         </v-btn>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
   </v-app-bar>
 </template>
 
@@ -57,7 +57,7 @@ export default {
   methods: {
     async handleLoginClicked() {
       try {
-        await this.$auth.loginWith('google')
+        await this.$auth.loginWith('keycloak')
       } catch (err) {
         this.errorLogin = true
         console.log(err)
