@@ -9,9 +9,6 @@
     <v-btn icon @click.stop="signOut">
       <v-icon>mdi-export</v-icon>
     </v-btn>
-    <v-avatar color="accent">
-      <span class="white--text headline">{{ avartar }}</span>
-    </v-avatar>
   </v-app-bar>
 </template>
 
@@ -33,10 +30,7 @@ export default {
   },
   mounted() {
     if (this.$nuxt.$auth.loggedIn) {
-      this.user = 'Welcome, ' + this.$nuxt.$auth.user.given_name + '!'
-      this.avartar =
-        this.$nuxt.$auth.user.given_name[0].toUpperCase() +
-        this.$nuxt.$auth.user.family_name[0].toUpperCase()
+      this.user = 'Welcome, ' + this.$nuxt.$auth.user.preferred_username + '!'
     }
   },
   methods: {
