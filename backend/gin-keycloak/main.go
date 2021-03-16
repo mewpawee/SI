@@ -33,7 +33,7 @@ func main() {
 	})
 	privateUser := router.Group("/api/privateUser")
 	privateUser.Use(ginkeycloak.NewAccessBuilder(config).
-		RestrictButForRealm("broker").
+		RestrictButForRealm("broker_firm").
 		Build())
 	privateUser.GET("/", func(c *gin.Context) {
 		uid, okUID := c.Get("uid")
