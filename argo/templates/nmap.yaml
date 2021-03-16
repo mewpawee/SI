@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: nmap
+spec:
+  serviceAccountName: argo
+  artifactRepositoryRef:
+    configMap: artifact-repositories
+    key: default
+  entrypoint: nmap
+  imagePullSecrets:
+    - name: registry-sec
+  templates:
+    - name: nmap
+      inputs:
+        artifacts:
+          - name: dnsmap
+            path: /mnt/dnsmap/dnsmap
+      container:
+        image: "registry.digitalocean.com/sec/nmap:latest"
+        command: [sh, -c]
+        args:
+          - nmap -v -A -p- -oG /tmp/nmp2hydra-raw -oX /tmp/nmap2db.xml -oN /tmp/log -iL /mnt/dnsmap/dnsmap && node app.js /tmp/nmap2db.xml && ./nmp2hyd.sh /tmp/nmp2hydra-raw /tmp/nmap2hydra
+      outputs:
+        parameters:
+          - name: dnmp2hydra
+            valueFrom:
+              path: /tmp/nmap2hydra
+        artifacts:
+          - name: debug
+            path: "/tmp/"
+            archive:
+              none: {}
+          - name: nmap-log
+            path: "/tmp/log"
+            archive:
+              none: {}

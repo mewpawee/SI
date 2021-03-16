@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: scan-multi-endpoint
+spec:
+  serviceAccountName: argo
+  artifactRepositoryRef:
+    configMap: artifact-repositories
+    key: default
+  entrypoint: scan-endpoints
+  arguments:
+    parameters:
+    - name: endpoints
+      value: |
+            ["cmkl.ac.th","172.217.31.110"]
+  imagePullSecrets:
+  - name: registry-sec
+  templates:
+  - name: scan-endpoints
+    dag:
+      tasks:
+        - name: validate-endpoints
+          templateRef:
+            name: scan-endpoint
+            template: scan-endpoint
+          arguments:
+            parameters:
+            - name: endpoint
+              value: "{{item}}"
+          withParam: "{{workflow.parameters.endpoints}}"
