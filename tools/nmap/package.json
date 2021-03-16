@@ -1,0 +1,16 @@
+{
+  "name": "gnorf",
+  "version": "1.0.0",
+  "description": "> Scan nmap -v -A -p- -oX x_nmap2.xml -oG nmap.txt -iL list_ips.txt",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jsonpath": "^1.0.2",
+    "xml2js": "^0.4.23"
+  }
+}

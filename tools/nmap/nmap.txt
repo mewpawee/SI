@@ -1,0 +1,5 @@
+# Nmap 7.80 scan initiated Wed Dec  9 06:56:56 2020 as: nmap -v -A -p- -oG /tmp/nmp2hydra-raw -oX /tmp/nmap2db.xml -oN /tmp/log -iL /mnt/dnsmap/dnsmap
+# Ports scanned: TCP(65535;1-65535) UDP(0;) SCTP(0;) PROTOCOLS(0;)
+Host: 150.95.79.133 (v150-95-79-133.a002.g.bkk2.static.cnode.io)	Status: Up
+Host: 150.95.79.133 (v150-95-79-133.a002.g.bkk2.static.cnode.io)	Ports: 443/open/tcp//ssl|http-proxy//HAProxy http proxy 1.3.1 or later/	Ignored State: filtered (65534)	OS: Linux 4.4	Seq Index: 261	IP ID Seq: All zeros
+# Nmap done at Wed Dec  9 07:03:09 2020 -- 1 IP address (1 host up) scanned in 375.21 seconds

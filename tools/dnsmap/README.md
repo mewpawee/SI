@@ -1,6 +1,7 @@
 # DNSMAP
 
 ### Code Usage
+sourcecode from: https://github.com/resurrecting-open-source-projects/dnsmap
 
 ```
 sudo docker run \
@@ -12,5 +13,10 @@ sudo docker run \
 --env resultFile=${RESULT FILE NAME} \
 ${IMAGE NAME} 
 ```
+## How to use this thing
+Scan example.com using a wordlist (-w /usr/share/wordlists/dnsmap.txt):
+
+dnsmap example.com -w /usr/share/wordlists/dnsmap.txt
+
 
 
