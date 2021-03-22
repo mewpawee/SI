@@ -22,7 +22,7 @@ type Scan struct {
 	ScanID        string `json:"scanid" gorm:"primary_key"`
 	Company       string `json:"company"`
 	PoolID        string `json:"poolid"`
-	Status        string `json:"status"` 
+	Status        string `json:"status"`
 }
 type Scanlog struct {
 	ScanID        string `json:"scanid" gorm:"primary_key"`

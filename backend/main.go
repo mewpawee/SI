@@ -72,6 +72,9 @@ func main() {
 	privateUser.GET("/deleteEndpoint", controllers.DeleteEndpoint) //input endpoint 
 	privateUser.GET("/getPools", controllers.GetCompanyPools) //just send the request
 	privateUser.GET("/getEndpoints", controllers.GetPoolEndpoints) //input poolid
+    privateUser.GET("/test", func(c *gin.Context) {
+                c.JSON(200, gin.H{"message": "this thing works"})
+                    })
 	//prawee code end
 	//r.POST("/AddCompany", controllers.AddNewCompany)
 	//r.POST("/AddAccount", controllers.AddNewAccount)

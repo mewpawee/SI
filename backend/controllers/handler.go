@@ -3,18 +3,23 @@ package controllers
 //D:\capstone\backend
 import (
 	models "backendAPI/models"
-	"net/http"
-	"github.com/jmoiron/sqlx/types"
-	"github.com/gin-gonic/gin"
 	"io/ioutil"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/jmoiron/sqlx/types"
+
 	//"database/sql"
-	"github.com/jinzhu/gorm"
 	"fmt"
+
+	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
+
 	//"encoding/json"
 	//"github.com/tbaehler/gin-keycloak/pkg/ginkeycloak"
-	"github.com/jmoiron/sqlx"
 	"log"
+
+	"github.com/jmoiron/sqlx"
 )
 
 func AddPool(c *gin.Context) { //input poolid
@@ -36,6 +41,7 @@ func AddPool(c *gin.Context) { //input poolid
 		c.JSON(http.StatusOK, gin.H{"data": pool})
 	}
 }
+
 func Raw(c *gin.Context) {
 	db := c.MustGet("NoSQL").(*sqlx.DB)
 	var body, _ = ioutil.ReadAll(c.Request.Body)
@@ -44,8 +50,8 @@ func Raw(c *gin.Context) {
 	log.Printf(str)
 	//json.Unmarshal(body, &hdata)
 	j := types.JSONText(string(body))
-	db.MustExec(`INSERT INTO results(data) VALUES($1)`,j)//record)
-	c.JSON(http.StatusOK, gin.H{"data": str})//record})
+	db.MustExec(`INSERT INTO results(data) VALUES($1)`, j) //record)
+	c.JSON(http.StatusOK, gin.H{"data": str})              //record})
 }
 
 func AddEndpoint(c *gin.Context) { //input poolid, endpoint
@@ -58,7 +64,7 @@ func AddEndpoint(c *gin.Context) { //input poolid, endpoint
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		var pool models.Pool 
+		var pool models.Pool
 		if err := db.Where("pool_id = ?", input.PoolID).First(&pool).Error; err != nil {
 			c.JSON(http.StatusOK, gin.H{"error": "Pool does not exist"})
 			return
@@ -92,7 +98,7 @@ func DeleteEndpoint(c *gin.Context) { //input endpoint
 			c.JSON(http.StatusOK, gin.H{"error": "Record not found!"})
 			return
 		}
-		var pool models.Pool 
+		var pool models.Pool
 		if err := db.Where("pool_id = ?", endpoint.PoolID).First(&pool).Error; err != nil {
 			c.JSON(http.StatusOK, gin.H{"error": "Pool does not exist"})
 			return
@@ -128,7 +134,7 @@ func GetPoolEndpoints(c *gin.Context) { // input poolid
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		var pool models.Pool 
+		var pool models.Pool
 		if err := db.Where("pool_id = ?", input.PoolID).Find(&pool).Error; err != nil {
 			c.JSON(http.StatusOK, gin.H{"error": "Pool does not exist"})
 			return
@@ -145,6 +151,7 @@ func GetPoolEndpoints(c *gin.Context) { // input poolid
 		c.JSON(http.StatusOK, gin.H{"data": endpoints})
 	}
 }
+
 /*func AddScan(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	company, okCompany := c.Get("company")
@@ -177,7 +184,7 @@ func ActivateScan(c *gin.Context) {
 	company, okCompany := c.Get("company")
 	if okCompany {
 		strCompany := fmt.Sprintf("%v", company)
-		
+
 		scan := models.Scan{ScanID: input.ScanID, Company: input.Company, PoolID: input.PoolID, Status: input.Status}
 		dbc := db.Create(&scan)
 		if dbc.Error != nil {

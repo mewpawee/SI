@@ -20,6 +20,8 @@ require (
 	github.com/prometheus/common v0.0.0-20180801064454-c7de2306084e // indirect
 	github.com/prometheus/procfs v0.0.0-20180725123919-05ee40e3a273 // indirect
 	github.com/szuecs/gin-glog v1.1.1 // indirect
-	github.com/tbaehler/gin-keycloak v1.1.8 // indirect
+	github.com/tbaehler/gin-keycloak v0.0.0 // indirect
 	google.golang.org/api v0.40.0
 )
+
+replace github.com/tbaehler/gin-keycloak => ./gin-keycloak
