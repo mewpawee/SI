@@ -17,17 +17,17 @@ import (
 	"log"
 )
 
-func AddPool(c *gin.Context) {
+func AddPool(c *gin.Context) { //input poolid
 	db := c.MustGet("db").(*gorm.DB)
 	company, okCompany := c.Get("company")
 	if okCompany {
 		strCompany := fmt.Sprintf("%v", company)
-		input := c.Param("poolid")//models.Pool
-		/*if err := c.ShouldBindJSON(&input); err != nil {
+		var input models.InputPool
+		if err := c.ShouldBindJSON(&input); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
-		}*/
-		pool := models.Pool{PoolID: input, Company: strCompany}
+		}
+		pool := models.Pool{PoolID: input.PoolID, Company: strCompany}
 		dbc := db.Create(&pool)
 		if dbc.Error != nil {
 			c.JSON(http.StatusOK, gin.H{"error": dbc.Error})
@@ -48,7 +48,7 @@ func Raw(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": str})//record})
 }
 
-func AddEndpoint(c *gin.Context) {
+func AddEndpoint(c *gin.Context) { //input poolid, endpoint
 	db := c.MustGet("db").(*gorm.DB)
 	company, okCompany := c.Get("company")
 	if okCompany {
@@ -59,7 +59,7 @@ func AddEndpoint(c *gin.Context) {
 			return
 		}
 		var pool models.Pool 
-		if err := db.Where("pool_id = ?", c.Param("poolid")).First(&pool).Error; err != nil {
+		if err := db.Where("pool_id = ?", input.PoolID).First(&pool).Error; err != nil {
 			c.JSON(http.StatusOK, gin.H{"error": "Pool does not exist"})
 			return
 		}
@@ -76,13 +76,19 @@ func AddEndpoint(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"data": endpoint})
 	}
 }
-func DeleteEndpoint(c *gin.Context) {
+func DeleteEndpoint(c *gin.Context) { //input endpoint
 	db := c.MustGet("db").(*gorm.DB)
 	company, okCompany := c.Get("company")
 	if okCompany {
 		strCompany := fmt.Sprintf("%v", company)
+		var input models.InputEndpoint
+		if err := c.ShouldBindJSON(&input); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		//log.Printf(input.Endpoint)
 		var endpoint models.Endpoint
-		if err := db.Where("endpoint = ?", c.Param("endpoint")).First(&endpoint).Error; err != nil {
+		if err := db.Where("endpoint = ?", input.Endpoint).First(&endpoint).Error; err != nil {
 			c.JSON(http.StatusOK, gin.H{"error": "Record not found!"})
 			return
 		}
@@ -99,7 +105,7 @@ func DeleteEndpoint(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"data": true})
 	}
 }
-func GetCompanyPools(c *gin.Context) {
+func GetCompanyPools(c *gin.Context) { // input non
 	db := c.MustGet("db").(*gorm.DB)
 	company, okCompany := c.Get("company")
 	if okCompany {
@@ -112,13 +118,18 @@ func GetCompanyPools(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"data": pools})
 	}
 }
-func GetPoolEndpoints(c *gin.Context) {
+func GetPoolEndpoints(c *gin.Context) { // input poolid
 	db := c.MustGet("db").(*gorm.DB)
 	company, okCompany := c.Get("company")
 	if okCompany {
 		strCompany := fmt.Sprintf("%v", company)
+		var input models.InputPool
+		if err := c.ShouldBindJSON(&input); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 		var pool models.Pool 
-		if err := db.Where("pool_id = ?", c.Param("poolid")).Find(&pool).Error; err != nil {
+		if err := db.Where("pool_id = ?", input.PoolID).Find(&pool).Error; err != nil {
 			c.JSON(http.StatusOK, gin.H{"error": "Pool does not exist"})
 			return
 		}
@@ -127,13 +138,56 @@ func GetPoolEndpoints(c *gin.Context) {
 			return
 		}
 		var endpoints []models.Endpoint
-		if err := db.Where("pool_id = ?", c.Param("poolid")).Find(&endpoints).Error; err != nil {
+		if err := db.Where("pool_id = ?", input.PoolID).Find(&endpoints).Error; err != nil {
 			c.JSON(http.StatusOK, gin.H{"error": "Pool does not exist in endpoints"})
 			return
 		}
 		c.JSON(http.StatusOK, gin.H{"data": endpoints})
 	}
 }
+/*func AddScan(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+	company, okCompany := c.Get("company")
+	if okCompany {
+		strCompany := fmt.Sprintf("%v", company)
+		var input models.Scan
+		if err := c.ShouldBindJSON(&input); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		scan := models.Scan{ScanID: input.ScanID, Company: input.Company, PoolID: input.PoolID, Status: input.Status}
+		dbc := db.Create(&scan)
+		if dbc.Error != nil {
+			c.JSON(http.StatusOK, gin.H{"error": dbc.Error})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"data": pool})
+	}
+}
+func GetScan(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+	if err := db.Where("scan_id = ?", c.Param("scan_id")).Find(&hosts).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": hosts})
+}
+func ActivateScan(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+	company, okCompany := c.Get("company")
+	if okCompany {
+		strCompany := fmt.Sprintf("%v", company)
+		
+		scan := models.Scan{ScanID: input.ScanID, Company: input.Company, PoolID: input.PoolID, Status: input.Status}
+		dbc := db.Create(&scan)
+		if dbc.Error != nil {
+			c.JSON(http.StatusOK, gin.H{"error": dbc.Error})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"data": pool})
+	}
+}*/
+
 /*
 
 func AddNewScan(c *gin.Context) {
