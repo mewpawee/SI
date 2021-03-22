@@ -52,12 +52,12 @@ func main() {
 		Url:     "https://csi.cmkl.ac.th",
 		Realm:   "csi",
 	}
-	privateGroup := r.Group("/api/privateGroup")
+	privateGroup := r.Group("/privateGroup")
 	privateGroup.Use(ginkeycloak.Auth(ginkeycloak.AuthCheck(), sbbEndpoint))
 	privateGroup.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "test"})
 	})
-	privateUser := r.Group("/api/privateUser")
+	privateUser := r.Group("/privateUser")
 	privateUser.Use(ginkeycloak.NewAccessBuilder(config).
 		RestrictButForRealm("broker_firm").
 		Build())
