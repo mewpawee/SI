@@ -67,12 +67,11 @@ func main() {
 			c.JSON(200, gin.H{"message": uid})
 		}
 	})*/
-	privateUser.GET("/addPool", controllers.AddPool)
-	privateUser.GET("/addEndpoint", controllers.AddEndpoint)
-	privateUser.GET("/deleteEndpoint", controllers.DeleteEndpoint)
-	//privateUser.GET("/addEndpoint", controllers.AddEndpoint)
-	privateUser.GET("/getPools", controllers.GetCompanyPools)
-	privateUser.GET("/getEndpoints", controllers.GetPoolEndpoints)
+	privateUser.GET("/addPool", controllers.AddPool) //input poolid
+	privateUser.GET("/addEndpoint", controllers.AddEndpoint) //input poolid, endpoint
+	privateUser.GET("/deleteEndpoint", controllers.DeleteEndpoint) //input endpoint 
+	privateUser.GET("/getPools", controllers.GetCompanyPools) //just send the request
+	privateUser.GET("/getEndpoints", controllers.GetPoolEndpoints) //input poolid
 	//prawee code end
 	//r.POST("/AddCompany", controllers.AddNewCompany)
 	//r.POST("/AddAccount", controllers.AddNewAccount)
