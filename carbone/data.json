@@ -1,0 +1,143 @@
+{
+    "scanInfo": {
+        "company": "SEC",
+        "date": "Wed Dec 09 ",
+        "started": "Wed Dec 09 14:47:52 +0700",
+        "finished": "Wed Dec 09 15:01:08 +0700",
+        "duration": "13 minutes 16 seconds",
+        "endpoints": [
+            {
+                "name": "cswww-qa.zcomsec.com"
+            },
+            {
+                "name": "csapi-qa.zcomsec.com"
+            }
+        ]
+    },
+    "index": {
+        "score": "10",
+        "vulnerabilities": {
+            "total": "0",
+            "details": {
+                "criticalSeverity": "0",
+                "highSeverity": "0",
+                "mediumSeverity": "0",
+                "lowSeverity": "0"
+            }
+        }
+    },
+    "nmap": {
+        "totalPort": {
+            "tcp": 2,
+            "udp": 0
+        },
+        "endpoints": [
+            {
+                "hostname": "cswww-qa.zcomsec.com",
+                "address": "150.95.79.133",
+                "protocols": [
+                    {
+                        "name": "TCP//SSL/HTTP/22"
+                    }
+                ]
+            },
+            {
+                "hostname": "csapi-qa.zcomsec.com",
+                "address": "150.95.79.134",
+                "protocols": [
+                    {
+                        "name": "TCP//SSL/HTTP/22"
+                    }
+                ]
+            }
+        ]
+    },
+    "dirb": [
+        {
+            "urlBase": "https://csapi-qa.zcomsec.com/",
+            "totalPaths": 16,
+            "paths": [
+                {
+                    "path": "https://csapi-qa.zcomsec.com/.git/HEAD",
+                    "httpResponsedCode": 400,
+                    "responseCodeDefinition": "Bad Request"
+                },
+                {
+                    "path": "https://csapi-qa.zcomsec.com/.svn/entries",
+                    "httpResponsedCode": 400,
+                    "responseCodeDefinition": "Bad Request"
+                },
+                {
+                    "path": "https://csapi-qa.zcomsec.com/auth",
+                    "httpResponsedCode": 400,
+                    "responseCodeDefinition": "Bad Request"
+                },
+                {
+                    "path": "https://csapi-qa.zcomsec.com/aux",
+                    "httpResponsedCode": 302,
+                    "responseCodeDefinition": "Found"
+                },
+                {
+                    "path": "https://csapi-qa.zcomsec.com/com1",
+                    "httpResponsedCode": 302,
+                    "responseCodeDefinition": "Found"
+                },
+                {
+                    "path": "https://csapi-qa.zcomsec.com/com2",
+                    "httpResponsedCode": 302,
+                    "responseCodeDefinition": "Found"
+                },
+                {
+                    "path": "https://csapi-qa.zcomsec.com/com3",
+                    "httpResponsedCode": 302,
+                    "responseCodeDefinition": "Found"
+                },
+                {
+                    "path": "https://csapi-qa.zcomsec.com/con",
+                    "httpResponsedCode": 302,
+                    "responseCodeDefinition": "Bad Request"
+                },
+                {
+                    "path": "https://csapi-qa.zcomsec.com/CVS/Entries",
+                    "httpResponsedCode": 400,
+                    "responseCodeDefinition": "Bad Request"
+                },
+                {
+                    "path": "https://csapi-qa.zcomsec.com/CVS/Repository",
+                    "httpResponsedCode": 400,
+                    "responseCodeDefinition": "Bad Request"
+                },
+                {
+                    "path": "https://csapi-qa.zcomsec.com/CVS/Root",
+                    "httpResponsedCode": 400,
+                    "responseCodeDefinition": "Bad Request"
+                },
+                {
+                    "path": "https://csapi-qa.zcomsec.com/index.html ",
+                    "httpResponsedCode": 200,
+                    "responseCodeDefinition": "Bad Request"
+                },
+                {
+                    "path": "https://csapi-qa.zcomsec.com/lpt1",
+                    "httpResponsedCode": 302,
+                    "responseCodeDefinition": "Found"
+                },
+                {
+                    "path": "https://csapi-qa.zcomsec.com/lpt2",
+                    "httpResponsedCode": 302,
+                    "responseCodeDefinition": "Found"
+                },
+                {
+                    "path": "https://csapi-qa.zcomsec.com/nul",
+                    "httpResponsedCode": 302,
+                    "responseCodeDefinition": "Found"
+                },
+                {
+                    "path": "https://csapi-qa.zcomsec.com/prn",
+                    "httpResponsedCode": 302,
+                    "responseCodeDefinition": "Found"
+                }
+            ]
+        }
+    ]
+}

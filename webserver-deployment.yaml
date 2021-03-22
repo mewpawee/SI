@@ -65,6 +65,8 @@ kind: Deployment
 metadata:
   name: backend
   namespace: webserver
+  labels:
+      app: backend
 spec:
   selector:
     matchLabels:
@@ -79,7 +81,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: registry.digitalocean.com/sec/backend:v1
+          image: registry.digitalocean.com/sec/backend:latest
           imagePullPolicy: Always
           ports:
             - name: http

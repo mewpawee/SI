@@ -1,16 +1,12 @@
 <template>
   <div>
-    <v-btn color="primary" dark class="mb-2" @click.stop="startScanner">
-      <v-icon left>mdi-plus-thick</v-icon>
-      Scan Endpoints
-    </v-btn>
     <v-data-table
       v-model="selected"
       :headers="headers"
-      :items="desserts"
+      :items="endpoints"
       sort-by="calories"
       class="elevation-1"
-      item-key="name"
+      item-key="endpoint"
       show-select
     >
       <template v-slot:top>
@@ -35,7 +31,7 @@
                   <v-row>
                     <v-col cols="12" sm="12" md="12">
                       <v-text-field
-                        v-model="editedItem.name"
+                        v-model="editedItem.endpoint"
                         label="Endpoint"
                       ></v-text-field>
                     </v-col>
@@ -89,9 +85,16 @@
 </template>
 
 <script>
-import { argoSubmit } from '@/utils/argo.js'
-import { addEndpoint } from '@/utils/backendAPI.js'
+import {
+  getEndpoints,
+  addEndpoint,
+  deleteEndpoint
+} from '@/utils/backendAPI.js'
 export default {
+  async fetch() {
+    const result = await getEndpoints()
+    this.endpoints = result.data
+  },
   data: () => ({
     dialog: false,
     dialogDelete: false,
@@ -101,17 +104,17 @@ export default {
         text: 'Name',
         align: 'start',
         sortable: false,
-        value: 'name'
+        value: 'endpoint'
       },
       { text: 'Actions', align: 'right', value: 'actions', sortable: false }
     ],
-    desserts: [],
+    endpoints: [],
     editedIndex: -1,
     editedItem: {
-      name: ''
+      endpoint: ''
     },
     defaultItem: {
-      name: ''
+      endpoint: ''
     }
   }),
 
@@ -131,38 +134,25 @@ export default {
   },
 
   created() {
-    this.initialize()
+    this.$fetch()
   },
 
   methods: {
-    initialize() {
-      this.desserts = [
-        {
-          name: 'kmitl.ac.th'
-        },
-        {
-          name: 'cie.kmitl.ac.th'
-        },
-        {
-          name: '192.168.0.1'
-        }
-      ]
-    },
-
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.endpoints.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
     deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.endpoints.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
 
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1)
+      deleteEndpoint(this.endpoints[this.editedIndex].endpoint)
+      this.endpoints.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
@@ -184,21 +174,12 @@ export default {
 
     async save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+        Object.assign(this.endpoints[this.editedIndex], this.editedItem)
       } else {
-        this.desserts.push(this.editedItem)
-        const res = await addEndpoint(
-          this.$nuxt.$auth.user.sub,
-          this.editedItem.name
-        )
-        console.log(res)
+        this.endpoints.push(this.editedItem)
+        await addEndpoint(this.editedItem.endpoint)
       }
       this.close()
-    },
-    async startScanner() {
-      console.log(this.selected)
-      const res = await argoSubmit(this.selected)
-      console.log(res)
     }
   }
 }

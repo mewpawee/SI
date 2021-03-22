@@ -130,7 +130,7 @@ func GetPoolEndpoints(c *gin.Context) { // input poolid
 	if okCompany {
 		strCompany := fmt.Sprintf("%v", company)
 		var input models.InputPool
-		if err := c.ShouldBindJSON(&input); err != nil {
+		if err := c.ShouldBind(&input); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}

@@ -14,21 +14,40 @@ import (
 	//"context"
 
 	"backendAPI/controllers"
+
 	ginglog "github.com/szuecs/gin-glog"
 	"github.com/tbaehler/gin-keycloak/pkg/ginkeycloak"
 
 	"github.com/jinzhu/gorm"
 	"github.com/jmoiron/sqlx"
 )
+
 var db *gorm.DB
 var NoSQL *sqlx.DB
 var err error
+
+func CORSMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+
+		c.Next()
+	}
+}
 
 func main() {
 	flag.Parse()
 	r := gin.Default()
 	db := models.ConnectPsql()
 	NoSQL := models.ConnectPNoSQL()
+	r.Use(CORSMiddleware())
 	r.Use(func(c *gin.Context) {
 		c.Set("db", db)
 		c.Next()
@@ -67,14 +86,14 @@ func main() {
 			c.JSON(200, gin.H{"message": uid})
 		}
 	})*/
-	privateUser.GET("/addPool", controllers.AddPool) //input poolid
-	privateUser.GET("/addEndpoint", controllers.AddEndpoint) //input poolid, endpoint
-	privateUser.GET("/deleteEndpoint", controllers.DeleteEndpoint) //input endpoint 
-	privateUser.GET("/getPools", controllers.GetCompanyPools) //just send the request
-	privateUser.GET("/getEndpoints", controllers.GetPoolEndpoints) //input poolid
-    privateUser.GET("/test", func(c *gin.Context) {
-                c.JSON(200, gin.H{"message": "this thing works"})
-                    })
+	privateUser.GET("/addPool", controllers.AddPool)                //input poolid
+	privateUser.POST("/addEndpoint", controllers.AddEndpoint)       //input poolid, endpoint
+	privateUser.POST("/deleteEndpoint", controllers.DeleteEndpoint) //input endpoint
+	privateUser.GET("/getPools", controllers.GetCompanyPools)       //just send the request
+	privateUser.GET("/getEndpoints", controllers.GetPoolEndpoints)  //input poolid
+	privateUser.GET("/test", func(c *gin.Context) {
+		c.JSON(200, gin.H{"message": "this thing works"})
+	})
 	//prawee code end
 	//r.POST("/AddCompany", controllers.AddNewCompany)
 	//r.POST("/AddAccount", controllers.AddNewAccount)
@@ -89,4 +108,3 @@ func main() {
 	r.DELETE("/DeleteEndpoint/:endpoint", controllers.DeleteEndpoint)*/
 	r.Run()
 }
-
