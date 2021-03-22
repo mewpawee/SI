@@ -1,51 +1,42 @@
 package models
 import (
 	"encoding/json"
+	//"time"
 )
-type Company struct {
-	Name          string `json:"name"`
-	Tel           string `json:"tel"`
-	Contactperson string `json:"contactperson"`
+type InputPool struct {
+	PoolID        string `json:"poolid"` 
+	//Company       string `json:"company"`
 }
-type Account struct {
-	UserName    string `json:"username"`
-	CompanyName string `json:"companyname"`
-	GoogleID    string `json:"googleid"`
+type Pool struct {
+	PoolID        string `json:"poolid" gorm:"primary_key"` 
+	Company       string `json:"company"`
 }
-type logs struct {
-	ID  int    `json:"id"`
-	Log string `json:"log"`
-}
-type Host struct {
-	IpAddress        string  `json:"ipaddress"`
-	ScanID           string  `json:"scanid"`
-	HostName         string  `json:"hostname"`
-	HostVulnerabilty float64 `json:"hostvulnerabilty"`
-}
-type Scan struct {
-	ScanID   string `json:"scanid" gorm:"primary_key"`
-	GoogleID string `json:"googleid"`
-	Status   string `json:"status"`
-}
-type UpdateScanInput struct {
-	ScanID string `json:"scanid"`
-	Status string `json:"status"`
-}
-type TestData struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-	Word string `json:"word"`
-}
-type Vulnerability struct {
-	ScanID             string  `json:"scanid"`
-	Critical           int     `json:"critical"`
-	High               int     `json:"high"`
-	Low                int     `json:"low"`
-	SystemVulnerabilty float64 `json:"systemvulnerabilty"`
+type InputEndpoint struct {
+	Endpoint      string `json:"endpoint"`
 }
 type Endpoint struct {
-	Endpoint string `json:"endpoint" gorm:"primary_key"`
-	GoogleID string `json:"googleid"`
+	Endpoint      string `json:"endpoint" gorm:"primary_key"`
+	PoolID        string `json:"poolid"`
+}
+type Scan struct {
+	ScanID        string `json:"scanid" gorm:"primary_key"`
+	Company       string `json:"company"`
+	PoolID        string `json:"poolid"`
+	Status        string `json:"status"` 
+}
+type Scanlog struct {
+	ScanID        string `json:"scanid" gorm:"primary_key"`
+	ScanEndpoint  string `json:"scanendpoint"`
+}
+type Report struct {
+	ScanID        string `json:"scanid" gorm:"primary_key"`
+	DIR           string `json:"dir"`
+}
+type Log struct {
+	FileName      string `json:"filename" gorm:"primary_key"`
+	ScanID        string `json:"scanid"`
+	ToolName      string `json:"toolname"`
+	DIR           string `json:"dir"`
 }
 type Resulth struct {
 	Data    json.RawMessage 
