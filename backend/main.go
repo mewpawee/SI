@@ -70,7 +70,7 @@ func main() {
 	privateUser.GET("/addPool", controllers.AddPool)
 	privateUser.GET("/addEndpoint", controllers.AddEndpoint)
 	privateUser.GET("/deleteEndpoint", controllers.DeleteEndpoint)
-	privateUser.GET("/addEndpoint", controllers.AddEndpoint)
+	//privateUser.GET("/addEndpoint", controllers.AddEndpoint)
 	privateUser.GET("/getPools", controllers.GetCompanyPools)
 	privateUser.GET("/getEndpoints", controllers.GetPoolEndpoints)
 	//prawee code end
