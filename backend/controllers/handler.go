@@ -64,7 +64,7 @@ func AddEndpoint(c *gin.Context) {
 			return
 		}
 		if pool.Company != strCompany {
-			c.JSON(http.StatusForbidden, gin.H{"error": "Why the hell are you try to add endpoint to other company's endpoint pool?")
+			c.JSON(http.StatusForbidden, gin.H{"error": "User do not have permission to add endpoint to this pool"})
 			return
 		}
 		endpoint := models.Endpoint{Endpoint: input.Endpoint, PoolID: input.PoolID}
@@ -92,10 +92,10 @@ func DeleteEndpoint(c *gin.Context) {
 			return
 		}
 		if pool.Company != strCompany {
-			c.JSON(http.StatusForbidden, gin.H{"error": "Why the hell are you try to delete endpoint in other company's endpoint pool?")
+			c.JSON(http.StatusForbidden, gin.H{"error": "User do not have permission to delete this endpoint"})
 			return
 		}
-		dbc := db.Delete(&endpoint)
+		db.Delete(&endpoint)
 		c.JSON(http.StatusOK, gin.H{"data": true})
 	}
 }
@@ -123,7 +123,7 @@ func GetPoolEndpoints(c *gin.Context) {
 			return
 		}
 		if pool.Company != strCompany {
-			c.JSON(http.StatusForbidden, gin.H{"error": "Why the hell are you peak in to other company's pool?")
+			c.JSON(http.StatusForbidden, gin.H{"error": "User do not have access this information"})
 			return
 		}
 		var endpoints []models.Endpoint
