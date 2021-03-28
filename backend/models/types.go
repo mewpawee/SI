@@ -5,25 +5,16 @@ import (
 	//"time"
 )
 
-type InputPool struct {
-	PoolID string `form:"poolid" json:"poolid"`
-	//Company       string `json:"company"`
-}
-type Pool struct {
-	PoolID  string `json:"poolid" gorm:"primary_key"`
-	Company string `json:"company"`
-}
 type InputEndpoint struct {
 	Endpoint string `form:"endpoint" json:"endpoint"`
 }
 type Endpoint struct {
 	Endpoint string `form:"endpoint" json:"endpoint" gorm:"primary_key"`
-	PoolID   string `form:"poolid" json:"poolid"`
+	Company  string `form:"company" json:"company"`
 }
 type Scan struct {
 	ScanID  string `json:"scanid" gorm:"primary_key"`
 	Company string `json:"company"`
-	PoolID  string `json:"poolid"`
 	Status  string `json:"status"`
 }
 type Scanlog struct {
