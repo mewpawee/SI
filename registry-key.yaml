@@ -1,9 +1,9 @@
 apiVersion: v1
+kind: Secret
+metadata:
+  name: registry-sec
+  namespace: argo
 data:
   .dockerconfigjson: eyJhdXRocyI6eyJyZWdpc3RyeS5kaWdpdGFsb2NlYW4uY29tIjp7ImF1dGgiOiJZVE13T0RJeFlXVmpaakF4WWpZM1pUaGxOV1ptT1RFeE5UWXdNVEV3TXpKaVpXRXdPVE0zTVRjeFpHRXhZamhrWXpSallUSXhNakF4WVROalptSmhZVHBoTXpBNE1qRmhaV05tTURGaU5qZGxPR1UxWm1ZNU1URTFOakF4TVRBek1tSmxZVEE1TXpjeE56RmtZVEZpT0dSak5HTmhNakV5TURGaE0yTm1ZbUZoIn19fQ==
 kind: Secret
-metadata:
-  creationTimestamp: null
-  name: registry-sec
-  namespace: argo
 type: kubernetes.io/dockerconfigjson

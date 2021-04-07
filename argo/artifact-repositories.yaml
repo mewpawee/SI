@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   # if you want to use this config map by default - name it "artifact-repositories"
   name: artifact-repositories
+  namespace: argo
   annotations:
     # if you want to use a specific key, put that's key into this annotation
     workflows.argoproj.io/default-artifact-repository: default
@@ -11,7 +12,6 @@ data:
     s3:
       endpoint: fra1.digitaloceanspaces.com
       bucket: csi
-      keyFormat: argo/{{workflow.name}}/{{pod.name}}
       accessKeySecret:
         name: artifact-key
         key: accessKey

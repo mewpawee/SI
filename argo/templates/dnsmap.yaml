@@ -2,11 +2,12 @@ apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
   name: dnsmap
+  namespace: argo
 spec:
-  serviceAccountName: argo
-  artifactRepositoryRef:
-    configMap: artifact-repositories
-    key: default
+  serviceAccountName: default
+  # artifactRepositoryRef:
+  #   configMap: artifact-repositories
+  #   key: default
   entrypoint: dnsmap
   imagePullSecrets:
   - name: registry-sec
