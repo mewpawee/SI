@@ -86,11 +86,9 @@ func main() {
 			c.JSON(200, gin.H{"message": uid})
 		}
 	})*/
-	privateUser.GET("/addPool", controllers.AddPool)                //input poolid
 	privateUser.POST("/addEndpoint", controllers.AddEndpoint)       //input poolid, endpoint
 	privateUser.POST("/deleteEndpoint", controllers.DeleteEndpoint) //input endpoint
-	privateUser.GET("/getPools", controllers.GetCompanyPools)       //just send the request
-	privateUser.GET("/getEndpoints", controllers.GetPoolEndpoints)  //input poolid
+	privateUser.GET("/getEndpoints", controllers.GetEndpoints)  //input poolid
 	privateUser.GET("/test", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "this thing works"})
 	})
