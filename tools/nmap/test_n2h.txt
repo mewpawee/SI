@@ -1,0 +1,59 @@
+# Nmap 7.80 scan initiated Thu Apr  1 20:02:25 2021 as: nmap -v -A -p- -oG nmp2hyd.txt -oX x_nmap.xml -iL KBankOut.txt
+# Ports scanned: TCP(65535;1-65535) UDP(0;) SCTP(0;) PROTOCOLS(0;)
+Host: 58.137.187.94 ()	Status: Down
+Host: 58.137.187.94 ()	Status: Down
+Host: 202.183.132.90 ()	Status: Down
+Host: 202.183.132.90 ()	Status: Down
+Host: 210.1.38.225 ()	Status: Down
+Host: 210.1.38.225 ()	Status: Down
+Host: 210.1.53.144 ()	Status: Down
+Host: 210.1.53.144 ()	Status: Down
+Host: 202.183.132.241 ()	Status: Down
+Host: 202.183.132.241 ()	Status: Down
+Host: 202.183.132.79 ()	Status: Down
+Host: 202.183.132.79 ()	Status: Down
+Host: 202.183.132.83 ()	Status: Down
+Host: 202.183.132.83 ()	Status: Down
+Host: 202.183.132.77 ()	Status: Down
+Host: 202.183.132.77 ()	Status: Down
+Host: 58.137.187.99 ()	Status: Up
+Host: 58.137.187.99 ()	Ports: 80/open/tcp//http-proxy//F5 BIG-IP load balancer http proxy/, 81/open/tcp//http//Microsoft IIS httpd 8.5/, 443/open/tcp//ssl|http//Microsoft IIS httpd 8.5/, 4400/open/tcp//ds-srv?///, 4433/open/tcp//tcpwrapped///, 4455/open/tcp//prchat-user?///, 4466/open/tcp/////, 4477/open/tcp//ssl|unknown///, 4499/open/tcp//tcpwrapped///, 8888/open/tcp//sun-answerbook?///, 30443/open/tcp/////, 31443/open/tcp/////, 31444/open/tcp/////, 31447/open/tcp/////, 32443/open/tcp//ssl|unknown///, 32444/open/tcp//tcpwrapped///	Ignored State: filtered (65519)
+Host: 58.137.187.99 ()	Status: Up
+Host: 58.137.187.99 ()	Ports: 80/open/tcp//http-proxy//F5 BIG-IP load balancer http proxy/, 81/open/tcp//http//Microsoft IIS httpd 8.5/, 443/open/tcp//ssl|http//Microsoft IIS httpd 8.5/, 4400/open/tcp//ds-srv?///, 4433/open/tcp//tcpwrapped///, 4455/open/tcp//prchat-user?///, 4466/open/tcp//ssl|unknown///, 4477/open/tcp/////, 4499/open/tcp/////, 8888/open/tcp//tcpwrapped///, 30443/open/tcp/////, 31443/open/tcp/////, 31444/open/tcp//tcpwrapped///, 31447/open/tcp/////, 32443/open/tcp//tcpwrapped///, 32444/open/tcp//tcpwrapped///	Ignored State: filtered (65519)
+Host: 202.183.132.102 (awtunnel.kasikornasset.com)	Status: Up
+Host: 202.183.132.102 (awtunnel.kasikornasset.com)	Ports: 80/closed/tcp//http///, 443/closed/tcp//https///, 587/closed/tcp//submission///, 993/closed/tcp//imaps///, 995/closed/tcp//pop3s///, 2010/closed/tcp//search///, 2020/closed/tcp//xinupageserver///, 8443/open/tcp//ssl|https-alt?///	Ignored State: filtered (65527)
+Host: 202.183.132.102 (awtunnel.kasikornasset.com)	Status: Up
+Host: 202.183.132.102 (awtunnel.kasikornasset.com)	Ports: 80/closed/tcp//http///, 443/closed/tcp//https///, 587/closed/tcp//submission///, 993/closed/tcp//imaps///, 995/closed/tcp//pop3s///, 2010/closed/tcp//search///, 2020/closed/tcp//xinupageserver///, 8443/open/tcp//tcpwrapped///	Ignored State: filtered (65527)
+Host: 58.137.161.105 ()	Status: Down
+Host: 58.137.161.105 ()	Status: Down
+Host: 202.183.132.82 ()	Status: Down
+Host: 202.183.132.82 ()	Status: Down
+Host: 202.142.207.162 ()	Status: Down
+Host: 202.142.207.162 ()	Status: Down
+Host: 58.137.161.120 ()	Status: Down
+Host: 58.137.161.120 ()	Status: Down
+Host: 202.183.132.85 ()	Status: Down
+Host: 202.183.132.85 ()	Status: Down
+Host: 202.57.133.234 ()	Status: Down
+Host: 202.57.133.234 ()	Status: Down
+Host: 202.183.132.78 ()	Status: Down
+Host: 202.183.132.78 ()	Status: Down
+Host: 58.137.187.96 ()	Status: Down
+Host: 58.137.187.96 ()	Status: Down
+Host: 202.183.132.53 ()	Status: Down
+Host: 202.183.132.53 ()	Status: Down
+Host: 202.183.132.87 ()	Status: Down
+Host: 202.183.132.87 ()	Status: Down
+Host: 202.183.132.54 ()	Status: Down
+Host: 202.183.132.54 ()	Status: Down
+Host: 202.183.132.91 ()	Status: Down
+Host: 202.183.132.91 ()	Status: Down
+Host: 202.183.132.80 ()	Status: Down
+Host: 202.183.132.80 ()	Status: Down
+Host: 58.137.187.91 ()	Status: Down
+Host: 58.137.187.91 ()	Status: Down
+Host: 202.183.132.76 ()	Status: Down
+Host: 202.183.132.76 ()	Status: Down
+Host: 202.183.132.193 ()	Status: Down
+Host: 202.183.132.193 ()	Status: Down
+Host: 202.183.132.84 ()	Status: Down

@@ -1,7 +1,5 @@
 FROM alpine:latest
-RUN apk update \
-    && apk add curl \ 
-    nmap \
+RUN apk add nmap \
     nodejs npm\
     nmap-scripts \
     --no-cache bash \
