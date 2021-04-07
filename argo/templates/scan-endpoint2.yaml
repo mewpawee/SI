@@ -1,0 +1,66 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: scan-endpoint2
+  namespace: argo
+spec:
+  serviceAccountName: default
+  artifactRepositoryRef:
+    configMap: artifact-repositories
+    key: default
+  entrypoint: scan-endpoint2
+  arguments:
+    parameters:
+      - name: endpoint
+        value: "google.com"
+      - name: company
+        value: ""
+  templates:
+    - name: scan-endpoint2
+      inputs:
+        parameters:
+          - name: endpoint
+          - name: company
+      dag: # You should only reference external "templates" in a "steps" or "dag" "template".
+        tasks:
+          - name: scan-validate-ip
+            templateRef: # You can reference a "template" from another "WorkflowTemplate" using this field
+              name: validate-ip # This is the name of the "WorkflowTemplate" CRD that contains the "template" you want
+              template: validate-ip # This is the name of the "template" you want to reference
+            arguments: # You can pass in arguments as normal
+              parameters:
+                - name: endpoint
+                  value: "{{inputs.parameters.endpoint}}"
+          - name: scan-dnsmap
+            depends: "scan-validate-ip.Succeeded"
+            when: "{{tasks.scan-validate-ip.outputs.result}} == false"
+            templateRef:
+              name: dnsmap
+              template: dnsmap
+            arguments:
+              parameters:
+                - name: domainName
+                  value: "{{inputs.parameters.endpoint}}"
+                - name: version
+                  value: "v1"
+          - name: scan-nmap
+            depends: "scan-dnsmap.Succeeded"
+            templateRef:
+              name: nmap
+              template: nmap
+            arguments:
+              artifacts:
+                - name: dnsmap
+                  from: "{{tasks.scan-dnsmap.outputs.artifacts.d2n}}"
+          - name: scan-hydra
+            depends: "scan-nmap.Succeeded"
+            templateRef:
+              name: hydra
+              template: hydra
+            arguments:
+              parameters:
+                - name: protocal-endpoint
+                  value: "{{item}}"
+                - name: company
+                  value: "{{inputs.parameters.company}}"
+            withParam: "{{tasks.scan-nmap.outputs.parameters.dnmp2hydra}}"
