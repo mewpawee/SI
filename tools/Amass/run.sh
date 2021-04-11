@@ -1,4 +1,4 @@
 #! /bin/bash
 set /p domain=
-toNmap="tmp/namp/"
-amass enum -active -o $toNmap -d %domain%
+toNmap="tmp/nmap/"
+amass enum -active -p -o $toNmap -d %domain%
