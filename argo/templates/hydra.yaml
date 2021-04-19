@@ -31,9 +31,9 @@ spec:
     outputs:
       artifacts:
       - name: hydra-log
-        path: "/tmp/log"
+        path: "/tmp/log" 
         archive: 
           none: {}
         s3:
-          key: log/{{inputs.parameters.company}}/{{workflow.name}}/{{pod.name}}/
+          key: log/{{inputs.parameters.company}}/{{workflow.name}}/{{pod.name}}/log
       
