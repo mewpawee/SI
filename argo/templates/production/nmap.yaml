@@ -39,10 +39,10 @@ spec:
             archive:
               none: {}
             s3:
-              key: log/{{inputs.parameters.company}}/{{workflow.name}}/nmap/{{pod.name}}-log
+              key: "{{inputs.parameters.company}}/{{workflow.name}}/log/nmap/{{pod.name}}-log"
           - name: nmap-json
             path: "/nmap/data.json"
             archive:
               none: {}
             s3:
-              key: log/{{inputs.parameters.company}}/{{workflow.name}}/nmap/{{pod.name}}-json
+              key: "{{inputs.parameters.company}}/{{workflow.name}}/log/nmap/{{pod.name}}-json"

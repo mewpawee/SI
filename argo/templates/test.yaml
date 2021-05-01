@@ -2,36 +2,73 @@ apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
   name: test
+  namespace: argo
 spec:
   serviceAccountName: argo
   artifactRepositoryRef:
     configMap: artifact-repositories
     key: default
-  entrypoint: test
+  entrypoint: test-set
+  arguments:
+    parameters:
+      - name: company
+        value: ""
   templates:
-    - name: test
+    - name: test-set
       dag:
         tasks:
-          - name: generate
+          - name: test-generate
             template: whalesay
-          - name: hydra
-            dependencies: [generate]
-            templateRef:
-              name: hydra
-              template: hydra
+          - name: test-savefile
+            dependencies: [test-generate]
+            template: savefile
             arguments:
               parameters:
-                - name: protocal-endpoint-port
+                - name: endpoint
                   value: "{{item}}"
-            withParam: "{{tasks.generate.outputs.parameters.hello-param}}"
+            withParam: "{{tasks.test-generate.outputs.parameters.hello-param}}"
+          - name: test-print
+            dependencies: [test-savefile]
+            template: printout
+
+    - name: printout
+      inputs:
+        artifacts:
+          - name: printout
+            path: /tmp
+            s3:
+              key: "{{workflow.parameters.company}}/{{workflow.name}}/savefile/"
+      container:
+        image: alpine
+        command: ['/bin/sh', '-c']
+        args: ["ls /tmp; sleep 10"]
+
     - name: whalesay
       container:
         image: docker/whalesay:latest
         command: [sh, -c]
         args:
-        - endpoint='[]' && echo -e $endpoint > /tmp/hello_world.txt
+        - endpoint='[1,2,3,4,5]' && sleep 1 && echo $endpoint > /tmp/hello_world.txt
       outputs:
         parameters:
           - name: hello-param
             valueFrom:
               path: /tmp/hello_world.txt
+    - name: savefile
+      inputs:
+        parameters:
+        - name: endpoint
+      script:
+        image: debian:9.4
+        command: [bash]
+        source: |
+          sleep 1 
+          echo {{inputs.parameters.endpoint}} > /tmp/{{inputs.parameters.endpoint}}
+      outputs:
+        artifacts:
+          - name: save-out
+            path: "/tmp/{{inputs.parameters.endpoint}}"
+            archive:
+              none: {}
+            s3:
+              key: "{{workflow.parameters.company}}/{{workflow.name}}/savefile/savefile-{{pod.name}}-log" 

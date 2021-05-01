@@ -1,0 +1,51 @@
+# Nmap 7.80 scan initiated Wed Dec  9 07:48:46 2020 as: nmap -v -A -p- -oG /tmp/nmp2hydra-raw -oX /tmp/nmap2db.xml -oN /tmp/log -iL /mnt/dnsmap/dnsmap
+Nmap scan report for csapi-qa.zcomsec.com (150.95.79.134)
+Host is up (0.029s latency).
+rDNS record for 150.95.79.134: v150-95-79-134.a002.g.bkk2.static.cnode.io
+Not shown: 65533 filtered ports
+PORT    STATE  SERVICE        VERSION
+80/tcp  closed http
+443/tcp open   ssl/http-proxy HAProxy http proxy 1.3.1 or later
+| http-methods: 
+|_  Supported Methods: GET
+|_http-title: Site doesn't have a title (application/json; charset=utf-8).
+| ssl-cert: Subject: commonName=*.zcomsec.com
+| Subject Alternative Name: DNS:*.zcomsec.com, DNS:zcomsec.com
+| Issuer: commonName=Sectigo RSA Domain Validation Secure Server CA/organizationName=Sectigo Limited/stateOrProvinceName=Greater Manchester/countryName=GB
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2020-08-18T00:00:00
+| Not valid after:  2022-08-18T23:59:59
+| MD5:   cd56 8ba4 8a72 3c18 4112 336a f0e9 295e
+|_SHA-1: d496 1e70 872a 1ce5 3a4f dbc6 1f30 89af cc5c 0fb3
+|_ssl-date: TLS randomness does not represent time
+Device type: general purpose
+Running (JUST GUESSING): Linux 4.X|3.X|2.6.X (98%)
+OS CPE: cpe:/o:linux:linux_kernel:4.4 cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:2.6.32
+Aggressive OS guesses: Linux 4.4 (98%), Linux 3.11 - 4.1 (95%), Linux 2.6.32 or 3.10 (94%), Linux 4.0 (94%), Linux 2.6.32 (93%), Linux 3.10 - 3.12 (93%), Linux 2.6.32 - 2.6.35 (92%), Linux 4.9 (92%), Linux 2.6.32 - 2.6.39 (92%), Linux 3.13 (90%)
+No exact OS matches for host (test conditions non-ideal).
+Uptime guess: 22.787 days (since Mon Nov 16 12:59:40 2020)
+Network Distance: 13 hops
+TCP Sequence Prediction: Difficulty=251 (Good luck!)
+IP ID Sequence Generation: All zeros
+Service Info: Device: load balancer
+
+TRACEROUTE (using port 80/tcp)
+HOP RTT      ADDRESS
+1   ...
+2   0.06 ms  10.244.0.19
+3   1.38 ms  128.199.127.254
+4   1.72 ms  138.197.251.190
+5   1.86 ms  138.197.251.175
+6   ...
+7   27.23 ms 202.183.138.122
+8   31.22 ms 202.183.138.121
+9   38.04 ms 202.183.138.170
+10  27.82 ms 202.183.234.130
+11  ... 12
+13  30.01 ms v150-95-79-134.a002.g.bkk2.static.cnode.io (150.95.79.134)
+
+Read data files from: /usr/bin/../share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Wed Dec  9 07:52:59 2020 -- 1 IP address (1 host up) scanned in 254.62 seconds
