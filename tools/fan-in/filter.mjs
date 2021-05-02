@@ -12,4 +12,7 @@ const nmap = async (file) => {
     return json
 }
 
+
 export{dnsmap,nmap}
+
+dnsmap("./log/dnsmap/nma.txt").then(result=>console.log(result))

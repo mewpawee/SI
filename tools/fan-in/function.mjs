@@ -31,6 +31,7 @@ const writeJSON = (filename,data) => {
         fs.writeFile(filename, JSON.stringify(data,null,2),(err)=>{
             if(err) reject(err);
             console.log("write: " + filename)
+            console.log(data)
         });
     });
 }

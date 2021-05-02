@@ -3,21 +3,22 @@ import path from 'path'
 import {writeJSON} from './function.mjs'
 import {dnsmap,nmap} from './filter.mjs'
 
-
 //global variable
 const json = {
-    dnsmap:[],
-    nmap:[]
+    nmap:null
 }
 
 //read file
 const read = async(dir,tool=null)=>{   
     for await(const d of await fs.promises.opendir(dir)){
         const entry = path.join(dir,d.name);
-        console.log(entry,d.name,tool)
         if(d.isDirectory()){
             await read(entry,d.name)
         }else if (d.isFile()){
+            console.log("read: " + entry);
+            if(json[tool] == null){
+                json[tool] = []
+            }
             switch(tool){
                 case "dnsmap":
                     const result = await dnsmap(entry)
@@ -36,8 +37,7 @@ const read = async(dir,tool=null)=>{
 
 // main program
 const main = async() => {
-    const result = await read("./log")
-    console.log(result)
+    const result = await read("./report")
     writeJSON('report.json',result)
 }
 
