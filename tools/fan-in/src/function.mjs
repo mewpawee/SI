@@ -3,7 +3,7 @@ import fs from 'fs'
 //read text file
 const readFile = (filename) => {
     return new Promise((fullfill,reject)=>{
-        fs.readFile(filename,"utf-8",(err,res)=>{
+        fs.readFile(filename,"utf8",(err,res)=>{
             if(err) reject(err);    
             else{
                 fullfill(res)
