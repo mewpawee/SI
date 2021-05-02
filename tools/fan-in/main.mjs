@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-import {writeJSON} from './function.mjs'
-import {dnsmap,nmap} from './filter.mjs'
+import {writeJSON} from './src/function.mjs'
+import {dnsmap,nmap} from './src/filter.mjs'
 
 //global variable
 const json = {
@@ -36,10 +36,17 @@ const read = async(dir,tool=null)=>{
 }
 
 // main program
-const main = async() => {
-    const result = await read("./report")
-    writeJSON('report.json',result)
+const main = async(location="./report") => {
+    const result = await read(location)
+    writeJSON('/tmp/report.json',result)
 }
 
-main()
+
+// print process.argv
+const args = process.argv.slice(2);
+if(args.length > 0 && args[0] == "-d"){
+    main(args[1])
+}else{
+    main()
+}
 
