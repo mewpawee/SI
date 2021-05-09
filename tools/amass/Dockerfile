@@ -6,4 +6,6 @@ FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 COPY --from=build /go/bin/amass /bin/amass
 ENV HOME /
-ENTRYPOINT ["/bin/amass"]
+WORKDIR /
+COPY run.sh . 
+# ENTRYPOINT ["sh", "run.sh"]
