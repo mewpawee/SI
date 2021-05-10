@@ -1,4 +1,5 @@
 #! /bin/bash
 domain=$1
-toNmap="tmp/domain.json"
-amass enum -active -ip -json $toNmap -d $domain 2>&1 | tee /tmp/log
+jsonForReport="tmp/domain.JSON"
+toNmap="tmp/domain.txt"
+amass enum -active -ip -o $toNmap -json $jsonForReport -d $domain 2>&1 | tee /tmp/log
