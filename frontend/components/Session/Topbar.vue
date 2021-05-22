@@ -5,26 +5,10 @@
         >{{ item.title }}
       </v-tab>
       <v-spacer />
-      <v-btn
-        class="ma-2"
-        color="indigo"
-        outlined
-        @click.stop="handleLoginClicked"
-      >
+      <v-btn class="ma-2" color="indigo" outlined to="login">
         Login
       </v-btn>
     </v-tabs>
-
-    <!-- <v-dialog v-model="dialogLogin" max-width="500">
-      <v-card color="accent" class="justify-center">
-        <v-card-title>Login</v-card-title>
-        <hr />
-        <v-btn large block @click="handleLoginClicked">
-          <v-icon class="mx-5">mdi-login</v-icon>
-          Sign in
-        </v-btn>
-      </v-card>
-    </v-dialog> -->
   </v-app-bar>
 </template>
 
@@ -32,9 +16,6 @@
 export default {
   data() {
     return {
-      dialogLogin: false,
-      usernameLogin: '',
-      passwordLogin: '',
       items: [
         {
           icon: 'mdi-monitor-dashboard',
@@ -47,21 +28,6 @@ export default {
           to: { name: 'overall' }
         }
       ]
-    }
-  },
-  mounted() {
-    if (this.$auth.loggedIn) {
-      this.$router.push({ name: 'scanner' })
-    }
-  },
-  methods: {
-    async handleLoginClicked() {
-      try {
-        await this.$auth.loginWith('keycloak')
-      } catch (err) {
-        this.errorLogin = true
-        console.log(err)
-      }
     }
   }
 }

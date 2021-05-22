@@ -2,7 +2,6 @@ import { request } from './api'
 
 export const getEndpoints = async () => {
   const poolUrl = 'https://csi.cmkl.ac.th/api/privateUser/getPools'
-
   try {
     const poolResponse = await request('get', poolUrl, {}, true)
     const poolId = poolResponse.data[0].poolid

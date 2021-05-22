@@ -3,13 +3,13 @@
 </template>
 <script>
 export default {
-  mounted() {
+  async mounted() {
     try {
-      if (this.$auth.loggedIn) {
-        this.$router.replace({ name: 'scanner' })
-      } else this.$router.replace({ name: 'index' })
+      if (!this.$auth.loggedIn) {
+        await this.$auth.loginWith('keycloak')
+      }
     } catch (err) {
-      this.$router.replace({ name: 'index' })
+      console.log(err)
     }
   }
 }
