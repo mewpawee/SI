@@ -1,11 +1,15 @@
 const express = require('express')
 const convert = require('./convert.js')
-const app = express()
+
 const HOST = '0.0.0.0';
 const PORT = 3000;
+const app = express()
 
-app.get('/', async (req, res) => {
-    result = await convert.generateReport();
+// parse application/json
+app.use(express.json())
+
+app.post('/generateReport', async (req, res) => {
+    result = await convert.generateReport(req.body);
     res.send(result);
   })
 
