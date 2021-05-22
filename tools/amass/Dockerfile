@@ -8,8 +8,4 @@ COPY --from=build /go/bin/amass /bin/amass
 ENV HOME /
 WORKDIR /
 COPY run.sh . 
-<<<<<<< HEAD
 # ENTRYPOINT ["sh", "run.sh"]
-=======
-# ENTRYPOINT ["sh", "run.sh"]
->>>>>>> amass-image
