@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: carbone
-  namespace: webserver
+  namespace: production
   labels:
       app: carbone
 spec:
@@ -17,7 +17,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: carbone
-  namespace: webserver
+  namespace: production
   labels:
     app: carbone
 spec:
