@@ -46,6 +46,7 @@
 
 <script>
 export default {
+  middleware: 'is-admin',
   data: () => ({
     dialog: false,
     dialogDelete: false,

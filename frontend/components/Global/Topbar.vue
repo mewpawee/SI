@@ -17,15 +17,7 @@ export default {
   data() {
     return {
       title: 'Cyber Security Index',
-      user: '',
-      avatar: ''
-    }
-  },
-  computed: {
-    miniVariant: {
-      get() {
-        return this.$nuxt.$store.state.miniVariant
-      }
+      user: ''
     }
   },
   mounted() {
@@ -37,14 +29,8 @@ export default {
     signOut() {
       this.$auth.logout('local')
     },
-    miniVariantToggle() {
-      this.$store.commit(
-        'set_minivariant',
-        !this.$nuxt.$store.state.miniVariant
-      )
-    },
     leftDrawerToggle() {
-      this.$store.commit('set_left_drawer', !this.$nuxt.$store.state.leftDrawer)
+      this.$store.commit('leftDrawer/toggle')
     }
   }
 }

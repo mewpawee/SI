@@ -1,6 +1,7 @@
 const colors = require('vuetify/es5/util/colors').default
 
 module.exports = {
+  ssr:false,
   server: {
     port: process.env.PORT || 3000,
     host: '0.0.0.0'
@@ -48,16 +49,17 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/auth-next'
+    '@nuxtjs/auth-next',
+    'cookie-universal-nuxt',
   ],
   router: {
     middleware: ['auth']
   },
   auth: {
     redirect: {
-      login: '/',
+      login: '/login',
       logout: '/',
-      callback: '/scanner',
+      callback: '/',
       home: '/scanner'
     },
     strategies: {
@@ -77,9 +79,13 @@ module.exports = {
         },
         token: {
           property: 'access_token',
+          required: true,
           type: 'Bearer',
           name: 'Authorization',
           maxAge: 300
+        },
+        cookie:{
+
         },
         refreshToken: {
           property: 'refresh_token',
@@ -88,7 +94,7 @@ module.exports = {
         responseType: 'code',
         grantType: 'authorization_code',
         clientId: 'frontend',
-        scope: ['openid', 'profile', 'email'],
+        scope: ['profile', 'email'],
         codeChallengeMethod: 'S256'
       }
     }
