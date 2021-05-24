@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 	"github.com/gin-gonic/gin"
-	"github.com/jmoiron/sqlx/types"
+	//"github.com/jmoiron/sqlx/types"
 	"time"
 
 	//"database/sql"
@@ -58,7 +58,7 @@ func Result(c *gin.Context) {
 }
 func GetScanResult(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
-	var input model.ScanID
+	var input models.ScanID
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
