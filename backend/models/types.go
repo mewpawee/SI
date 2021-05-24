@@ -1,9 +1,15 @@
 package models
 
 import (
-	"encoding/json"
-	//"time"
+	//"encoding/json"
+	"time"
+	"github.com/jmoiron/sqlx/types"
 )
+
+/*type Result struct {
+	Data JSON `json:"company"`
+	ScanID  string `json:"scanid"`
+}*/
 
 type InputEndpoint struct {
 	Endpoint string `form:"endpoint" json:"endpoint"`
@@ -12,10 +18,22 @@ type Endpoint struct {
 	Endpoint string `form:"endpoint" json:"endpoint" gorm:"primary_key"`
 	Company  string `form:"company" json:"company"`
 }
+type InputScan struct {
+	ScanID  string `json:"scanid"`
+	Company string `json:"company"`
+}
+type ScanID struct {
+	ScanID  string `json:"scanid"`
+}
+type ScanStatus struct {
+	ScanID  string `json:"scanid" gorm:"primary_key"`
+	Status  string `json:"status"`
+}
 type Scan struct {
 	ScanID  string `json:"scanid" gorm:"primary_key"`
 	Company string `json:"company"`
 	Status  string `json:"status"`
+	Start	time.Time `json:"start"`
 }
 type Scanlog struct {
 	ScanID       string `json:"scanid" gorm:"primary_key"`
@@ -31,8 +49,9 @@ type Log struct {
 	ToolName string `json:"toolname"`
 	DIR      string `json:"dir"`
 }
-type Resulth struct {
-	Data json.RawMessage
+type Result struct {
+	ScanID string `json:"scanid" gorm:"primary_key"`
+	Data   types.JSONText `json:"data"`
 }
 type Resultd struct {
 	Data string `db:"data"`
