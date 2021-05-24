@@ -164,7 +164,7 @@ func DeleteEndpoint(c *gin.Context) { //input endpoint
 	}
 }
 func GetEndpoints(c *gin.Context) { // input poolid
-	log.Println("GetEndpoints")
+	// log.Println("GetEndpoints")
 	db := c.MustGet("db").(*gorm.DB)
 	company, okCompany := c.Get("company")
 	if okCompany {
