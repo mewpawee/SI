@@ -164,13 +164,14 @@ func DeleteEndpoint(c *gin.Context) { //input endpoint
 	}
 }
 func GetEndpoints(c *gin.Context) { // input poolid
+	// log.Println("GetEndpoints")
 	db := c.MustGet("db").(*gorm.DB)
 	company, okCompany := c.Get("company")
 	if okCompany {
 		strCompany := fmt.Sprintf("%v", company)
 		strCompany = strings.Trim(strCompany, "[/]")
 		var endpoints []models.Endpoint
-		if err := db.Where("endpoint = ?", strCompany).Find(&endpoints).Error; err != nil {
+		if err := db.Where("company = ?", strCompany).Find(&endpoints).Error; err != nil {
 			c.JSON(http.StatusOK, gin.H{"error": "record not found"})
 			return
 		}
