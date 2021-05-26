@@ -1,0 +1,81 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: filter-upload
+  namespace: argo
+spec:
+  serviceAccountName: default
+  entrypoint: filter-upload
+  imagePullSecrets:
+    - name: registry-sec
+  arguments:
+    parameters:
+      - name: company
+        value: ""
+      - name: workflowName
+        value: ""
+  templates:
+    - name: filter-upload
+      inputs:
+        parameters:
+          - name: company
+          - name: workflowName
+      steps:
+        - - name: filter
+            template: filter-template
+            arguments:
+              parameters:
+                - name: company
+                  value: "{{inputs.parameters.company}}"
+                - name: workflowName
+                  value: "{{inputs.parameters.workflowName}}"
+        - - name: upload
+            template: upload-template
+            arguments:
+              parameters:
+                - name: workflowName
+                  value: "{{inputs.parameters.workflowName}}"
+                - name: report-json
+                  value: "{{steps.filter.outputs.parameters.output-json}}"
+    #templates
+    - name: filter-template
+      inputs:
+        parameters:
+          - name: company
+          - name: workflowName
+        artifacts:
+          - name: log
+            path: /mnt/log
+            s3:
+              key: "{{inputs.parameters.company}}/{{inputs.parameters.workflowName}}/log"
+      container:
+        image: "registry.digitalocean.com/sec/filter:latest"
+        command: [sh, -c]
+        args:
+          - ./run.sh
+      outputs:
+        parameters:
+          - name: output-json
+            valueFrom:
+              path: "/tmp/report.json"
+
+    - name: upload-template
+      inputs:
+        parameters:
+          - name: workflowName
+          - name: report-json
+      script:
+        image: curlimages/curl:7.76.1
+        command: [sh]
+        source: |
+          data=$(cat <<EOF
+          {
+            "scanid": "{{inputs.parameters.workflowName}}",
+            "data": {{inputs.parameters.report-json}}
+          }
+          EOF
+          )
+          curl -X POST 'https://csi.cmkl.ac.th/api/uploadResult' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          --data "$data"

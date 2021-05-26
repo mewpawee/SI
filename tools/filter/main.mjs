@@ -5,7 +5,8 @@ import {dnsmap,nmap} from './src/filter.mjs'
 
 //global variable
 const json = {
-    nmap:null
+    dnsmap:null,
+    nmap:null,
 }
 
 //read file
@@ -26,7 +27,9 @@ const read = async(dir,tool=null)=>{
                     break;
                 case "nmap":
                     const test = await nmap(entry)
-                    json.nmap.push(test)
+                    if(test){
+                        json.nmap.push(test)
+                    }
                     break;
             }
         }
