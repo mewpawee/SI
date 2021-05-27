@@ -23,11 +23,11 @@ import (
 	//"github.com/jmoiron/sqlx"
 )
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
 
-=======
->>>>>>> develop
+//=======
+//>>>>>>> develop
 func AddNewScan(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var input models.InputScan
@@ -258,29 +258,6 @@ func GetAllScan(c *gin.Context) { // input poolid
 		c.JSON(http.StatusOK, gin.H{"data": scans})
 	}
 }
-func Booking(c *gin.Context) {
-	db := c.MustGet("db").(*gorm.DB)
-	company, okCompany := c.Get("company")
-	if okCompany {
-		strCompany := fmt.Sprintf("%v", company)
-		var inputList []models.BookingInput
-		if err := c.ShouldBindJSON(&inputList); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
-		booking := []models.Booking
-		for _, element := range inputList {
-			i := models.Booking{Company : strCompany, DayStart : element.DayStart, TimeStart : element.TimeStart, DayEnd : element.DayEnd, TimeEnd : element.TimeEnd}  
-			booking = append(booking, )
-		dbc := db.Create(&booking)
-		if dbc.Error != nil {
-			c.JSON(http.StatusOK, gin.H{"error": dbc.Error})
-			return
-		}
-		c.JSON(http.StatusOK, gin.H{"data": booking})
-	}
-}
-
 /*func DeleteEndpoint(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	// Get model if exist
@@ -339,25 +316,29 @@ func GetVul(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": vulnerability})
 }
 */
-/*func AddScan(c *gin.Context) {
+func Booking(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	company, okCompany := c.Get("company")
 	if okCompany {
 		strCompany := fmt.Sprintf("%v", company)
-		var input models.Scan
-		if err := c.ShouldBindJSON(&input); err != nil {
+		var inputList []models.BookingInput
+		if err := c.ShouldBindJSON(&inputList); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		scan := models.Scan{ScanID: input.ScanID, Company: input.Company, Status: input.Status}
-		dbc := db.Create(&scan)
+		var booking []models.Booking
+		for _, element := range inputList {
+			i := models.Booking{Company : strCompany, DayStart : element.DayStart, TimeStart : element.TimeStart, DayEnd : element.DayEnd, TimeEnd : element.TimeEnd}  
+			booking = append(booking, i)
+			}
+		dbc := db.Create(&booking)
 		if dbc.Error != nil {
 			c.JSON(http.StatusOK, gin.H{"error": dbc.Error})
 			return
 		}
-		c.JSON(http.StatusOK, gin.H{"data": pool})
+		c.JSON(http.StatusOK, gin.H{"data": booking})
 	}
-}*/
+}
 
 /*func GetScan(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
