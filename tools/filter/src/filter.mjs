@@ -5,7 +5,8 @@ const dnsmap = async (file) => {
   let json;
 //   const data = await readFile(file);
 //   const json = JSON.parse(data);
-  return json;
+// return json;
+  return null
 };
 
 const nmap = async (file) => {
