@@ -15,11 +15,14 @@ spec:
     parameters:
       - name: company
         value: ""
+      - name: endpoint
+        value: ""
   templates:
     - name: nmap
       inputs:
         parameters:
           - name: company
+          - name: endpoint
         artifacts:
           - name: dnsmap
             path: /mnt/dnsmap/dnsmap
@@ -39,10 +42,10 @@ spec:
             archive:
               none: {}
             s3:
-              key: "{{inputs.parameters.company}}/{{workflow.name}}/log/nmap/{{pod.name}}.log"
+              key: "{{inputs.parameters.company}}/{{workflow.name}}/{{inputs.parameters.endpoint}}/log/nmap/{{inputs.parameters.endpoint}}.log"
           - name: nmap-json
             path: "/nmap/data.json"
             archive:
               none: {}
             s3:
-              key: "{{inputs.parameters.company}}/{{workflow.name}}/log/nmap/{{pod.name}}.json"
+              key: "{{inputs.parameters.company}}/{{workflow.name}}/{{inputs.parameters.endpoint}}/log/nmap/{{inputs.parameters.endpoint}}.json"

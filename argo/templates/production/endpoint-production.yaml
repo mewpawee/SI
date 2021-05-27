@@ -43,7 +43,7 @@ spec:
               template: dnsmap
             arguments:
               parameters:
-                - name: domainName
+                - name: endpoint
                   value: "{{inputs.parameters.endpoint}}"
                 - name: company
                   value: "{{workflow.parameters.company}}"
@@ -57,6 +57,8 @@ spec:
               parameters:
                 - name: company
                   value: "{{workflow.parameters.company}}"
+                - name: endpoint
+                  value: "{{inputs.parameters.endpoint}}"
               artifacts:
                 - name: dnsmap
                   raw:
@@ -73,6 +75,8 @@ spec:
                   value: "{{workflow.parameters.company}}"
                 - name: workflowName
                   value: "{{workflow.name}}"
+                - name: endpoint
+                  value: "{{inputs.parameters.endpoint}}"
 
     - name: add-scan
       script:
