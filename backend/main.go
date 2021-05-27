@@ -113,6 +113,7 @@ func main() {
 	r.GET("/getScanStatus", controllers.GetScanStatus)
 =======*/
 	r.GET("/getScanStatus", controllers.GetScanStatus)
+	r.GET("/getAllScansAdmin", controllers.GetAllScansAdmin)
 	r.POST("/generateReport", controllers.GenerateReport)
 //>>>>>>> develop
 	//r.POST("/resultLogs", controllers.Raw)

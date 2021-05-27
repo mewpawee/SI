@@ -203,6 +203,16 @@ func GetEndpoints(c *gin.Context) { // input poolid
 	}
 }
 
+func GetAllScansAdmin(c *gin.Context) { // input poolid
+	db := c.MustGet("db").(*gorm.DB)
+	var scan []models.Scan
+	if err := db.Find(&scan).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": scan})
+}
+
 
 func UpdateScan(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
