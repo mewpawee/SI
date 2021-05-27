@@ -279,13 +279,14 @@ func UpdateScan(c *gin.Context) {
 func GetScanStatus(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	// Get model if exist
-	var input models.ScanID
-	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
-		return
-	}
+	// var input models.ScanID
+	// if err := c.ShouldBindJSON(&input); err != nil {
+	// 	c.JSON(http.StatusOK, gin.H{"error": err.Error()})
+	// 	return
+	// }
+	scanId := c.Query("scanid")
 	var scan models.Scan
-	if err := db.Where("scan_id = ?", input.ScanID).First(&scan).Error; err != nil {
+	if err := db.Where("scan_id = ?", scanId).First(&scan).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		return
 	}
