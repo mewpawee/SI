@@ -78,7 +78,7 @@
         </v-icon>
       </template>
       <template v-slot:no-data>
-        <v-title> Add Endpoint</v-title>
+        <v-card-title> Add Endpoint</v-card-title>
       </template>
     </v-data-table>
   </div>
@@ -91,6 +91,7 @@ import {
   deleteEndpoint
 } from '@/utils/backendAPI.js'
 export default {
+  middleware: 'is-admin',
   async fetch() {
     const result = await getEndpoints()
     this.endpoints = result.data

@@ -6,8 +6,10 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+
 	"github.com/gin-gonic/gin"
-	"github.com/jmoiron/sqlx/types"
+
+	"time"
 
 	//"database/sql"
 	"fmt"
@@ -18,12 +20,101 @@ import (
 	//"encoding/json"
 	//"github.com/tbaehler/gin-keycloak/pkg/ginkeycloak"
 	"log"
-
-	"github.com/jmoiron/sqlx"
+	//"github.com/jmoiron/sqlx"
 )
 
+func AddNewScan(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+	var input models.InputScan
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	loc, _ := time.LoadLocation("Asia/Bangkok")
+	//log.Printf(input.ScanID)
+	scan := models.Scan{ScanID: input.ScanID, Company: input.Company, Status: "running", Start: time.Now().In(loc)}
+	dbc := db.Create(&scan)
+	if dbc.Error != nil {
+		c.JSON(http.StatusOK, gin.H{"error": dbc.Error})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": scan})
+}
+func Result(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+	var input models.Result
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	//log.Printf(input.ScanID)
+	result := models.Result{ScanID: input.ScanID, Data: input.Data}
+	dbc := db.Create(&result)
+	if dbc.Error != nil {
+		c.JSON(http.StatusOK, gin.H{"error": dbc.Error})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": result})
+}
+func GenerateReport(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+	var input models.ScanID
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	//check if scan end
+	var result models.Result
+	if err := db.Where("scan_id = ?", input.ScanID).Find(&result).Error; err != nil {
+		c.JSON(http.StatusOK, gin.H{"error": "record not found"})
+		return
+	}
+	jsonData := result.Data
+	url := "http://carbone:3000/generateReport"
+	jsonString := string(jsonData)
+	payload := strings.NewReader(jsonString)
+	fmt.Print(jsonString)
+	client := &http.Client{}
+	req, err := http.NewRequest("POST", url, payload)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Internal Error"})
+		return
+	}
+	req.Header.Add("Content-Type", "application/json")
 
-func Raw(c *gin.Context) {
+	res, err := client.Do(req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Internal Error"})
+		return
+	}
+	defer res.Body.Close()
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Internal Error"})
+		return
+	}
+
+	c.Data(http.StatusOK, "application/pdf", body)
+}
+
+/*func ActivateScan(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+	// Get model if exist
+	var scan models.Scan
+	if err := db.Where("scan_id = ?", c.Param("scan_id")).First(&scan).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+	var input models.Scan
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
+		return
+	}
+	db.Model(&scan).Updates(input)
+	c.JSON(http.StatusOK, gin.H{"data": scan})
+}*/
+/*func Raw(c *gin.Context) {
 	db := c.MustGet("NoSQL").(*sqlx.DB)
 	var body, _ = ioutil.ReadAll(c.Request.Body)
 	var str = string(body)
@@ -33,8 +124,18 @@ func Raw(c *gin.Context) {
 	j := types.JSONText(string(body))
 	db.MustExec(`INSERT INTO results(data) VALUES($1)`, j) //record)
 	c.JSON(http.StatusOK, gin.H{"data": str})              //record})
-}
-
+}*/
+/*func GetJSON(c *gin.Context) {
+	db := c.MustGet("NoSQL").(*sqlx.DB)
+	var body, _ = ioutil.ReadAll(c.Request.Body)
+	var str = string(body)
+	log.Printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+	log.Printf(str)
+	//json.Unmarshal(body, &hdata)
+	j := types.JSONText(string(body))
+	db.MustExec(`SELECT * FROM results WHERE (data #>> scanid)`, j) //record)
+	c.JSON(http.StatusOK, gin.H{"data": str})              //record})
+}*/
 func AddEndpoint(c *gin.Context) { //input poolid, endpoint
 	db := c.MustGet("db").(*gorm.DB)
 	company, okCompany := c.Get("company")
@@ -82,13 +183,14 @@ func DeleteEndpoint(c *gin.Context) { //input endpoint
 	}
 }
 func GetEndpoints(c *gin.Context) { // input poolid
+	log.Println("GetEndpoints")
 	db := c.MustGet("db").(*gorm.DB)
 	company, okCompany := c.Get("company")
 	if okCompany {
 		strCompany := fmt.Sprintf("%v", company)
 		strCompany = strings.Trim(strCompany, "[/]")
 		var endpoints []models.Endpoint
-		if err := db.Where("endpoint = ?", strCompany).Find(&endpoints).Error; err != nil {
+		if err := db.Where("company = ?", strCompany).Find(&endpoints).Error; err != nil {
 			c.JSON(http.StatusOK, gin.H{"error": "record not found"})
 			return
 		}
@@ -157,7 +259,7 @@ func AddNewScan(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": scan})
-}
+}*/
 func UpdateScan(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	// Get model if exist
@@ -166,7 +268,7 @@ func UpdateScan(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		return
 	}
-	var input models.Scan
+	var input models.ScanStatus
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
 		return
@@ -174,8 +276,24 @@ func UpdateScan(c *gin.Context) {
 	db.Model(&scan).Updates(input)
 	c.JSON(http.StatusOK, gin.H{"data": scan})
 }
+func GetScanStatus(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+	// Get model if exist
+	// var input models.ScanID
+	// if err := c.ShouldBindJSON(&input); err != nil {
+	// 	c.JSON(http.StatusOK, gin.H{"error": err.Error()})
+	// 	return
+	// }
+	scanId := c.Query("scanid")
+	var scan models.Scan
+	if err := db.Where("scan_id = ?", scanId).First(&scan).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": scan.Status})
+}
 
-func DeleteEndpoint(c *gin.Context) {
+/*func DeleteEndpoint(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	// Get model if exist
 	var endpoint models.Endpoint

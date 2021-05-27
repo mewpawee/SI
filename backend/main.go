@@ -88,7 +88,7 @@ func main() {
 	})*/
 	privateUser.POST("/addEndpoint", controllers.AddEndpoint)       //input poolid, endpoint
 	privateUser.POST("/deleteEndpoint", controllers.DeleteEndpoint) //input endpoint
-	privateUser.GET("/getEndpoints", controllers.GetEndpoints)  //input poolid
+	privateUser.GET("/getEndpoints", controllers.GetEndpoints)      //input poolid
 	privateUser.GET("/test", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "this thing works"})
 	})
@@ -98,11 +98,14 @@ func main() {
 	/*r.GET("/testData/:id", controllers.GetTestData)
 	r.GET("/getHost/:scan_id", controllers.GetHost)
 	r.GET("/getVal/:scan_id", controllers.GetVul)
-	r.POST("/addEndpoint", controllers.AddNewEndpoint)
-	r.POST("/addScan", controllers.AddNewScan)*/
-	r.POST("/resultLogs", controllers.Raw)
-	/*r.PATCH("/updateScan/:status", controllers.UpdateScan)
-	r.GET("/getEndpoints/:google_id", controllers.GetEndpoints)
+	r.POST("/addEndpoint", controllers.AddNewEndpoint)*/
+	r.POST("/addScan", controllers.AddNewScan)
+	r.POST("/uploadResult", controllers.Result)
+	r.GET("/getScanStatus", controllers.GetScanStatus)
+	r.POST("/generateReport", controllers.GenerateReport)
+	//r.POST("/resultLogs", controllers.Raw)
+	r.PATCH("/updateScan/:scan_id", controllers.UpdateScan)
+	/*r.GET("/getEndpoints/:google_id", controllers.GetEndpoints)
 	r.DELETE("/DeleteEndpoint/:endpoint", controllers.DeleteEndpoint)*/
 	r.Run()
 }

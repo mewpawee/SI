@@ -4,7 +4,7 @@ var fs = require('fs');
 var xml = process.argv.slice(2);
 xml = xml.toString();
 
-var parser = new xml2js.Parser();
+var parser = new xml2js.Parser({explicitArray :false, mergeAttrs:true});
 fs.readFile(xml, function(err, data){
     // convert XML to JSON
     if(err) throw err;
