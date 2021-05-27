@@ -203,14 +203,14 @@ func GetEndpoints(c *gin.Context) { // input poolid
 	}
 }
 
-func GetAllEndpoinsAdmin(c *gin.Context) { // input poolid
+func GetAllEndpointsAdmin(c *gin.Context) { // input poolid
 	db := c.MustGet("db").(*gorm.DB)
 	var endpoint []models.Endpoint
 	if err := db.Find(&endpoint).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": scan})
+	c.JSON(http.StatusOK, gin.H{"data": endpoint})
 }
 
 
