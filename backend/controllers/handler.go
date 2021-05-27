@@ -240,7 +240,7 @@ func AddNewScan(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": scan})
-}
+}*/
 func UpdateScan(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	// Get model if exist
@@ -249,7 +249,7 @@ func UpdateScan(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		return
 	}
-	var input models.Scan
+	var input models.ScanStatus
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
 		return
@@ -258,7 +258,7 @@ func UpdateScan(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": scan})
 }
 
-func DeleteEndpoint(c *gin.Context) {
+/*func DeleteEndpoint(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	// Get model if exist
 	var endpoint models.Endpoint
