@@ -77,6 +77,9 @@ spec:
                   value: "{{workflow.name}}"
                 - name: endpoint
                   value: "{{inputs.parameters.endpoint}}"
+          - name: scan-finished
+            depends: "scan-filter-upload.Succeeded"
+            template: finish-scan 
 
     - name: add-scan
       script:
@@ -88,4 +91,15 @@ spec:
           --data-raw '{
           "company": "{{workflow.parameters.company}}",
           "scanid": "{{workflow.name}}"
+          }'
+
+    - name: finish-scan
+      script:
+        image: curlimages/curl:7.76.1
+        command: [sh]
+        source: |
+          curl --location --request PATCH 'https://csi.cmkl.ac.th/api/updateScan/{{workflow.name}}' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+          "status": "success"
           }'
