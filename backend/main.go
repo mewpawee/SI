@@ -101,7 +101,7 @@ func main() {
 	r.POST("/addEndpoint", controllers.AddNewEndpoint)*/
 	r.POST("/addScan", controllers.AddNewScan)
 	r.POST("/uploadResult", controllers.Result)
-	r.POST("/getScanResult", controllers.GetScanResult)
+	r.POST("/generateReport", controllers.GenerateReport)
 	//r.POST("/resultLogs", controllers.Raw)
 	/*r.PATCH("/updateScan/:status", controllers.UpdateScan)
 	r.GET("/getEndpoints/:google_id", controllers.GetEndpoints)

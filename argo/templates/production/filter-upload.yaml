@@ -14,12 +14,15 @@ spec:
         value: ""
       - name: workflowName
         value: ""
+      - name: endpoint
+        value: ""
   templates:
     - name: filter-upload
       inputs:
         parameters:
           - name: company
           - name: workflowName
+          - name: endpoint
       steps:
         - - name: filter
             template: filter-template
@@ -29,6 +32,8 @@ spec:
                   value: "{{inputs.parameters.company}}"
                 - name: workflowName
                   value: "{{inputs.parameters.workflowName}}"
+                - name: endpoint
+                  value: "{{inputs.parameters.endpoint}}"
         - - name: upload
             template: upload-template
             arguments:
@@ -43,11 +48,12 @@ spec:
         parameters:
           - name: company
           - name: workflowName
+          - name: endpoint
         artifacts:
           - name: log
             path: /mnt/log
             s3:
-              key: "{{inputs.parameters.company}}/{{inputs.parameters.workflowName}}/log"
+              key: "{{inputs.parameters.company}}/{{inputs.parameters.workflowName}}/{{inputs.parameters.endpoint}}/log"
       container:
         image: "registry.digitalocean.com/sec/filter:latest"
         command: [sh, -c]
