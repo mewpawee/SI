@@ -86,6 +86,7 @@ func main() {
 			c.JSON(200, gin.H{"message": uid})
 		}
 	})*/
+	privateUser.POST("/booking", controllers.Booking) 
 	privateUser.POST("/addEndpoint", controllers.AddEndpoint)       //input poolid, endpoint
 	privateUser.POST("/deleteEndpoint", controllers.DeleteEndpoint) //input endpoint
 <<<<<<< HEAD
