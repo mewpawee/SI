@@ -18,7 +18,7 @@ import (
 
 	//"encoding/json"
 	//"github.com/tbaehler/gin-keycloak/pkg/ginkeycloak"
-	//"log"
+	"log"
 
 	//"github.com/jmoiron/sqlx"
 )
@@ -31,8 +31,9 @@ func AddNewScan(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	loc, _ := time.LoadLocation("Asia/Bangkok")
 	//log.Printf(input.ScanID)
-	scan := models.Scan{ScanID: input.ScanID, Company: input.Company, Status: "pending", Start: time.Now()}
+	scan := models.Scan{ScanID: input.ScanID, Company: input.Company, Status: "running", Start: time.Now().In(loc)}
 	dbc := db.Create(&scan)
 	if dbc.Error != nil {
 		c.JSON(http.StatusOK, gin.H{"error": dbc.Error})
@@ -164,7 +165,7 @@ func DeleteEndpoint(c *gin.Context) { //input endpoint
 	}
 }
 func GetEndpoints(c *gin.Context) { // input poolid
-	// log.Println("GetEndpoints")
+	log.Println("GetEndpoints")
 	db := c.MustGet("db").(*gorm.DB)
 	company, okCompany := c.Get("company")
 	if okCompany {
@@ -240,7 +241,7 @@ func AddNewScan(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": scan})
-}
+}*/
 func UpdateScan(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	// Get model if exist
@@ -249,7 +250,7 @@ func UpdateScan(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		return
 	}
-	var input models.Scan
+	var input models.ScanStatus
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
 		return
@@ -257,8 +258,23 @@ func UpdateScan(c *gin.Context) {
 	db.Model(&scan).Updates(input)
 	c.JSON(http.StatusOK, gin.H{"data": scan})
 }
+func GetScanStatus(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+	// Get model if exist
+	var input models.ScanID
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
+		return
+	}
+	var scan models.Scan
+	if err := db.Where("scan_id = ?", input.ScanID).First(&scan).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": scan.Status})
+}
 
-func DeleteEndpoint(c *gin.Context) {
+/*func DeleteEndpoint(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	// Get model if exist
 	var endpoint models.Endpoint
