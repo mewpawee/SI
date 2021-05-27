@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: CronWorkflow
+metadata:
+  name: cron-test
+  namespace: argo
+spec:
+  schedule: "*/10 * * * *"
+  timezone: "Asia/Bangkok"
+  concurrencyPolicy: "Replace"
+  startingDeadlineSeconds: 0
+  workflowSpec:
+    entrypoint: scan-endpoint
+    arguments:
+      parameters:
+      - name: company
+        value: "test"
+      - name: endpoint
+        value: "csi.cmkl.ac.th"
+    templates:
+      - name: scan-endpoint
+        steps:
+         - - name: scan
+             templateRef:
+               name: endpoint-production
+               template: endpoint-production 
+             arguments:
+               parameters:
+               - name: company
+                 value: "{{workflow.parameters.company}}"
+               - name: endpoint
+                 value: "{{workflow.parameters.endpoint}}"

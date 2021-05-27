@@ -88,8 +88,12 @@ func main() {
 	})*/
 	privateUser.POST("/addEndpoint", controllers.AddEndpoint)       //input poolid, endpoint
 	privateUser.POST("/deleteEndpoint", controllers.DeleteEndpoint) //input endpoint
+<<<<<<< HEAD
 	privateUser.GET("/getEndpoints", controllers.GetEndpoints)  //input poolid
 	privateUser.GET("/getAllScans", controllers.GetAllScan) 
+=======
+	privateUser.GET("/getEndpoints", controllers.GetEndpoints)      //input poolid
+>>>>>>> develop
 	privateUser.GET("/test", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "this thing works"})
 	})
@@ -102,8 +106,13 @@ func main() {
 	r.POST("/addEndpoint", controllers.AddNewEndpoint)*/
 	r.POST("/addScan", controllers.AddNewScan)
 	r.POST("/uploadResult", controllers.Result)
+<<<<<<< HEAD
 	r.GET("/getScanResult", controllers.GetScanResult)
 	r.GET("/getScanStatus", controllers.GetScanStatus)
+=======
+	r.GET("/getScanStatus", controllers.GetScanStatus)
+	r.POST("/generateReport", controllers.GenerateReport)
+>>>>>>> develop
 	//r.POST("/resultLogs", controllers.Raw)
 	r.PATCH("/updateScan/:scan_id", controllers.UpdateScan)
 	/*r.GET("/getEndpoints/:google_id", controllers.GetEndpoints)

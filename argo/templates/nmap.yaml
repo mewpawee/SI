@@ -11,9 +11,15 @@ spec:
   entrypoint: nmap
   imagePullSecrets:
     - name: registry-sec
+  arguments:
+    parameters:
+      - name: company
+        value: ""
   templates:
     - name: nmap
       inputs:
+        parameters:
+          - name: company
         artifacts:
           - name: dnsmap
             path: /mnt/dnsmap/dnsmap
@@ -32,3 +38,11 @@ spec:
             path: "/tmp/log"
             archive:
               none: {}
+            s3:
+              key: log/{{inputs.parameters.company}}/{{workflow.name}}/nmap/{{pod.name}}-log
+          - name: nmap-json
+            path: "/nmap/data.json"
+            archive:
+              none: {}
+            s3:
+              key: log/{{inputs.parameters.company}}/{{workflow.name}}/nmap/{{pod.name}}-json

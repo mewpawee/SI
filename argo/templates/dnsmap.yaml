@@ -14,17 +14,17 @@ spec:
   arguments:
     parameters:
     - name: domainName
-      value: ''
-    - name: version
-      value: 'v1'
+      value: ""
+    - name: company
+      value: ""
   templates:
   - name: dnsmap
     inputs:
       parameters:
       - name: domainName
-      - name: version
+      - name: company
     container:
-      image: "registry.digitalocean.com/sec/dnsmap:{{inputs.parameters.version}}"
+      image: "registry.digitalocean.com/sec/dnsmap:v1"
       command: [sh, -c]
       args:
       - ./dnsmap "{{inputs.parameters.domainName}}" -r /tmp/log && grep -Eo "([0-9]{1,3}\.){3}[0-9]{1,3}" "/tmp/log" | sort | uniq > "/tmp/dnsmap2nmap" && [ -s /tmp/dnsmap2nmap ] || echo "{{inputs.parameters.domainName}}" > /tmp/dnsmap2nmap;
@@ -34,8 +34,12 @@ spec:
         path: "/tmp/log"
         archive: 
           none: {}
+        s3:
+          key: log/{{inputs.parameters.company}}/{{workflow.name}}/{{pod.name}}/log
       - name: d2n
         path: "/tmp/dnsmap2nmap"
         archive:
           none: {}
+        s3:
+          key: log/{{inputs.parameters.company}}/{{workflow.name}}/{{pod.name}}/dnmap2nmap      
       

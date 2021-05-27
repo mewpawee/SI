@@ -3,11 +3,12 @@ package controllers
 //D:\capstone\backend
 import (
 	models "backendAPI/models"
-	//"io/ioutil"
+	"io/ioutil"
 	"net/http"
 	"strings"
+
 	"github.com/gin-gonic/gin"
-	//"github.com/jmoiron/sqlx/types"
+
 	"time"
 
 	//"database/sql"
@@ -19,12 +20,14 @@ import (
 	//"encoding/json"
 	//"github.com/tbaehler/gin-keycloak/pkg/ginkeycloak"
 	"log"
-
 	//"github.com/jmoiron/sqlx"
 )
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> develop
 func AddNewScan(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var input models.InputScan
@@ -58,7 +61,7 @@ func Result(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": result})
 }
-func GetScanResult(c *gin.Context) {
+func GenerateReport(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var input models.ScanID
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -66,21 +69,40 @@ func GetScanResult(c *gin.Context) {
 		return
 	}
 	//check if scan end
-	var results []models.Result
-	if err := db.Where("scan_id = ?", input.ScanID).Find(&results).Error; err != nil {
-			c.JSON(http.StatusOK, gin.H{"error": "record not found"})
-			return
+	var result models.Result
+	if err := db.Where("scan_id = ?", input.ScanID).Find(&result).Error; err != nil {
+		c.JSON(http.StatusOK, gin.H{"error": "record not found"})
+		return
+	}
+	jsonData := result.Data
+	url := "http://carbone:3000/generateReport"
+	jsonString := string(jsonData)
+	payload := strings.NewReader(jsonString)
+	fmt.Print(jsonString)
+	client := &http.Client{}
+	req, err := http.NewRequest("POST", url, payload)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Internal Error"})
+		return
+	}
+	req.Header.Add("Content-Type", "application/json")
+
+	res, err := client.Do(req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Internal Error"})
+		return
+	}
+	defer res.Body.Close()
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Internal Error"})
+		return
 	}
 
-	/*scanID := models.ScanID{ScanID: input.ScanID}
-	dbc := db.Create(&result)
-	if dbc.Error != nil {
-		c.JSON(http.StatusOK, gin.H{"error": dbc.Error})
-		return
-	}*/
-	c.JSON(http.StatusOK, gin.H{"data": results})
-	//c.JSON(http.StatusOK, gin.H{"data": result})
+	c.Data(http.StatusOK, "application/pdf", body)
 }
+
 /*func ActivateScan(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	// Get model if exist
@@ -208,13 +230,14 @@ func UpdateScan(c *gin.Context) {
 func GetScanStatus(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	// Get model if exist
-	var input models.ScanID
-	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
-		return
-	}
+	// var input models.ScanID
+	// if err := c.ShouldBindJSON(&input); err != nil {
+	// 	c.JSON(http.StatusOK, gin.H{"error": err.Error()})
+	// 	return
+	// }
+	scanId := c.Query("scanid")
 	var scan models.Scan
-	if err := db.Where("scan_id = ?", input.ScanID).First(&scan).Error; err != nil {
+	if err := db.Where("scan_id = ?", scanId).First(&scan).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		return
 	}

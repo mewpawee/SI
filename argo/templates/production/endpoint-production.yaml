@@ -1,0 +1,91 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: endpoint-production
+  namespace: argo
+spec:
+  serviceAccountName: default
+  artifactRepositoryRef:
+    configMap: artifact-repositories
+    key: default
+  entrypoint: endpoint-production
+  arguments:
+    parameters:
+      - name: endpoint
+        value: "google.com"
+      - name: company
+        value: ""
+  templates:
+    - name: endpoint-production
+      inputs:
+        parameters:
+          - name: endpoint
+      dag: # You should only reference external "templates" in a "steps" or "dag" "template".
+        tasks:
+          #add scan on database
+          - name: scan-addscan
+            template: add-scan
+          #validate ip
+          - name: scan-validate-ip
+            templateRef: # You can reference a "template" from another "WorkflowTemplate" using this field
+              name: validate-ip # This is the name of the "WorkflowTemplate" CRD that contains the "template" you want
+              template: validate-ip # This is the name of the "template" you want to reference
+            arguments: # You can pass in arguments as normal
+              parameters:
+                - name: endpoint
+                  value: "{{inputs.parameters.endpoint}}"
+          #dnsmap
+          - name: scan-dnsmap 
+            depends: "scan-validate-ip.Succeeded"
+            when: "{{tasks.scan-validate-ip.outputs.result}} == false"
+            templateRef:
+              name: dnsmap
+              template: dnsmap
+            arguments:
+              parameters:
+                - name: endpoint
+                  value: "{{inputs.parameters.endpoint}}"
+                - name: company
+                  value: "{{workflow.parameters.company}}"
+          #nmap
+          - name: scan-nmap 
+            depends: "scan-dnsmap.Succeeded"
+            templateRef:
+              name: nmap
+              template: nmap
+            arguments:
+              parameters:
+                - name: company
+                  value: "{{workflow.parameters.company}}"
+                - name: endpoint
+                  value: "{{inputs.parameters.endpoint}}"
+              artifacts:
+                - name: dnsmap
+                  raw:
+                    data: "{{tasks.scan-dnsmap.outputs.parameters.d2n}}"
+          #Filter data and upload
+          - name: scan-filter-upload
+            depends: "scan-nmap.Succeeded"
+            templateRef:
+              name: filter-upload
+              template: filter-upload
+            arguments:
+              parameters:
+                - name: company
+                  value: "{{workflow.parameters.company}}"
+                - name: workflowName
+                  value: "{{workflow.name}}"
+                - name: endpoint
+                  value: "{{inputs.parameters.endpoint}}"
+
+    - name: add-scan
+      script:
+        image: curlimages/curl:7.76.1
+        command: [sh]
+        source: |
+          curl --location --request POST 'https://csi.cmkl.ac.th/api/addScan' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+          "company": "{{workflow.parameters.company}}",
+          "scanid": "{{workflow.name}}"
+          }'

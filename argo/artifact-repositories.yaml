@@ -18,3 +18,4 @@ data:
       secretKeySecret:
         name: artifact-key
         key: secretKey
+  disable: |

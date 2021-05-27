@@ -41,14 +41,17 @@ spec:
               parameters:
                 - name: domainName
                   value: "{{inputs.parameters.endpoint}}"
-                - name: version
-                  value: "v1"
+                - name: company
+                  value: "{{inputs.parameters.company}}"
           - name: scan-nmap
             depends: "scan-dnsmap.Succeeded"
             templateRef:
               name: nmap
               template: nmap
             arguments:
+              parameters:
+                - name: company
+                  value: "{{inputs.parameters.company}}"
               artifacts:
                 - name: dnsmap
                   from: "{{tasks.scan-dnsmap.outputs.artifacts.d2n}}"
