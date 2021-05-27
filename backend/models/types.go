@@ -29,11 +29,23 @@ type ScanStatus struct {
 	ScanID  string `json:"scanid" gorm:"primary_key"`
 	Status  string `json:"status"`
 }
+type ScanEnd struct {
+	ScanID  string `json:"scanid" gorm:"primary_key"`
+	Status  string `json:"status"`
+	Complete	time.Time `json:"Complete"`
+}
 type Scan struct {
 	ScanID  string `json:"scanid" gorm:"primary_key"`
 	Company string `json:"company"`
 	Status  string `json:"status"`
 	Start	time.Time `json:"start"`
+}
+type ScanInfo struct {
+	ScanID  string `json:"scanid" gorm:"primary_key"`
+	Company string `json:"company"`
+	Status  string `json:"status"`
+	Start	time.Time `json:"start"`
+	Complete	time.Time `json:"Complete"`
 }
 type Scanlog struct {
 	ScanID       string `json:"scanid" gorm:"primary_key"`
