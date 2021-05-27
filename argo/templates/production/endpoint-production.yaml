@@ -9,6 +9,7 @@ spec:
     configMap: artifact-repositories
     key: default
   entrypoint: endpoint-production
+  onExit: exit-handler
   arguments:
     parameters:
       - name: endpoint
@@ -88,4 +89,15 @@ spec:
           --data-raw '{
           "company": "{{workflow.parameters.company}}",
           "scanid": "{{workflow.name}}"
+          }'
+
+    - name: exit-handler
+      script:
+        image: curlimages/curl:7.76.1
+        command: [sh]
+        source: |
+          curl --location --request PATCH 'https://csi.cmkl.ac.th/api/updateScan/{{workflow.name}}' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+          "status": "{{workflow.status}}"
           }'
