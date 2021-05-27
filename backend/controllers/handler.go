@@ -1,4 +1,4 @@
-package controllers
+﻿package controllers
 
 //D:\capstone\backend
 import (
@@ -340,6 +340,53 @@ func Booking(c *gin.Context) {
 	}
 }
 
+func BookingCronjob(c *gin.Context) {
+	var booking []string
+	if err := c.ShouldBindJSON(&Booking); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	for _, element := range Booking {
+	body := strings.NewReader("{
+	apiVersion: argoproj.io/v1alpha1
+	kind: CronWorkflow
+	metadata:
+		name: hello-world
+	spec:
+		schedule: "* * * * *"
+		timezone: "America/Los_Angeles"   # Default to local machine timezone
+		startingDeadlineSeconds: 0
+		concurrencyPolicy: "Replace"      # Default to "Allow"
+		successfulJobsHistoryLimit: 4     # Default 3
+		failedJobsHistoryLimit: 4         # Default 1
+		suspend: false                    # Set to "true" to suspend scheduling
+		workflowSpec:
+			entrypoint: whalesay
+			templates:
+				- name: whalesay
+				container:
+				image: docker/whalesay:latest
+				command: [cowsay]
+				args: ["🕓 hello world. Scheduled on: {{workflow.scheduledTime}}"]
+	}
+}
+}")
+	req, err := http.NewRequest("POST", "argo-server.argo.svc.cluster.local:2746", body)
+	if err != nil {
+	// handle err
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+	// handle err
+	}
+	defer resp.Body.Close()
+	}
+	c.JSON(http.StatusOK, gin.H{"data": booking})
+}
+
+
 /*func GetScan(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	if err := db.Where("scan_id = ?", c.Param("scan_id")).Find(&hosts).Error; err != nil {
@@ -382,3 +429,25 @@ func AddNewScan(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": scan})
 }*/
+/*
+apiVersion: argoproj.io/v1alpha1
+kind: CronWorkflow
+metadata:
+  name: sci
+spec:
+  schedule: "* * * * *"
+  timezone: "Asia/Bangkok"   # Default to local machine timezone
+  startingDeadlineSeconds: 0
+  concurrencyPolicy: "Replace"      # Default to "Allow"
+  successfulJobsHistoryLimit: 4     # Default 3
+  failedJobsHistoryLimit: 4         # Default 1
+  suspend: false                    # Set to "true" to suspend scheduling
+  workflowSpec:
+    entrypoint: whalesay
+    templates:
+      - name: whalesay
+        container:
+          image: docker/whalesay:latest
+          command: [cowsay]
+          args: ["🕓 hello world. Scheduled on: {{workflow.scheduledTime}}"]
+		  */
