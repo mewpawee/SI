@@ -68,6 +68,12 @@ type Result struct {
 type Resultd struct {
 	Data string `db:"data"`
 }
+type BookingInput struct {
+	DayStart string `json:"daystart"`
+	TimeStart time.Time `json:"timestart"`
+	DayEnd string `json:"dayend"`
+	TimeEnd time.Time `json:"timeend"`
+}
 type Booking struct {
 	DayStart string `json:"daystart"`
 	TimeStart time.Time `json:"timestart"`
