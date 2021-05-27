@@ -78,7 +78,10 @@ type BookingInput struct {
 type Booking struct {
 	Company string `json:"company"`
 	DayStart string `json:"daystart"`
-	TimeStart time.Time `json:"timestart"`
+	TimeStart string `json:"timestart"`
 	DayEnd string `json:"dayend"`
-	TimeEnd time.Time `json:"timeend"`
+	TimeEnd string `json:"timeend"`
+}
+type BookingList struct{
+	List []Booking `json:"list"`
 }

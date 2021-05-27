@@ -107,12 +107,13 @@ func main() {
 	r.POST("/addEndpoint", controllers.AddNewEndpoint)*/
 	r.POST("/addScan", controllers.AddNewScan)
 	r.POST("/uploadResult", controllers.Result)
-	r.POST("/bookingCronjob", controllers.BookingCronjob)
+	//r.POST("/bookingCronjob", controllers.BookingCronjob)
 /*<<<<<<< HEAD
 	r.GET("/getScanResult", controllers.GetScanResult)
 	r.GET("/getScanStatus", controllers.GetScanStatus)
 =======*/
 	r.GET("/getScanStatus", controllers.GetScanStatus)
+	r.GET("/getAllEndpointsAdmin", controllers.GetAllEndpointsAdmin)
 	r.POST("/generateReport", controllers.GenerateReport)
 //>>>>>>> develop
 	//r.POST("/resultLogs", controllers.Raw)

@@ -203,6 +203,16 @@ func GetEndpoints(c *gin.Context) { // input poolid
 	}
 }
 
+func GetAllEndpointsAdmin(c *gin.Context) { // input poolid
+	db := c.MustGet("db").(*gorm.DB)
+	var endpoint []models.Endpoint
+	if err := db.Find(&endpoint).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": endpoint})
+}
+
 
 func UpdateScan(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
@@ -321,13 +331,37 @@ func Booking(c *gin.Context) {
 	company, okCompany := c.Get("company")
 	if okCompany {
 		strCompany := fmt.Sprintf("%v", company)
-		var inputList []models.BookingInput
+		strCompany = strings.Trim(strCompany, "[/]")
+		var inputList models.BookingList
 		if err := c.ShouldBindJSON(&inputList); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		var booking []models.Booking
-		for _, element := range inputList {
+		for _, element := range inputList.List {
+			booking := models.Booking{Company : strCompany, DayStart : element.DayStart, TimeStart : element.TimeStart, DayEnd : element.DayEnd, TimeEnd : element.TimeEnd}  
+			dbc := db.Create(&booking)
+			if dbc.Error != nil {
+				c.JSON(http.StatusOK, gin.H{"error": dbc.Error})
+				return
+				}
+			}
+		c.JSON(http.StatusOK, gin.H{"data": inputList, "company": strCompany})
+	}
+}
+
+func GetBooking(c *gin.Context) {
+	//db := c.MustGet("db").(*gorm.DB)
+	company, okCompany := c.Get("company")
+	if okCompany {
+		strCompany := fmt.Sprintf("%v", company)
+		var inputList models.BookingList
+		if err := c.ShouldBindJSON(&inputList); err != nil {
+			log.Println("----------------------------------------------------------------------------------------")
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		/*var booking []models.Booking
+		for _, element := range inputList.List {
 			i := models.Booking{Company : strCompany, DayStart : element.DayStart, TimeStart : element.TimeStart, DayEnd : element.DayEnd, TimeEnd : element.TimeEnd}  
 			booking = append(booking, i)
 			}
@@ -335,12 +369,12 @@ func Booking(c *gin.Context) {
 		if dbc.Error != nil {
 			c.JSON(http.StatusOK, gin.H{"error": dbc.Error})
 			return
-		}
-		c.JSON(http.StatusOK, gin.H{"data": booking})
+		}*/
+		c.JSON(http.StatusOK, gin.H{"data": inputList, "company": strCompany})
 	}
 }
 
-func BookingCronjob(c *gin.Context) {
+/*func BookingCronjob(c *gin.Context) {
 	var booking []string
 	if err := c.ShouldBindJSON(&Booking); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
