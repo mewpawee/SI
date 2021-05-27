@@ -263,12 +263,15 @@ func Booking(c *gin.Context) {
 	company, okCompany := c.Get("company")
 	if okCompany {
 		strCompany := fmt.Sprintf("%v", company)
-		var input models.Booking
-		if err := c.ShouldBindJSON(&input); err != nil {
+		var inputList []models.BookingInput
+		if err := c.ShouldBindJSON(&inputList); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		booking := models.Booking{DayStart: input.DayStart, TimeStart: input.TimeStart, DayEnd: input.DayEnd, TimeEnd : input.TimeEnd}
+		booking := []models.Booking
+		for _, element := range inputList {
+			i := models.Booking{Company : strCompany, DayStart : element.DayStart, TimeStart : element.TimeStart, DayEnd : element.DayEnd, TimeEnd : element.TimeEnd}  
+			booking = append(booking, )
 		dbc := db.Create(&booking)
 		if dbc.Error != nil {
 			c.JSON(http.StatusOK, gin.H{"error": dbc.Error})
@@ -277,6 +280,7 @@ func Booking(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"data": booking})
 	}
 }
+
 /*func DeleteEndpoint(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	// Get model if exist
