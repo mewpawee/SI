@@ -9,7 +9,6 @@ spec:
     configMap: artifact-repositories
     key: default
   entrypoint: endpoint-production
-  onExit: exit-handler
   arguments:
     parameters:
       - name: endpoint
@@ -78,6 +77,9 @@ spec:
                   value: "{{workflow.name}}"
                 - name: endpoint
                   value: "{{inputs.parameters.endpoint}}"
+          - name: scan-finished
+            depends: "scan-filter-upload.Succeeded"
+            template: finish-scan 
 
     - name: add-scan
       script:
@@ -91,7 +93,7 @@ spec:
           "scanid": "{{workflow.name}}"
           }'
 
-    - name: exit-handler
+    - name: finish-scan
       script:
         image: curlimages/curl:7.76.1
         command: [sh]
@@ -99,5 +101,5 @@ spec:
           curl --location --request PATCH 'https://csi.cmkl.ac.th/api/updateScan/{{workflow.name}}' \
           --header 'Content-Type: application/json' \
           --data-raw '{
-          "status": "{{workflow.status}}"
+          "status": "success"
           }'
