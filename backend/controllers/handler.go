@@ -250,12 +250,12 @@ func GetAllScan(c *gin.Context) { // input poolid
 	if okCompany {
 		strCompany := fmt.Sprintf("%v", company)
 		strCompany = strings.Trim(strCompany, "[/]")
-		var scans []models.ScanInfo
-		if err := db.Where("company = ?", strCompany).Find(&scans).Error; err != nil {
+		var scan []models.Scan
+		if err := db.Where("company = ?", strCompany).Find(&scan).Error; err != nil {
 			c.JSON(http.StatusOK, gin.H{"error": "record not found"})
 			return
 		}
-		c.JSON(http.StatusOK, gin.H{"data": scans})
+		c.JSON(http.StatusOK, gin.H{"data": scan})
 	}
 }
 /*func DeleteEndpoint(c *gin.Context) {

@@ -39,6 +39,7 @@ type Scan struct {
 	Company string `json:"company"`
 	Status  string `json:"status"`
 	Start	time.Time `json:"start"`
+	Complete	time.Time `json:"Complete"`
 }
 type ScanInfo struct {
 	ScanID  string `json:"scanid" gorm:"primary_key"`
