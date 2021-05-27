@@ -340,7 +340,7 @@ func Booking(c *gin.Context) {
 	}
 }
 
-func BookingConjob(c *gin.Context) {
+func BookingCronjob(c *gin.Context) {
 	var booking []string
 	if err := c.ShouldBindJSON(&Booking); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
