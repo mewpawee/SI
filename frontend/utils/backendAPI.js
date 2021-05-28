@@ -1,4 +1,14 @@
 import { request, download } from './api'
+
+export const adminGetEndpoints = async () => {
+  try {
+    const endpointUrl = `https://csi.cmkl.ac.th/api/getAllEndpointsAdmin`
+    const result = await request('get', endpointUrl, {}, true)
+    return result
+  } catch (err) {
+    throw new Error(`can't get endpoints`)
+  }
+}
 export const downloadReport = async (scanId) => {
   try {
     const endpointUrl = 'https://csi.cmkl.ac.th/api/generateReport'

@@ -1,41 +1,38 @@
-<template lang="html">
+<template>
   <div>
-    <div v-for="item in companies" :key="item.name">
-      <v-card>
-        <v-card-title>{{ item.name }}</v-card-title>
-        <v-card-actions>
-          <v-btn color="primary lighten-2" text>
-            Endpoints
-          </v-btn>
-
-          <v-spacer></v-spacer>
-
-          <v-btn icon @click="toggle(item)">
-            <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-          </v-btn>
-        </v-card-actions>
-        <v-expand-transition>
-          <div v-show="item.show">
-            <v-divider></v-divider>
-
-            <v-card-text>
-              <v-list>
-                <v-list-item v-for="endpoint in item.endpoints" :key="endpoint">
-                  {{ endpoint }}
-                </v-list-item>
-              </v-list>
-            </v-card-text>
-          </div>
-        </v-expand-transition>
-      </v-card>
-    </div>
+    <v-data-table
+      :headers="headers"
+      :items="scans"
+      sort-by="Start"
+      class="elevation-1"
+      item-key="name"
+      :search="search"
+    >
+      <template v-slot:top>
+        <v-text-field
+          v-model="search"
+          label="Search"
+          class="mx-4"
+        ></v-text-field>
+        <v-toolbar flat>
+          <v-toolbar-title>Scans</v-toolbar-title>
+        </v-toolbar>
+      </template>
+    </v-data-table>
   </div>
 </template>
 
 <script>
+import { adminGetEndpoints } from '@/utils/backendAPI.js'
 export default {
   auth: false,
   layout: 'admin',
+  async fetch() {
+    const result = await adminGetEndpoints()
+    this.scans = result.data
+  },
+  fetchDelay: 1000,
+  fetchOnServer: false,
   async middleware({ $auth, redirect }) {
     if ($auth.loggedIn) {
       const roles = await $auth.user.realm_access.roles
@@ -47,15 +44,30 @@ export default {
     }
   },
   data: () => ({
-    companies: [
-      { name: 'Start', endpoints: [1, 2, 3, 4], show: false },
-      { name: 'Start', endpoints: [1, 2, 3, 4], show: false },
-      { name: 'Start', endpoints: [1, 2, 3, 4], show: false }
-    ]
+    search: '',
+    polling: null,
+    headers: [
+      {
+        text: 'Company',
+        align: 'start',
+        sortable: true,
+        value: 'company'
+      },
+      { text: 'Endpoint', value: 'endpoint' }
+    ],
+    scans: []
   }),
+  beforeDestroy() {
+    clearInterval(this.polling)
+  },
+  created() {
+    this.pollData()
+  },
   methods: {
-    toggle(item) {
-      item.show = !item.show
+    pollData() {
+      this.polling = setInterval(() => {
+        this.$fetch()
+      }, 3000)
     }
   }
 }
