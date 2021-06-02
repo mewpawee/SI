@@ -42,7 +42,9 @@ spec:
                   value: "{{inputs.parameters.workflowName}}"
               artifacts:
                 - name: report-json
-                  from: "{{steps.filter.outputs.artifacts.output-json}}"
+                  raw:
+                    data: |
+                      "{{steps.filter.outputs.parameters.output-json}}"
 
     #templates
     - name: filter-template
@@ -62,11 +64,10 @@ spec:
         args:
           - ./run.sh
       outputs:
-        artifacts:
+        parameters:
           - name: output-json
-            path: "/tmp/report.json"
-            s3:
-              key: "{{inputs.parameters.company}}/{{inputs.parameters.workflowName}}/{{inputs.parameters.endpoint}}/tmp/report.json"
+            valueFrom:
+              path: "/tmp/report.json"
 
     - name: upload-template
       inputs:
@@ -76,27 +77,20 @@ spec:
           - name: report-json
             path: /mnt/report.json
       script:
-        image: python:alpine3.6
-        command: [python]
+        image: curlimages/curl:7.76.1
+        command: [sh]
         source: |
-          import http.client
-          import json
-
-          conn = http.client.HTTPSConnection("csi.cmkl.ac.th")
-
-          with open('/mnt/report.json') as f:
-            data_json = json.load(f)
-          print(data_json)
-          obj_data = {
-          "scanid": "{{inputs.parameters.workflowName}}",
-          "data": data_json    
+          fileLocation=/mnt/report.json
+          json=`cat /mnt/report.json`
+          data=$(cat <<EOF
+          {
+            "scanid": "{{inputs.parameters.workflowName}}",
+            "data": $json
           }
-
-          payload = json.dumps(obj_data)
-          headers = {
-          'Content-Type': 'application/json'
-          }
-          conn.request("POST", "/api/uploadResult", payload, headers)
-          res = conn.getresponse()
-          data = res.read()
-          print(data.decode("utf-8"))
+          EOF
+          )
+          echo $data > /mnt/report.json
+          curl -X POST 'https://csi.cmkl.ac.th/api/uploadResult' \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          --data-binary "@$fileLocation"

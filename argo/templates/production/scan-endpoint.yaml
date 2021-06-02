@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: endpoint-production
+  name: scan-endpoint
   namespace: argo
 spec:
   serviceAccountName: default
   artifactRepositoryRef:
     configMap: artifact-repositories
     key: default
-  entrypoint: endpoint-production
+  entrypoint: scan-endpoint
   arguments:
     parameters:
       - name: endpoint
@@ -16,7 +16,7 @@ spec:
       - name: company
         value: ""
   templates:
-    - name: endpoint-production
+    - name: scan-endpoint
       inputs:
         parameters:
           - name: endpoint
@@ -25,19 +25,8 @@ spec:
           #add scan on database
           - name: scan-addscan
             template: add-scan
-          #validate ip
-          - name: scan-validate-ip
-            templateRef: # You can reference a "template" from another "WorkflowTemplate" using this field
-              name: validate-ip # This is the name of the "WorkflowTemplate" CRD that contains the "template" you want
-              template: validate-ip # This is the name of the "template" you want to reference
-            arguments: # You can pass in arguments as normal
-              parameters:
-                - name: endpoint
-                  value: "{{inputs.parameters.endpoint}}"
           #dnsmap
-          - name: scan-dnsmap 
-            depends: "scan-validate-ip.Succeeded"
-            when: "{{tasks.scan-validate-ip.outputs.result}} == false"
+          - name: scan-dnsmap
             templateRef:
               name: dnsmap
               template: dnsmap
@@ -48,8 +37,8 @@ spec:
                 - name: company
                   value: "{{workflow.parameters.company}}"
           #nmap
-          - name: scan-nmap 
-            depends: "scan-dnsmap.Succeeded"
+          - name: scan-nmap
+            depends: "scan-dnsmap.Succeeded||scan-dnsmap.Skipped"
             templateRef:
               name: nmap
               template: nmap
@@ -62,7 +51,8 @@ spec:
               artifacts:
                 - name: dnsmap
                   raw:
-                    data: "{{tasks.scan-dnsmap.outputs.parameters.d2n}}"
+                    data: |
+                      {{tasks.scan-dnsmap.outputs.parameters.d2n}}
           #Filter data and upload
           - name: scan-filter-upload
             depends: "scan-nmap.Succeeded"
@@ -79,7 +69,7 @@ spec:
                   value: "{{inputs.parameters.endpoint}}"
           - name: scan-finished
             depends: "scan-filter-upload.Succeeded"
-            template: finish-scan 
+            template: finish-scan
 
     - name: add-scan
       script:
