@@ -38,5 +38,4 @@ spec:
         archive: 
           none: {}
         s3:
-          key: |
-            {{inputs.parameters.company}}/{{workflow.name}}/{{inputs.parameters.endpoint}}/log/hydra/{{inputs.parameters.protocol-port}}.log
+          key: "{{inputs.parameters.company}}/{{workflow.name}}/{{inputs.parameters.endpoint}}/log/hydra/{{inputs.parameters.protocol-port}}.log"

@@ -13,15 +13,18 @@ spec:
     parameters:
     - name: endpoints
       value: |
-            ["",""]
+            ["csi.cmkl.ac.th","133.245.192.1"]
     - name: company
-      value: ""
+      value: "csi"
   imagePullSecrets:
   - name: registry-sec
   templates:
   - name: scan-endpoints
     dag:
       tasks:
+        #add scan on database
+        - name: scan-addscan
+          template: add-scan
         - name: scan-each-endpoint
           templateRef:
             name: scan-endpoint
@@ -33,3 +36,45 @@ spec:
             - name: company
               value: "{{workflow.parameters.company}}"
           withParam: "{{workflow.parameters.endpoints}}"
+        #Filter data and upload JSON data to the database via backend
+        - name: scan-filter-upload
+          depends: "scan-each-endpoint.Succeeded || scan-each-endpoint.Skipped"
+          templateRef:
+            name: filter-upload
+            template: filter-upload
+          arguments:
+            parameters:
+              - name: company
+                value: "{{workflow.parameters.company}}"
+              - name: workflowName
+                value: "{{workflow.name}}"
+              - name: endpoints
+                value: "{{workflow.parameters.endpoints}}"
+        #Tell the backend that the scan is finished
+        - name: scan-finished
+          depends: "scan-filter-upload.Succeeded"
+          template: finish-scan
+
+  # a script to add the scan to the backend
+  - name: add-scan
+    script:
+      image: curlimages/curl:7.76.1
+      command: [sh]
+      source: |
+        curl --location --request POST 'https://csi.cmkl.ac.th/api/addScan' \
+        --header 'Content-Type: application/json' \
+        --data-raw '{
+        "company": "{{workflow.parameters.company}}",
+        "scanid": "{{workflow.name}}"
+        }'
+  # a script to tell the backend that the workflow were finished
+  - name: finish-scan
+    script:
+      image: curlimages/curl:7.76.1
+      command: [sh]
+      source: |
+        curl --location --request PATCH 'https://csi.cmkl.ac.th/api/updateScan/{{workflow.name}}' \
+        --header 'Content-Type: application/json' \
+        --data-raw '{
+        "status": "success"
+        }'

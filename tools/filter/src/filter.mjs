@@ -15,7 +15,7 @@ const nmap = async (file) => {
   let filtered;
   if (filetype == "json") {
     const json = await readJSON(file);
-    console.log(json);
+    // console.log(json);
     filtered = await nmapFilter(json);
   }
   return filtered;

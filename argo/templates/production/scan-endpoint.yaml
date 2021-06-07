@@ -22,9 +22,6 @@ spec:
           - name: endpoint
       dag: # You should only reference external "templates" in a "steps" or "dag" "template".
         tasks:
-          #add scan on database
-          - name: scan-addscan
-            template: add-scan
           #dnsmap
           - name: scan-dnsmap
             templateRef:
@@ -38,10 +35,10 @@ spec:
                   value: "{{workflow.parameters.company}}"
           #nmap
           - name: scan-nmap
-            depends: "scan-dnsmap.Succeeded||scan-dnsmap.Skipped"
             templateRef:
               name: nmap
               template: nmap
+            depends: "scan-dnsmap.Succeeded||scan-dnsmap.Skipped"
             arguments:
               parameters:
                 - name: company
@@ -53,12 +50,18 @@ spec:
                   raw:
                     data: |
                       {{tasks.scan-dnsmap.outputs.parameters.d2n}}
+          #check if nmap couldn't find anything useful for hydra
+          - name: check-param
+            template: param-true
+            depends: "scan-nmap.Succeeded"
+            when: >-
+              "{{tasks.scan-nmap.outputs.parameters.dnmp2hydra}}" != ""
           #penetration  
           - name: scan-penetration
-            depends: "scan-nmap.Succeeded"
             templateRef:
               name: penetration
               template: penetration
+            depends: "check-param.Succeeded"
             arguments:
               parameters:
                 - name: company
@@ -68,44 +71,10 @@ spec:
                 - name: protocol-endpoint
                   value: "{{item}}"
             withParam: "{{tasks.scan-nmap.outputs.parameters.dnmp2hydra}}"
-          #Filter data and upload JSON data to the database via backend
-          - name: scan-filter-upload
-            depends: "scan-penetration.Succeeded"
-            templateRef:
-              name: filter-upload
-              template: filter-upload
-            arguments:
-              parameters:
-                - name: company
-                  value: "{{workflow.parameters.company}}"
-                - name: workflowName
-                  value: "{{workflow.name}}"
-                - name: endpoint
-                  value: "{{inputs.parameters.endpoint}}"
-          #Tell the backend that the scan is finished
-          - name: scan-finished
-            depends: "scan-filter-upload.Succeeded"
-            template: finish-scan
-
-    - name: add-scan
+    #a work around for checking the parameter becase when is not working with WithParam somehow
+    - name: param-true
       script:
-        image: curlimages/curl:7.76.1
-        command: [sh]
+        image: alpine:3.6
+        command: [sh, -c]
         source: |
-          curl --location --request POST 'https://csi.cmkl.ac.th/api/addScan' \
-          --header 'Content-Type: application/json' \
-          --data-raw '{
-          "company": "{{workflow.parameters.company}}",
-          "scanid": "{{workflow.name}}"
-          }'
-
-    - name: finish-scan
-      script:
-        image: curlimages/curl:7.76.1
-        command: [sh]
-        source: |
-          curl --location --request PATCH 'https://csi.cmkl.ac.th/api/updateScan/{{workflow.name}}' \
-          --header 'Content-Type: application/json' \
-          --data-raw '{
-          "status": "success"
-          }'
+          args: ["echo true]

@@ -36,6 +36,7 @@ spec:
           - name: dnmp2hydra
             valueFrom:
               path: /tmp/nmap2hydra
+              default: ""
         artifacts:
           - name: nmap-log
             path: "/tmp/log"

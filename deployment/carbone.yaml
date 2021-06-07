@@ -24,7 +24,7 @@ spec:
   selector:
     matchLabels:
       app: carbone
-  replicas: 1
+  replicas: 2
 
   template:
     metadata:
