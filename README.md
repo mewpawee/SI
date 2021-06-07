@@ -5,7 +5,35 @@ CSI is a cloud-based automated security assessment system which could scan on se
 **Table of Contents**
 - [Documentation](#documentation)
 ## Documentation
-
+## Object Storage directories structure
 ```
-argo submit -n argo scan-artifact.yaml -p target-domain='[<endpoints>]' -p userId=<userId>
+csi 
+ |- [company-name]
+ .   |- [scan-name]
+ .   . 	   |- [endpoint]
+ .   .     .       |- log
+     .     .       |   |- dirb
+           .       |   |   - [protocol:port].log
+    	           |   |   .
+ 	               |   |   .
+ 	               |   |   .
+ 	          	   |   |
+                   |   |- hydra
+   		   		   |   |   - [protocol:endpoint].log
+           	   	   |   |   .
+           	   	   |   |   .
+           	   	   |   |   .
+           	   	   |   |
+                   |   |- nmap
+           	   	   |   |   - [endpoint].json
+           	   	   |   |   - [endpoint].log
+           	   	   |   |
+           	   	   |   |- xsssniper
+           	   	   |       - [protocol:port].log
+          	   	   |	   .
+           	   	   |       .
+           	   	   |       . 	
+          	   	   |
+     	   	   	   |- tmp
+               	       - report.json
 ```

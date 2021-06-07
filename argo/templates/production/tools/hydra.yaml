@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
   name: hydra
-  namespace: argoz
+  namespace: argo
 spec:
   serviceAccountName: default
   entrypoint: hydra
@@ -10,7 +10,11 @@ spec:
   - name: registry-sec
   arguments:
     parameters:
-    - name: protocal-endpoint
+    - name: endpoint
+      value: ""
+    - name: protocol-port
+      value: ""
+    - name: protocol-endpoint
       value: "ssh://161.246.34.35:22"
     - name: company
       value: ""
@@ -18,13 +22,15 @@ spec:
   - name: hydra
     inputs:
       parameters:
-      - name: protocal-endpoint
+      - name: endpoint
+      - name: protocol-port
+      - name: protocol-endpoint
       - name: company
     container:
       image: "registry.digitalocean.com/sec/hydra:latest"
       command: [sh, -c]
       args:
-      - bash run.sh {{inputs.parameters.protocal-endpoint}};
+      - bash run.sh "{{inputs.parameters.protocol-endpoint}}";
     outputs:
       artifacts:
       - name: hydra-log
@@ -32,4 +38,5 @@ spec:
         archive: 
           none: {}
         s3:
-          key: log/{{inputs.parameters.company}}/{{workflow.name}}/{{pod.name}}/log
+          key: |
+            {{inputs.parameters.company}}/{{workflow.name}}/{{inputs.parameters.endpoint}}/log/hydra/{{inputs.parameters.protocol-port}}.log

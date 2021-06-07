@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: validate-protocol
+  namespace: argo
+spec:
+  serviceAccountName: argo
+  entrypoint: validate-protocol
+  arguments:
+    parameters:
+    - name: protocol-endpoint
+      value: ""  
+  templates:
+  - name: validate-protocol
+    inputs:
+      parameters:
+      - name: protocol-endpoint
+    script:
+      image: debian:9.4
+      command: [bash]
+      source: |                                         # Contents of the here-script
+        ip="{{inputs.parameters.protocol-endpoint}}"
+        regEx="^(http|https)"
+        protocol=$(echo $ip | awk -F '://' '{print $1}')
+        port=$(echo $ip | awk -F ':' '{print $(NF)}')
+        if  [[ $ip =~ $regEx ]]; then 
+          echo "[{\"http\":true,\"protocol-port\":\"$protocol:$port\"}]"
+        else 
+          echo "[{\"http\":false,\"protocol-port\":\"$protocol:$port\"}]"  
+        fi

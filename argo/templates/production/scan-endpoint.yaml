@@ -53,9 +53,24 @@ spec:
                   raw:
                     data: |
                       {{tasks.scan-dnsmap.outputs.parameters.d2n}}
-          #Filter data and upload
-          - name: scan-filter-upload
+          #penetration  
+          - name: scan-penetration
             depends: "scan-nmap.Succeeded"
+            templateRef:
+              name: penetration
+              template: penetration
+            arguments:
+              parameters:
+                - name: company
+                  value: "{{workflow.parameters.company}}"
+                - name: endpoint
+                  value: "{{inputs.parameters.endpoint}}"
+                - name: protocol-endpoint
+                  value: "{{item}}"
+            withParam: "{{tasks.scan-nmap.outputs.parameters.dnmp2hydra}}"
+          #Filter data and upload JSON data to the database via backend
+          - name: scan-filter-upload
+            depends: "scan-penetration.Succeeded"
             templateRef:
               name: filter-upload
               template: filter-upload
@@ -67,6 +82,7 @@ spec:
                   value: "{{workflow.name}}"
                 - name: endpoint
                   value: "{{inputs.parameters.endpoint}}"
+          #Tell the backend that the scan is finished
           - name: scan-finished
             depends: "scan-filter-upload.Succeeded"
             template: finish-scan
