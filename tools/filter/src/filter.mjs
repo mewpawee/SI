@@ -27,18 +27,14 @@ const dirb = async (file) => {
   const cmd = `grep '+' ${file} | sed 's/+ /url-/;s/ (CODE:/,code-/;s/|SIZE:/,size-/;s/)//'`;
   const grepedData = await command(cmd);
   const obj = {};
-  if (grepedData) {
-    const data = grepedData.split("\n").slice(0, -1);
-    for (const d of data) {
-      const arr = d.split(",");
-      arr.forEach((string) => {
-        //console.log(arr)
-        const [key, value] = string.split("-");
-        obj[key] = value;
-      });
-    }
-  } else {
-    return undefined;
+  if (!grepedData) return undefined;
+  const data = grepedData.split("\n").slice(0, -1);
+  for (const d of data) {
+    const arr = d.split(",");
+    arr.forEach((string) => {
+      const [key, value] = string.split("-");
+      obj[key] = value;
+    });
   }
   return obj;
 };

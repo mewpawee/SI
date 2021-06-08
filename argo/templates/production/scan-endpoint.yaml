@@ -55,7 +55,7 @@ spec:
             template: param-true
             depends: "scan-nmap.Succeeded"
             when: >-
-              "{{tasks.scan-nmap.outputs.parameters.dnmp2hydra}}" != ""
+              {{tasks.scan-nmap.outputs.parameters.dnmp2hydra}} != ""
           #penetration  
           - name: scan-penetration
             templateRef:
@@ -76,5 +76,4 @@ spec:
       script:
         image: alpine:3.6
         command: [sh, -c]
-        source: |
-          args: ["echo true]
+        args: ["echo true"]
