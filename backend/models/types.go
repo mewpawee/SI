@@ -85,3 +85,7 @@ type Booking struct {
 type BookingList struct{
 	List []Booking `json:"list"`
 }
+type CompanyEndpoint struct{
+	Company string `json:"company"`
+	Endpoints []string `json:"endpoints"`
+}
