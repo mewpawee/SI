@@ -3,7 +3,7 @@ const fs = require('fs')
 
 
 
-fs.readFile('dump.txt', null, (err, data) => {
+fs.readFile('/mnt/log/103.153.118.68/log/sqlmap/http:10254.log', null, (err, data) => {
     if (err) {
         console.error(err)
         return
@@ -24,7 +24,7 @@ fs.readFile('dump.txt', null, (err, data) => {
         var paramInfo = {}
         var ty = firstSection.search('Type')
         pa = firstSection.search('Parameter')
-        paramInfo['Pramiter_name'] = firstSection.substring(0, firstSection.search('\r'))
+        paramInfo['Prameter_name'] = firstSection.substring(0, firstSection.search('\r'))
         
         var injectlist = []
         while (((pa == -1) || (ty < pa)) && (ty != -1)){
