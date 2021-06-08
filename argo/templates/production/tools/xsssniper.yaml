@@ -27,7 +27,7 @@ spec:
       - name: protocol-endpoint
       - name: company
     container:
-      image: "registry.digitalocean.com/sec/dirb:latest"
+      image: "registry.digitalocean.com/sec/xsssniper:latest"
       command: [sh, -c]
       args:
       - ./run.sh "{{inputs.parameters.protocol-endpoint}}";
