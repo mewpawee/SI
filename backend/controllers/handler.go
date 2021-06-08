@@ -15,6 +15,7 @@ import (
 	"fmt"
 
 	"github.com/jinzhu/gorm"
+	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 
 	//"encoding/json"
@@ -204,13 +205,17 @@ func GetEndpoints(c *gin.Context) { // input poolid
 }
 
 func GetAllEndpointsAdmin(c *gin.Context) { // input poolid
-	db := c.MustGet("db").(*gorm.DB)
-	var endpoint []models.Endpoint
-	if err := db.Find(&endpoint).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-		return
+	db := c.MustGet("sqlx").(*sqlx.DB)
+	var companies []string
+    db.Select(&companies, "SELECT company FROM endpoints")
+	var list []models.CompanyEndpoint 
+	for _, element := range companies {
+		var endpoints []string
+		db.Get(&endpoints, "SELECT endpoint FROM endpoints WHERE company=$1", element)
+		i := models.CompanyEndpoint{Company : element, Endpoints : endpoints}
+		list = append(list,i)
 	}
-	c.JSON(http.StatusOK, gin.H{"data": endpoint})
+	c.JSON(http.StatusOK, gin.H{"data": list})
 }
 
 

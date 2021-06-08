@@ -22,7 +22,7 @@ func ConnectPsql() *gorm.DB {
 	}
 	return db
 }
-func ConnectPNoSQL() *sqlx.DB {
+func ConnectSqlx() *sqlx.DB {
 	dsn := "<POSTGRESQL_URI>"
 	db, err := sqlx.Connect("postgres", dsn)
 	if err != nil {

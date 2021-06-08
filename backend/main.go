@@ -46,14 +46,14 @@ func main() {
 	flag.Parse()
 	r := gin.Default()
 	db := models.ConnectPsql()
-	NoSQL := models.ConnectPNoSQL()
+	sqlx := models.ConnectSqlx()
 	r.Use(CORSMiddleware())
 	r.Use(func(c *gin.Context) {
 		c.Set("db", db)
 		c.Next()
 	})
 	r.Use(func(c *gin.Context) {
-		c.Set("NoSQL", NoSQL)
+		c.Set("sqlx", sqlx)
 		c.Next()
 	})
 	//prawee code
