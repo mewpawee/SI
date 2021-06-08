@@ -1,5 +1,10 @@
-#! /bin/bash
-domain=$1
-out="tmp/"
+#! /bin/sh
+endpoint=$1
+protocolEndpoint=$2
+out="./result"
 
-sqlmap --url $1 --dump-all --out-put $out --batch 
+python sqlmap.py --url $protocolEndpoint --dump-all --output-dir $out --batch 
+if [ -s ./result/$endpoint/log ]
+then
+    cp ./result/$endpoint/log /tmp/log
+fi
