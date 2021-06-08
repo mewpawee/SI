@@ -20,15 +20,16 @@ spec:
   - name: registry-sec
   templates:
   - name: scan-endpoints
-    dag:
-      tasks:
+    steps:
         #add scan on database
-        - name: scan-addscan
+      - - name: scan-addscan
           template: add-scan
         - name: scan-each-endpoint
           templateRef:
             name: scan-endpoint
             template: scan-endpoint
+          continueOn:
+              failed: true
           arguments:
             parameters:
             - name: endpoint
@@ -37,11 +38,12 @@ spec:
               value: "{{workflow.parameters.company}}"
           withParam: "{{workflow.parameters.endpoints}}"
         #Filter data and upload JSON data to the database via backend
-        - name: scan-filter-upload
-          depends: "scan-each-endpoint.Succeeded || scan-each-endpoint.Skipped"
+      - - name: scan-filter-upload
           templateRef:
             name: filter-upload
             template: filter-upload
+          continueOn:
+              failed: true
           arguments:
             parameters:
               - name: company
@@ -51,8 +53,9 @@ spec:
               - name: endpoints
                 value: "{{workflow.parameters.endpoints}}"
         #Tell the backend that the scan is finished
-        - name: scan-finished
-          depends: "scan-filter-upload.Succeeded"
+      - - name: scan-finished
+          continueOn:
+              failed: true
           template: finish-scan
 
   # a script to add the scan to the backend
