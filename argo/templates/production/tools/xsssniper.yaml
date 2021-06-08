@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: xsssniper
+  namespace: argo
+spec:
+  serviceAccountName: default
+  entrypoint: xsssniper
+  imagePullSecrets:
+  - name: registry-sec
+  arguments:
+    parameters:
+    - name: endpoint
+      value: "161.246.34.35"
+    - name: protocol-port
+      value: "https:443"
+    - name: protocol-endpoint
+      value: "https://161.246.34.35"
+    - name: company
+      value: "csi"
+  templates:
+  - name: xsssniper
+    inputs:
+      parameters:
+      - name: endpoint
+      - name: protocol-port
+      - name: protocol-endpoint
+      - name: company
+    container:
+      image: "registry.digitalocean.com/sec/xsssniper:latest"
+      command: [sh, -c]
+      args:
+      - ./run.sh "{{inputs.parameters.protocol-endpoint}}";
+    outputs:
+      artifacts:
+      - name: xsssniper-log
+        path: "/tmp/log" 
+        archive: 
+          none: {}
+        s3:
+          key: "{{inputs.parameters.company}}/{{workflow.name}}/{{inputs.parameters.endpoint}}/log/xsssniper/{{inputs.parameters.protocol-port}}.log"

@@ -12,6 +12,7 @@
 import security1 from '@/static/slide/security-1.jpg'
 import security2 from '@/static/slide/security-2.jpg'
 export default {
+  auth: 'guest',
   layout: 'session',
   data: () => ({
     model: 0,
@@ -23,11 +24,6 @@ export default {
         src: security2
       }
     ]
-  }),
-  mounted() {
-    if (this.$auth.loggedIn) {
-      this.$router.replace({ name: 'login' })
-    }
-  }
+  })
 }
 </script>

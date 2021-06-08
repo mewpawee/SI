@@ -46,14 +46,14 @@ func main() {
 	flag.Parse()
 	r := gin.Default()
 	db := models.ConnectPsql()
-	NoSQL := models.ConnectPNoSQL()
+	sqlx := models.ConnectSqlx()
 	r.Use(CORSMiddleware())
 	r.Use(func(c *gin.Context) {
 		c.Set("db", db)
 		c.Next()
 	})
 	r.Use(func(c *gin.Context) {
-		c.Set("NoSQL", NoSQL)
+		c.Set("sqlx", sqlx)
 		c.Next()
 	})
 	//prawee code
@@ -86,9 +86,15 @@ func main() {
 			c.JSON(200, gin.H{"message": uid})
 		}
 	})*/
+	privateUser.POST("/booking", controllers.Booking) 
 	privateUser.POST("/addEndpoint", controllers.AddEndpoint)       //input poolid, endpoint
 	privateUser.POST("/deleteEndpoint", controllers.DeleteEndpoint) //input endpoint
+//<<<<<<< HEAD
 	privateUser.GET("/getEndpoints", controllers.GetEndpoints)  //input poolid
+	privateUser.GET("/getAllScans", controllers.GetAllScan) 
+/*=======
+	privateUser.GET("/getEndpoints", controllers.GetEndpoints)      //input poolid
+>>>>>>> develop
 	privateUser.GET("/test", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "this thing works"})
 	})
@@ -98,11 +104,21 @@ func main() {
 	/*r.GET("/testData/:id", controllers.GetTestData)
 	r.GET("/getHost/:scan_id", controllers.GetHost)
 	r.GET("/getVal/:scan_id", controllers.GetVul)
-	r.POST("/addEndpoint", controllers.AddNewEndpoint)
-	r.POST("/addScan", controllers.AddNewScan)*/
-	r.POST("/resultLogs", controllers.Raw)
-	/*r.PATCH("/updateScan/:status", controllers.UpdateScan)
-	r.GET("/getEndpoints/:google_id", controllers.GetEndpoints)
+	r.POST("/addEndpoint", controllers.AddNewEndpoint)*/
+	r.POST("/addScan", controllers.AddNewScan)
+	r.POST("/uploadResult", controllers.Result)
+	//r.POST("/bookingCronjob", controllers.BookingCronjob)
+/*<<<<<<< HEAD
+	r.GET("/getScanResult", controllers.GetScanResult)
+	r.GET("/getScanStatus", controllers.GetScanStatus)
+=======*/
+	r.GET("/getScanStatus", controllers.GetScanStatus)
+	r.GET("/getAllEndpointsAdmin", controllers.GetAllEndpointsAdmin)
+	r.POST("/generateReport", controllers.GenerateReport)
+//>>>>>>> develop
+	//r.POST("/resultLogs", controllers.Raw)
+	r.PATCH("/updateScan/:scan_id", controllers.UpdateScan)
+	/*r.GET("/getEndpoints/:google_id", controllers.GetEndpoints)
 	r.DELETE("/DeleteEndpoint/:endpoint", controllers.DeleteEndpoint)*/
 	r.Run()
 }

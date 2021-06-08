@@ -1,0 +1,81 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: scan-endpoint
+  namespace: argo
+spec:
+  serviceAccountName: default
+  artifactRepositoryRef:
+    configMap: artifact-repositories
+    key: default
+  entrypoint: scan-endpoint
+  arguments:
+    parameters:
+      - name: endpoint
+        value: "google.com"
+      - name: company
+        value: ""
+  templates:
+    - name: scan-endpoint
+      inputs:
+        parameters:
+          - name: endpoint
+      dag: # You should only reference external "templates" in a "steps" or "dag" "template".
+        tasks:
+          #dnsmap
+          - name: scan-dnsmap
+            templateRef:
+              name: dnsmap
+              template: dnsmap
+            arguments:
+              parameters:
+                - name: endpoint
+                  value: "{{inputs.parameters.endpoint}}"
+                - name: company
+                  value: "{{workflow.parameters.company}}"
+          #nmap
+          - name: scan-nmap
+            templateRef:
+              name: nmap
+              template: nmap
+            depends: "scan-dnsmap.Succeeded||scan-dnsmap.Skipped"
+            arguments:
+              parameters:
+                - name: company
+                  value: "{{workflow.parameters.company}}"
+                - name: endpoint
+                  value: "{{inputs.parameters.endpoint}}"
+              artifacts:
+                - name: dnsmap
+                  raw:
+                    data: |
+                      {{tasks.scan-dnsmap.outputs.parameters.d2n}}
+          #check if nmap couldn't find anything useful for hydra
+          - name: check-param
+            template: param-true
+            depends: "scan-nmap.Succeeded"
+            continueOn:
+              failed: true
+            when: >-
+              {{tasks.scan-nmap.outputs.parameters.dnmp2hydra}} != ""
+          #penetration  
+          - name: scan-penetration
+            templateRef:
+              name: penetration
+              template: penetration
+            depends: "check-param.Succeeded"
+            arguments:
+              parameters:
+                - name: company
+                  value: "{{workflow.parameters.company}}"
+                - name: endpoint
+                  value: "{{inputs.parameters.endpoint}}"
+                - name: protocol-endpoint
+                  value: "{{item}}"
+            withParam: "{{tasks.scan-nmap.outputs.parameters.dnmp2hydra}}"
+    #a work around for checking the parameter becase when is not working with WithParam somehow
+    - name: param-true
+      script:
+        image: alpine:3.6
+        command: [sh, -c]
+        args: ["echo true"]

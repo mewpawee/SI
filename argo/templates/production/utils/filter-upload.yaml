@@ -1,0 +1,104 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: filter-upload
+  namespace: argo
+spec:
+  serviceAccountName: default
+  entrypoint: filter-upload
+  imagePullSecrets:
+    - name: registry-sec
+  arguments:
+    parameters:
+      - name: company
+        value: ""
+      - name: workflowName
+        value: ""
+      - name: endpoints
+        value: ""
+  templates:
+    - name: filter-upload
+      inputs:
+        parameters:
+          - name: company
+          - name: workflowName
+          - name: endpoints
+      steps:
+        - - name: filter
+            template: filter-template
+            arguments:
+              parameters:
+                - name: company
+                  value: "{{inputs.parameters.company}}"
+                - name: workflowName
+                  value: "{{inputs.parameters.workflowName}}"
+                - name: endpoints
+                  value: "{{inputs.parameters.endpoints}}"
+        - - name: upload
+            template: upload-template
+            arguments:
+              parameters:
+                - name: workflowName
+                  value: "{{inputs.parameters.workflowName}}"
+              artifacts:
+                - name: report-json
+                  from: "{{steps.filter.outputs.artifacts.output-json}}"
+
+    #templates
+    - name: filter-template
+      inputs:
+        parameters:
+          - name: company
+          - name: workflowName
+          - name: endpoints
+        artifacts:
+          - name: log
+            path: /mnt/log
+            s3:
+              key: "{{inputs.parameters.company}}/{{inputs.parameters.workflowName}}"
+      container:
+        image: "registry.digitalocean.com/sec/filter:latest"
+        command: [sh, -c]
+        args:
+          - ./run.sh "{{inputs.parameters.company}}" "{{inputs.parameters.endpoints}}"
+      outputs:
+        artifacts:
+          - name: output-json
+            path: "/tmp/report.json"
+            archive:
+              none: {}
+            s3:
+              key: "{{inputs.parameters.company}}/{{inputs.parameters.workflowName}}/tmp/report.json"
+
+    - name: upload-template
+      inputs:
+        parameters:
+          - name: workflowName
+        artifacts:
+          - name: report-json
+            path: /mnt/report.json
+      script:
+        image: python:alpine3.6
+        command: [python]
+        source: |
+          import http.client
+          import json
+
+          conn = http.client.HTTPSConnection("csi.cmkl.ac.th")
+
+          with open('/mnt/report.json') as f:
+            data_json = json.load(f)
+          print(data_json)
+          obj_data = {
+          "scanid": "{{inputs.parameters.workflowName}}",
+          "data": data_json    
+          }
+
+          payload = json.dumps(obj_data)
+          headers = {
+          'Content-Type': 'application/json'
+          }
+          conn.request("POST", "/api/uploadResult", payload, headers)
+          res = conn.getresponse()
+          data = res.read()
+          print(data.decode("utf-8"))

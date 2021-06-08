@@ -1,0 +1,96 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: penetration
+  namespace: argo
+spec:
+  serviceAccountName: default
+  entrypoint: penetration
+  imagePullSecrets:
+    - name: registry-sec
+  arguments:
+    parameters:
+      - name: company
+        value: ""
+      - name: endpoint
+        value: ""
+      - name: protocol-endpoint
+        value: ""
+  templates:
+    - name: penetration
+      inputs:
+        parameters:
+          - name: company
+          - name: endpoint
+          - name: protocol-endpoint
+      dag:
+        tasks:
+          #check for http and https protocol
+          - name: is-http
+            templateRef:
+              name: validate-protocol
+              template: validate-protocol
+            arguments:
+              parameters:
+                - name: protocol-endpoint
+                  value: "{{inputs.parameters.protocol-endpoint}}"
+          #brute force username and password
+          - name: scan-bruteforce
+            templateRef:
+              name: hydra
+              template: hydra
+            depends: "is-http.Succeeded"
+            when: "{{item.http}} == false"
+            continueOn:
+              failed: true
+            arguments:
+              parameters:
+                - name: company
+                  value: "{{inputs.parameters.company}}"
+                - name: protocol-port
+                  value: "{{item.protocol-port}}"
+                - name: endpoint
+                  value: "{{inputs.parameters.endpoint}}"
+                - name: protocol-endpoint
+                  value: "{{inputs.parameters.protocol-endpoint}}"
+            withParam: "{{tasks.is-http.outputs.result}}"
+          #scan for directory
+          - name: scan-directory
+            templateRef:
+              name: dirb
+              template: dirb
+            depends: "is-http.Succeeded"
+            when: "{{item.http}} == true"
+            continueOn:
+              failed: true
+            arguments:
+              parameters:
+                - name: company
+                  value: "{{inputs.parameters.company}}"
+                - name: protocol-port
+                  value: "{{item.protocol-port}}"
+                - name: endpoint
+                  value: "{{inputs.parameters.endpoint}}"
+                - name: protocol-endpoint
+                  value: "{{inputs.parameters.protocol-endpoint}}"
+            withParam: "{{tasks.is-http.outputs.result}}"
+          #scan for cross-site script
+          - name: scan-xss
+            templateRef:
+              name: xsssniper
+              template: xsssniper
+            depends: "is-http.Succeeded"
+            when: "{{item.http}} == true"
+            continueOn:
+              failed: true
+            arguments:
+              parameters:
+                - name: company
+                  value: "{{inputs.parameters.company}}"
+                - name: protocol-port
+                  value: "{{item.protocol-port}}"
+                - name: endpoint
+                  value: "{{inputs.parameters.endpoint}}"
+                - name: protocol-endpoint
+                  value: "{{inputs.parameters.protocol-endpoint}}"
+            withParam: "{{tasks.is-http.outputs.result}}"
