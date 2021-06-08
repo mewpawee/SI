@@ -41,6 +41,8 @@ spec:
               template: hydra
             depends: "is-http.Succeeded"
             when: "{{item.http}} == false"
+            continueOn:
+              failed: true
             arguments:
               parameters:
                 - name: company
@@ -59,6 +61,8 @@ spec:
               template: dirb
             depends: "is-http.Succeeded"
             when: "{{item.http}} == true"
+            continueOn:
+              failed: true
             arguments:
               parameters:
                 - name: company
@@ -77,6 +81,8 @@ spec:
               template: xsssniper
             depends: "is-http.Succeeded"
             when: "{{item.http}} == true"
+            continueOn:
+              failed: true
             arguments:
               parameters:
                 - name: company

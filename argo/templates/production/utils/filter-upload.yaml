@@ -60,11 +60,13 @@ spec:
         image: "registry.digitalocean.com/sec/filter:latest"
         command: [sh, -c]
         args:
-          - ./run.sh
+          - ./run.sh "{{inputs.parameters.company}}" "{{inputs.parameters.endpoints}}"
       outputs:
         artifacts:
           - name: output-json
             path: "/tmp/report.json"
+            archive:
+              none: {}
             s3:
               key: "{{inputs.parameters.company}}/{{inputs.parameters.workflowName}}/tmp/report.json"
 

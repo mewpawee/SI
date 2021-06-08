@@ -1,2 +1,5 @@
 #!/bin/sh
-node main.mjs -d /mnt/log
+company=$1
+endpoints=$2
+
+node main.mjs $company $endpoints

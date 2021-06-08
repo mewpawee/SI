@@ -24,7 +24,7 @@ const read = async (dir, json, tool = null) => {
     if (d.isDirectory()) {
       await read(entry, json, d.name);
     } else if (d.isFile()) {
-      //console.log("read: " + entry);
+      console.log("read: " + entry);
       switch (tool) {
         case "nmap":
           const nmapResult = await nmap(entry);
@@ -39,7 +39,7 @@ const read = async (dir, json, tool = null) => {
           }
           break;
         case "sqlmap":
-          const sqlmapResult = await sqlmap(entry,d.name);
+          const sqlmapResult = await sqlmap(entry, d.name);
           if (sqlmapResult) {
             json.sqlmap.push(sqlmapResult);
           }
@@ -51,7 +51,12 @@ const read = async (dir, json, tool = null) => {
 };
 
 // main program
-const main = async (company, endpoints, location = "/mnt/log/") => {
+const main = async (
+  company,
+  endpoints,
+  output = "/tmp/report.json",
+  location = "/mnt/log/",
+) => {
   const trimedEndpoints = endpoints.replace(/^\[+|\]+$/g, "");
   const arrayEndpoints = trimedEndpoints.split(",");
   const reportObj = {
@@ -67,10 +72,9 @@ const main = async (company, endpoints, location = "/mnt/log/") => {
     endpointsData.push(endpointObj);
   }
   reportObj.endpoints = endpointsData;
-  // writeJSON("/tmp/report.json", result);
-  writeJSON("./report.json", reportObj);
+  writeJSON(output, reportObj);
 };
 
 // print process.argv
 const args = process.argv.slice(2);
-main(args[0], args[1]);
+main(args[0], args[1], args[2], args[3]);

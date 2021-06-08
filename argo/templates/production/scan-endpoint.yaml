@@ -54,6 +54,8 @@ spec:
           - name: check-param
             template: param-true
             depends: "scan-nmap.Succeeded"
+            continueOn:
+              failed: true
             when: >-
               {{tasks.scan-nmap.outputs.parameters.dnmp2hydra}} != ""
           #penetration  
