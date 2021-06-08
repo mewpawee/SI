@@ -1,14 +1,15 @@
 import { readJSON, readFile, command } from "./function.mjs";
 import { nmapFilter } from "./nmap.mjs";
+import { sqlmapFilter } from "./sqlmap.mjs";
 
 //each tools filter
 
-const dnsmap = async (file) => {
-  let json;
-  //   const data = await readFile(file);
-  //   const json = JSON.parse(data);
-  // return json;
-  return null;
+const sqlmap = async (file, name) => {
+  const protocolPort=name.replace(".log", "");
+  const data = await readFile(file);
+  const Obj = await sqlmapFilter(data, protocolPort);
+  if (!Obj) return undefined;
+  return Obj;
 };
 
 const nmap = async (file) => {
@@ -19,6 +20,7 @@ const nmap = async (file) => {
     // console.log(json);
     filtered = await nmapFilter(json);
   }
+  if (!filtered) return undefined;
   return filtered;
 };
 
@@ -39,4 +41,4 @@ const dirb = async (file) => {
   return obj;
 };
 
-export { dnsmap, nmap, dirb };
+export { sqlmap, nmap, dirb };

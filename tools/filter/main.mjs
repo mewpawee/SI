@@ -1,13 +1,13 @@
 import fs from "fs";
 import path from "path";
 import { writeJSON } from "./src/function.mjs";
-import { dnsmap, nmap, dirb } from "./src/filter.mjs";
-import { DH_NOT_SUITABLE_GENERATOR } from "node:constants";
+import { sqlmap, nmap, dirb } from "./src/filter.mjs";
 
 const readEndpoint = async (dir) => {
   const json = {
     nmap: [],
     dirb: [],
+    sqlmap: [],
   };
   const result = await read(dir, json);
   for (const key in result) {
@@ -36,6 +36,12 @@ const read = async (dir, json, tool = null) => {
           const dirbResult = await dirb(entry);
           if (dirbResult) {
             json.dirb.push(dirbResult);
+          }
+          break;
+        case "sqlmap":
+          const sqlmapResult = await sqlmap(entry,d.name);
+          if (sqlmapResult) {
+            json.sqlmap.push(sqlmapResult);
           }
           break;
       }
