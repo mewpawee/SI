@@ -3,8 +3,9 @@ import path from "path";
 import { writeJSON } from "./src/function.mjs";
 import { sqlmap, nmap, dirb } from "./src/filter.mjs";
 
-const readEndpoint = async (dir) => {
+const readEndpoint = async (dir, endpoint) => {
   const json = {
+    endpoint: endpoint,
     nmap: [],
     dirb: [],
     sqlmap: [],
@@ -55,7 +56,7 @@ const main = async (
   company,
   endpoints,
   output = "/tmp/report.json",
-  location = "/mnt/log/",
+  location = "/mnt/log/"
 ) => {
   const trimedEndpoints = endpoints.replace(/^\[+|\]+$/g, "");
   const arrayEndpoints = trimedEndpoints.split(",");
@@ -65,11 +66,8 @@ const main = async (
   const endpointsData = [];
   for (const endpoint of arrayEndpoints) {
     const dir = location + endpoint + "/log";
-    const result = await readEndpoint(dir);
-    const endpointObj = {
-      [endpoint]: result,
-    };
-    endpointsData.push(endpointObj);
+    const result = await readEndpoint(dir, endpoint);
+    endpointsData.push(result);
   }
   reportObj.endpoints = endpointsData;
   writeJSON(output, reportObj);
