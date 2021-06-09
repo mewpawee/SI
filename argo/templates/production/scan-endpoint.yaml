@@ -20,13 +20,14 @@ spec:
       inputs:
         parameters:
           - name: endpoint
-      dag: # You should only reference external "templates" in a "steps" or "dag" "template".
-        tasks:
-          #dnsmap
-          - name: scan-dnsmap
+      steps:
+            #dnsmap
+        - - name: scan-dnsmap
             templateRef:
               name: dnsmap
               template: dnsmap
+            continueOn:
+              failed: true
             arguments:
               parameters:
                 - name: endpoint
@@ -34,11 +35,12 @@ spec:
                 - name: company
                   value: "{{workflow.parameters.company}}"
           #nmap
-          - name: scan-nmap
+        - - name: scan-nmap
             templateRef:
               name: nmap
               template: nmap
-            depends: "scan-dnsmap.Succeeded||scan-dnsmap.Skipped"
+            continueOn:
+              failed: true
             arguments:
               parameters:
                 - name: company
@@ -49,21 +51,21 @@ spec:
                 - name: dnsmap
                   raw:
                     data: |
-                      {{tasks.scan-dnsmap.outputs.parameters.d2n}}
+                      {{steps.scan-dnsmap.outputs.parameters.d2n}}
           #check if nmap couldn't find anything useful for hydra
-          - name: check-param
+        - - name: check-param
             template: param-true
-            depends: "scan-nmap.Succeeded"
             continueOn:
               failed: true
             when: >-
-              {{tasks.scan-nmap.outputs.parameters.dnmp2hydra}} != ""
+              {{steps.scan-nmap.outputs.parameters.dnmp2hydra}} != ""
           #penetration  
-          - name: scan-penetration
+        - - name: scan-penetration
             templateRef:
               name: penetration
               template: penetration
-            depends: "check-param.Succeeded"
+            continueOn:
+              failed: true
             arguments:
               parameters:
                 - name: company
@@ -72,7 +74,7 @@ spec:
                   value: "{{inputs.parameters.endpoint}}"
                 - name: protocol-endpoint
                   value: "{{item}}"
-            withParam: "{{tasks.scan-nmap.outputs.parameters.dnmp2hydra}}"
+            withParam: "{{steps.scan-nmap.outputs.parameters.dnmp2hydra}}"
     #a work around for checking the parameter becase when is not working with WithParam somehow
     - name: param-true
       script:

@@ -41,8 +41,6 @@ spec:
               template: hydra
             depends: "is-http.Succeeded"
             when: "{{item.http}} == false"
-            continueOn:
-              failed: true
             arguments:
               parameters:
                 - name: company
@@ -61,8 +59,6 @@ spec:
               template: dirb
             depends: "is-http.Succeeded"
             when: "{{item.http}} == true"
-            continueOn:
-              failed: true
             arguments:
               parameters:
                 - name: company
@@ -81,8 +77,24 @@ spec:
               template: xsssniper
             depends: "is-http.Succeeded"
             when: "{{item.http}} == true"
-            continueOn:
-              failed: true
+            arguments:
+              parameters:
+                - name: company
+                  value: "{{inputs.parameters.company}}"
+                - name: protocol-port
+                  value: "{{item.protocol-port}}"
+                - name: endpoint
+                  value: "{{inputs.parameters.endpoint}}"
+                - name: protocol-endpoint
+                  value: "{{inputs.parameters.protocol-endpoint}}"
+            withParam: "{{tasks.is-http.outputs.result}}"
+          #scan sql map
+          - name: scan-sql
+            templateRef:
+              name: sqlmap
+              template: sqlmap
+            depends: "is-http.Succeeded"
+            when: "{{item.http}} == true"
             arguments:
               parameters:
                 - name: company
