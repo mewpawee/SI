@@ -6,9 +6,7 @@ import { sqlmap, nmap, dirb } from "./src/filter.mjs";
 const readEndpoint = async (dir, endpoint) => {
   const json = {
     endpoint: endpoint,
-    nmap: [],
-    dirb: [],
-    sqlmap: [],
+    tools: [],
   };
   const result = await read(dir, json);
   for (const key in result) {
@@ -28,21 +26,27 @@ const read = async (dir, json, tool = null) => {
       console.log("read: " + entry);
       switch (tool) {
         case "nmap":
+          const nmapObj = { name: "nmap", data: [] };
           const nmapResult = await nmap(entry);
           if (nmapResult) {
-            json.nmap.push(nmapResult);
+            nmapObj.data.push(nmapResult);
+            json.tools.push(nmapObj);
           }
           break;
         case "dirb":
+          const dirbObj = { name: "dirb", data: [] };
           const dirbResult = await dirb(entry);
           if (dirbResult) {
-            json.dirb.push(dirbResult);
+            dirbObj.data.push(dirbResult);
+            json.tools.push(dirbObj);
           }
           break;
         case "sqlmap":
+          const sqlmapObj = { name: "sqlmap", data: [] };
           const sqlmapResult = await sqlmap(entry, d.name);
           if (sqlmapResult) {
-            json.sqlmap.push(sqlmapResult);
+            sqlmapObj.data.push(sqlmapResult);
+            json.tools.push(sqlmapObj);
           }
           break;
       }
