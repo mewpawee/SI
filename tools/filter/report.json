@@ -2590,6 +2590,46 @@
           ]
         },
         {
+          "name": "dirb",
+          "data": [
+            {
+              "url": "http://103.153.118.68:10256/render/https://www.google.com",
+              "code": "301",
+              "size": "64"
+            },
+            {
+              "url": "http://103.153.118.68:31500/v2",
+              "code": "301",
+              "size": "39"
+            },
+            {
+              "url": "http://103.153.118.68:9353/render/https://www.google.com",
+              "code": "301",
+              "size": "64"
+            },
+            {
+              "url": "http://103.153.118.68:9253/render/https://www.google.com",
+              "code": "301",
+              "size": "64"
+            },
+            {
+              "url": "https://103.153.118.68:31443/assets/robots.txt",
+              "code": "200",
+              "size": "4"
+            },
+            {
+              "url": "http://103.153.118.68:5000/v2",
+              "code": "301",
+              "size": "39"
+            },
+            {
+              "url": "http://103.153.118.68:10254/render/https://www.google.com",
+              "code": "301",
+              "size": "64"
+            }
+          ]
+        },
+        {
           "name": "sqlmap",
           "data": [
             {
@@ -2625,76 +2665,6 @@
               "Application": "Apache 2.4.25",
               "DBMS": "SQL >= 5.0 (MariaDB fork)",
               "Database name": "dvwadb"
-            }
-          ]
-        },
-        {
-          "name": "dirb",
-          "data": [
-            {
-              "url": "http://103.153.118.68:10256/render/https://www.google.com",
-              "code": "301",
-              "size": "64"
-            }
-          ]
-        },
-        {
-          "name": "dirb",
-          "data": [
-            {
-              "url": "http://103.153.118.68:31500/v2",
-              "code": "301",
-              "size": "39"
-            }
-          ]
-        },
-        {
-          "name": "dirb",
-          "data": [
-            {
-              "url": "http://103.153.118.68:9353/render/https://www.google.com",
-              "code": "301",
-              "size": "64"
-            }
-          ]
-        },
-        {
-          "name": "dirb",
-          "data": [
-            {
-              "url": "http://103.153.118.68:9253/render/https://www.google.com",
-              "code": "301",
-              "size": "64"
-            }
-          ]
-        },
-        {
-          "name": "dirb",
-          "data": [
-            {
-              "url": "https://103.153.118.68:31443/assets/robots.txt",
-              "code": "200",
-              "size": "4"
-            }
-          ]
-        },
-        {
-          "name": "dirb",
-          "data": [
-            {
-              "url": "http://103.153.118.68:5000/v2",
-              "code": "301",
-              "size": "39"
-            }
-          ]
-        },
-        {
-          "name": "dirb",
-          "data": [
-            {
-              "url": "http://103.153.118.68:10254/render/https://www.google.com",
-              "code": "301",
-              "size": "64"
             }
           ]
         }
@@ -4925,42 +4895,22 @@
               "url": "http://103.153.118.69:10256/render/https://www.google.com",
               "code": "301",
               "size": "64"
-            }
-          ]
-        },
-        {
-          "name": "dirb",
-          "data": [
+            },
             {
               "url": "http://103.153.118.69:9353/render/https://www.google.com",
               "code": "301",
               "size": "64"
-            }
-          ]
-        },
-        {
-          "name": "dirb",
-          "data": [
+            },
             {
               "url": "http://103.153.118.69:9253/render/https://www.google.com",
               "code": "301",
               "size": "64"
-            }
-          ]
-        },
-        {
-          "name": "dirb",
-          "data": [
+            },
             {
               "url": "http://103.153.118.69:32000/render/https://www.google.com",
               "code": "301",
               "size": "0"
-            }
-          ]
-        },
-        {
-          "name": "dirb",
-          "data": [
+            },
             {
               "url": "http://103.153.118.69:5000/v2",
               "code": "301",
@@ -6853,32 +6803,17 @@
               "url": "http://103.153.118.70:10256/render/https://www.google.com",
               "code": "301",
               "size": "64"
-            }
-          ]
-        },
-        {
-          "name": "dirb",
-          "data": [
+            },
             {
               "url": "http://103.153.118.70:9353/render/https://www.google.com",
               "code": "301",
               "size": "64"
-            }
-          ]
-        },
-        {
-          "name": "dirb",
-          "data": [
+            },
             {
               "url": "http://103.153.118.70:9253/render/https://www.google.com",
               "code": "301",
               "size": "64"
-            }
-          ]
-        },
-        {
-          "name": "dirb",
-          "data": [
+            },
             {
               "url": "http://103.153.118.70:5000/v2",
               "code": "301",

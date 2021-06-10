@@ -6,14 +6,16 @@ import { sqlmap, nmap, dirb } from "./src/filter.mjs";
 const readEndpoint = async (dir, endpoint) => {
   const json = {
     endpoint: endpoint,
-    tools: [],
+    tools: [
+      { name: "nmap", data: [] },
+      { name: "dirb", data: [] },
+      { name: "sqlmap", data: [] },
+    ],
   };
   const result = await read(dir, json);
-  for (const key in result) {
-    if (result[key].length == 0) {
-      result[key] = null;
-    }
-  }
+  result.tools = result.tools.filter((value, index, arr) => {
+    return value.data.length > 0;
+  });
   return result;
 };
 //read file
@@ -26,27 +28,21 @@ const read = async (dir, json, tool = null) => {
       console.log("read: " + entry);
       switch (tool) {
         case "nmap":
-          const nmapObj = { name: "nmap", data: [] };
           const nmapResult = await nmap(entry);
           if (nmapResult) {
-            nmapObj.data.push(nmapResult);
-            json.tools.push(nmapObj);
+            json.tools[0].data.push(nmapResult);
           }
           break;
         case "dirb":
-          const dirbObj = { name: "dirb", data: [] };
           const dirbResult = await dirb(entry);
           if (dirbResult) {
-            dirbObj.data.push(dirbResult);
-            json.tools.push(dirbObj);
+            json.tools[1].data.push(dirbResult);
           }
           break;
         case "sqlmap":
-          const sqlmapObj = { name: "sqlmap", data: [] };
           const sqlmapResult = await sqlmap(entry, d.name);
           if (sqlmapResult) {
-            sqlmapObj.data.push(sqlmapResult);
-            json.tools.push(sqlmapObj);
+            json.tools[2].data.push(sqlmapResult);
           }
           break;
       }
